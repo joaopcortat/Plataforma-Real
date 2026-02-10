@@ -1,0 +1,10 @@
+export { Dashboard } from './Dashboard';
+export { Login } from './auth/Login';
+export { Schedule } from './Schedule';
+export { Achievements } from './Achievements';
+export { Simulations } from './Simulations';
+export { Performance } from './Performance';
+export { Courses } from './Courses';
+export { Ranking } from './Ranking';
+export { Profile } from './Profile';
+export { Materials } from './Materials';
