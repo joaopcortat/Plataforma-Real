@@ -116,18 +116,20 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                 const history = JSON.parse(localStorage.getItem('sim_history') || '[]');
                 history.push({ ...resultData, id: Date.now() });
                 localStorage.setItem('sim_history', JSON.stringify(history));
-                // Even if there's a DB error, we still want to close the modal and potentially reload
+
+                alert('Salvo localmente (erro de conexão).');
                 onClose();
             } else {
                 console.log('Result saved!');
-                if (onSuccess) {
-                    onSuccess();
-                } else {
-                    onClose();
-                }
+                // Wait a bit for DB to propagate?
+                setTimeout(() => {
+                    if (onSuccess) {
+                        onSuccess();
+                    } else {
+                        window.location.reload();
+                    }
+                }, 500);
             }
-
-            window.location.reload();
         } catch (error) {
             console.error(error);
             alert('Erro ao salvar resultado');
