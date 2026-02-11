@@ -2,10 +2,14 @@ import { useState, useEffect } from 'react';
 import {
     LayoutDashboard,
     Calendar,
+    BarChart2,
+    Trophy,
     LogOut,
     Menu,
     X,
     FileText,
+    GraduationCap,
+    Medal,
     Crown,
     BookOpen
 } from 'lucide-react';
@@ -16,6 +20,9 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
+import { useStudyTimer } from '../contexts/StudyTimerContext';
+import { StudyStopwatch } from '../components/dashboard/StudyStopwatch';
+import { StudySessionModal } from '../components/dashboard/StudySessionModal';
 
 export function Shell() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -24,6 +31,15 @@ export function Shell() {
     const navigate = useNavigate();
 
     const [profile, setProfile] = useState<any>(null);
+
+    const {
+        isTimerOpen,
+        closeTimer,
+        openSessionModal,
+        isSessionModalOpen,
+        closeSessionModal,
+        sessionSeconds
+    } = useStudyTimer();
 
     useEffect(() => {
         if (user) {
@@ -50,8 +66,7 @@ export function Shell() {
         { path: '/materials', icon: BookOpen, label: 'Materiais' },
     ];
 
-
-    /*
+    /* 
     const devItems = [
         { path: '/performance', icon: BarChart2, label: 'Desempenho' },
         { path: '/ranking', icon: Trophy, label: 'Ranking' },
@@ -150,13 +165,11 @@ export function Shell() {
 
                 <div className="flex-1 overflow-y-auto py-6 px-4 space-y-6">
                     <div>
-                        <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2 px-4">Foco</h3>
+                        {/* <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2 px-4">Foco</h3> */}
                         <div className="space-y-1">
                             {focusItems.map(renderMenuItem)}
                         </div>
                     </div>
-
-
 
                     {/* 
                     <div>
@@ -164,7 +177,7 @@ export function Shell() {
                         <div className="space-y-1">
                             {devItems.map(renderMenuItem)}
                         </div>
-                    </div> 
+                    </div>
                     */}
                 </div>
 
@@ -189,26 +202,9 @@ export function Shell() {
                                     <p className="font-bold text-sm truncate text-white group-hover:text-primary transition-colors">
                                         {profile?.full_name || user?.email?.split('@')[0]}
                                     </p>
-                                    <p className="text-xs text-primary truncate">
-                                        Lvl {GAMIFICATION.getLevel(profile?.xp || 0)} • {GAMIFICATION.getTitle(GAMIFICATION.getLevel(profile?.xp || 0)).title}
-                                    </p>
                                 </div>
                             </div>
-                            <div className="relative h-2 bg-zinc-800 rounded-full overflow-hidden">
-                                <div
-                                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-primary to-emerald-300 transition-all duration-500"
-                                    style={{
-                                        width: `${Math.min(
-                                            ((profile?.xp || 0) / GAMIFICATION.getNextLevelXp(GAMIFICATION.getLevel(profile?.xp || 0))) * 100,
-                                            100
-                                        )}%`
-                                    }}
-                                />
-                            </div>
-                            <div className="flex justify-between text-[10px] text-zinc-500 mt-1 font-medium group-hover:text-zinc-400">
-                                <span>{profile?.xp || 0} XP</span>
-                                <span>{GAMIFICATION.getNextLevelXp(GAMIFICATION.getLevel(profile?.xp || 0))} XP</span>
-                            </div>
+
                         </NavLink>
                     </div>
 
@@ -268,6 +264,29 @@ export function Shell() {
                     </div>
                 </div>
             </main>
+
+            {/* Global Study Tools */}
+            <StudyStopwatch
+                isOpen={isTimerOpen}
+                onClose={closeTimer}
+                onFinish={(seconds) => {
+                    closeTimer();
+                    openSessionModal(seconds);
+                }}
+            />
+
+            <StudySessionModal
+                isOpen={isSessionModalOpen}
+                onClose={closeSessionModal}
+                totalSeconds={sessionSeconds}
+                onSuccess={() => {
+                    closeSessionModal();
+                    // Optionally force refresh dashboard or something? 
+                    // The modals refresh usually. But if on Schedule page, might not update.
+                    // Ideally use a global refresh trigger or query invalidation.
+                    window.location.reload(); // Simple brute force update for now
+                }}
+            />
         </div>
     );
 }

@@ -20,18 +20,22 @@ export function ActionBanner({ title, description, icon: Icon, variant, onClick 
             onClick={onClick}
             className={`w-full group relative overflow-hidden rounded-2xl p-4 bg-zinc-900/50 border border-zinc-800 transition-all duration-300 ${variants.border} hover:bg-zinc-900/80 hover:shadow-lg`}
         >
-            <div className="flex items-center justify-between relative z-10">
-                <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${variants.bg} bg-opacity-10 group-hover:bg-opacity-20 transition-all duration-300 group-hover:scale-110`}>
-                        <Icon size={24} className={variants.text} />
+            <div className="flex items-center justify-between relative z-10 w-full">
+                <div className="flex items-center gap-5">
+                    {/* Vivid Gradient Icon Box */}
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${variants.bg} bg-opacity-20 shadow-[0_0_20px_-5px] group-hover:bg-opacity-30 group-hover:scale-105 transition-all duration-300`}>
+                        <Icon size={26} className={variants.text} />
                     </div>
-                    <div className="text-left">
-                        <h4 className="font-bold text-white text-sm mb-0.5">{title}</h4>
-                        <p className="text-xs text-zinc-500 group-hover:text-zinc-400 transition-colors uppercase tracking-wide">{description}</p>
+
+                    <div className="text-left flex flex-col justify-center">
+                        <h4 className="font-bold text-white text-[15px] mb-0.5 tracking-tight group-hover:text-white/90 transition-colors">{title}</h4>
+                        <p className="text-xs text-zinc-500 font-medium tracking-wide group-hover:text-zinc-400 transition-colors leading-relaxed">{description}</p>
                     </div>
                 </div>
-                <div className="w-8 h-8 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-500 group-hover:text-white group-hover:border-zinc-500 transition-all">
-                    <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+
+                {/* Subtle Arrow */}
+                <div className="w-8 h-8 flex items-center justify-center text-zinc-600 transition-all transform group-hover:translate-x-1 group-hover:text-zinc-400">
+                    <ArrowRight size={18} />
                 </div>
             </div>
         </button>

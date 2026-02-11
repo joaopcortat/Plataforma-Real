@@ -1,37 +1,51 @@
 import { useEffect, useState } from 'react';
-import { WelcomeHero } from '../components/dashboard/WelcomeHero';
 import { MetricCard } from '../components/dashboard/MetricCard';
 import { ActionBanner } from '../components/dashboard/ActionBanner';
 import { DailyGoals } from '../components/dashboard/DailyGoals';
 import { CompetencyRadar } from '../components/dashboard/CompetencyRadar';
 import { ENEMCountdown } from '../components/dashboard/ENEMCountdown';
-import { CheckCircle2, FileText, Play, Plus, BookOpen, PenTool } from 'lucide-react';
+import { ManualStudyEntryModal } from '../components/dashboard/ManualStudyEntryModal';
+import { CheckCircle2, FileText, Play, Plus, BookOpen, Clock } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useStudyTimer } from '../contexts/StudyTimerContext';
 
 export function Dashboard() {
+    const { openTimer } = useStudyTimer();
     const [metrics, setMetrics] = useState({
+        studyHours: 0,
         classesDone: 0,
         questionsDone: 0,
         lastSimScore: 0,
         lastEssayScore: 0
     });
 
+    // Manual Entry State
+    const [showManualEntry, setShowManualEntry] = useState(false);
+
     useEffect(() => {
         async function fetchMetrics() {
             const { data: { user } } = await supabase.auth.getUser();
             if (!user) return;
 
-            // 1. Fetch Goals (for questions/classes done) - Approximating from daily goals sum or actual tasks?
-            // For now, let's sum up daily_goals for 'total' or just use today's? 
-            // Mocking 'Total' by summing daily goals is imperfect but better than static.
-            // Better: 'questions_done' from daily_goals summed up.
-            const { data: goalsData } = await supabase
-                .from('daily_goals')
-                .select('questions_done, classes_done')
+            // 1. Fetch Study Sessions Stats
+            const { data: sessions } = await supabase
+                .from('study_sessions')
+                .select('duration_seconds, questions_count, classes_count')
                 .eq('user_id', user.id);
 
-            const totalQuestions = goalsData?.reduce((acc, curr) => acc + (curr.questions_done || 0), 0) || 0;
-            const totalClasses = goalsData?.reduce((acc, curr) => acc + (curr.classes_done || 0), 0) || 0;
+            let totalSeconds = 0;
+            let totalQuestions = 0;
+            let totalClasses = 0;
+
+            if (sessions) {
+                sessions.forEach(s => {
+                    totalSeconds += (s.duration_seconds || 0);
+                    totalQuestions += (s.questions_count || 0);
+                    totalClasses += (s.classes_count || 0);
+                });
+            }
+
+            const totalHours = Math.round(totalSeconds / 3600);
 
             // 2. Last Simulation
             const { data: lastSim } = await supabase
@@ -53,6 +67,7 @@ export function Dashboard() {
                 .single();
 
             setMetrics({
+                studyHours: totalHours,
                 classesDone: totalClasses,
                 questionsDone: totalQuestions,
                 lastSimScore: lastSim?.score || 0,
@@ -61,20 +76,18 @@ export function Dashboard() {
         }
         fetchMetrics();
     }, []);
+
     return (
         <div className="space-y-6 pb-8 animate-in fade-in duration-500">
-
-            {/* Hero Section */}
-            <WelcomeHero />
 
             {/* Metrics Grid - Real Data */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <MetricCard
-                    label="Aulas Assistidas"
-                    value={metrics.classesDone.toString()}
-                    subValue="nesta semana"
-                    icon={BookOpen}
-                    variant="blue"
+                    label="Horas de Estudo"
+                    value={metrics.studyHours.toString()}
+                    subValue="tempo total"
+                    icon={Clock}
+                    variant="orange"
                 />
                 <MetricCard
                     label="Questões Resolvidas"
@@ -84,18 +97,18 @@ export function Dashboard() {
                     variant="green"
                 />
                 <MetricCard
+                    label="Aulas Assistidas"
+                    value={metrics.classesDone.toString()}
+                    subValue="registradas"
+                    icon={BookOpen}
+                    variant="blue"
+                />
+                <MetricCard
                     label="Último Simulado"
                     value={metrics.lastSimScore.toString()}
                     subValue="/ 180 acertos"
                     icon={FileText}
                     variant="purple"
-                />
-                <MetricCard
-                    label="Última Redação"
-                    value={metrics.lastEssayScore.toString()}
-                    subValue="pontos"
-                    icon={PenTool}
-                    variant="orange"
                 />
             </div>
 
@@ -109,17 +122,17 @@ export function Dashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <ActionBanner
                             title="Iniciar Cronômetro"
-                            description="Timer"
+                            description="Registre seu tempo de estudo"
                             icon={Play}
                             variant="blue"
-                            onClick={() => window.location.href = '/simulations'}
+                            onClick={openTimer}
                         />
                         <ActionBanner
                             title="Registrar Estudo"
-                            description="Manual"
+                            description="Registrar manualmente"
                             icon={Plus}
                             variant="green"
-                            onClick={() => window.location.href = '/schedule'}
+                            onClick={() => setShowManualEntry(true)}
                         />
                         <ActionBanner
                             title="Novo Simulado"
@@ -137,6 +150,14 @@ export function Dashboard() {
                     <CompetencyRadar />
                 </div>
             </div>
+
+            <ManualStudyEntryModal
+                isOpen={showManualEntry}
+                onClose={() => setShowManualEntry(false)}
+                onSuccess={() => {
+                    setShowManualEntry(false);
+                }}
+            />
         </div>
     );
 }

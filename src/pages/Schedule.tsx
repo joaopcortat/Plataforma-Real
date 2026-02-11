@@ -349,15 +349,15 @@ export function Schedule() {
                                             const durationMin = 90;
                                             const startMin = currentMinutes;
                                             const endMin = startMin + durationMin;
-                                            const startStr = `${Math.floor(startMin / 60).toString().padStart(2, '0')}:${(startMin % 60).toString().padStart(2, '0')}`;
-                                            const endStr = `${Math.floor(endMin / 60).toString().padStart(2, '0')}:${(endMin % 60).toString().padStart(2, '0')}`;
+                                            // const startStr = `${Math.floor(startMin / 60).toString().padStart(2, '0')}:${(startMin % 60).toString().padStart(2, '0')}`;
+                                            // const endStr = `${Math.floor(endMin / 60).toString().padStart(2, '0')}:${(endMin % 60).toString().padStart(2, '0')}`;
                                             currentMinutes = endMin;
 
                                             return (
                                                 <SortableTask
                                                     key={task.id}
                                                     task={task}
-                                                    timeRange={`${startStr} - ${endStr}`}
+                                                    timeRange={`${durationMin} min`}
                                                     duration={durationMin}
                                                     onToggle={(id, val) => toggleTask(id, val)}
                                                 />

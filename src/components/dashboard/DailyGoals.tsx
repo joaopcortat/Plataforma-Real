@@ -7,6 +7,7 @@ interface DailyGoalType {
     questions_done: number;
     classes_target: number;
     classes_done: number;
+    tasks?: string[];
 }
 
 export function DailyGoals() {
@@ -14,7 +15,8 @@ export function DailyGoals() {
         questions_target: 30,
         questions_done: 0,
         classes_target: 4,
-        classes_done: 0
+        classes_done: 0,
+        tasks: []
     });
     const [loading, setLoading] = useState(true);
 
@@ -109,51 +111,73 @@ export function DailyGoals() {
     if (loading) return <div className="animate-pulse h-[100px] bg-zinc-900/50 rounded-xl" />;
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {items.map((goal) => {
-                const percentage = Math.round((goal.current / goal.target) * 100);
-                const Icon = goal.icon;
+        <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {items.map((goal) => {
+                    const percentage = Math.round((goal.current / goal.target) * 100);
+                    const Icon = goal.icon;
 
-                return (
-                    <div key={goal.id} className="group relative overflow-hidden rounded-3xl p-6 border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900/80 transition-all duration-500">
-                        <div className="flex justify-between items-start mb-6">
-                            <div className="flex items-center gap-3">
-                                <div className={`p-2 rounded-xl ${goal.bgColor} ${goal.textColor} bg-opacity-10 ring-1 ring-white/5`}>
-                                    <Icon size={20} />
+                    return (
+                        <div key={goal.id} className="group relative overflow-hidden rounded-3xl p-6 border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900/80 transition-all duration-500">
+                            <div className="flex justify-between items-start mb-6">
+                                <div className="flex items-center gap-3">
+                                    <div className={`p-2 rounded-xl ${goal.bgColor} ${goal.textColor} bg-opacity-10 ring-1 ring-white/5`}>
+                                        <Icon size={20} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-white text-sm">{goal.label}</h4>
+                                        <span className="text-xs text-zinc-500">Meta diária</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h4 className="font-bold text-white text-sm">{goal.label}</h4>
-                                    <span className="text-xs text-zinc-500">Meta diária</span>
+                                <div className={`text-xl font-bold ${goal.textColor}`}>
+                                    {percentage}%
                                 </div>
                             </div>
-                            <div className={`text-xl font-bold ${goal.textColor}`}>
-                                {percentage}%
+
+                            <div className="flex items-end justify-between mb-2">
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-2xl font-bold text-white">{goal.current}</span>
+                                    <span className="text-sm text-zinc-500">/ {goal.target}</span>
+                                </div>
+                                <button
+                                    onClick={() => incrementGoal(goal.id === 1 ? 'questions' : 'classes')}
+                                    className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-all hover:scale-105 active:scale-95"
+                                    title="Adicionar +1"
+                                >
+                                    <Plus size={16} />
+                                </button>
+                            </div>
+
+                            <div className="h-1.5 w-full bg-zinc-800/50 rounded-full overflow-hidden">
+                                <div
+                                    className={`h-full ${goal.color} transition-all duration-1000 ease-out`}
+                                    style={{ width: `${Math.min(percentage, 100)}%` }}
+                                />
                             </div>
                         </div>
+                    );
+                })}
+            </div>
 
-                        <div className="flex items-end justify-between mb-2">
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-2xl font-bold text-white">{goal.current}</span>
-                                <span className="text-sm text-zinc-500">/ {goal.target}</span>
-                            </div>
-                            <button
-                                onClick={() => incrementGoal(goal.id === 1 ? 'questions' : 'classes')}
-                                className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-all hover:scale-105 active:scale-95"
-                                title="Adicionar +1"
+            {/* Tasks / Topics List */}
+            {goals.tasks && goals.tasks.length > 0 && (
+                <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-2xl p-5">
+                    <h4 className="text-sm font-bold text-zinc-400 mb-3 flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                        Tópicos Estudados Hoje
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                        {goals.tasks.map((task, index) => (
+                            <span
+                                key={index}
+                                className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-300 font-medium"
                             >
-                                <Plus size={16} />
-                            </button>
-                        </div>
-
-                        <div className="h-1.5 w-full bg-zinc-800/50 rounded-full overflow-hidden">
-                            <div
-                                className={`h-full ${goal.color} transition-all duration-1000 ease-out`}
-                                style={{ width: `${Math.min(percentage, 100)}%` }}
-                            />
-                        </div>
+                                {task}
+                            </span>
+                        ))}
                     </div>
-                );
-            })}
+                </div>
+            )}
         </div>
     );
 }

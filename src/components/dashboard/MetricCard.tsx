@@ -46,18 +46,18 @@ export function MetricCard({ label, value, subValue, icon: Icon, variant }: Metr
 
             <div className="relative z-10 flex flex-col justify-between h-[140px]">
                 <div className="flex justify-between items-start">
-                    <span className="font-semibold text-zinc-400 text-xs uppercase tracking-wider">{label}</span>
-                    <div className={clsx("p-2 rounded-xl transition-all duration-300 group-hover:scale-110", styles.iconBg, "bg-opacity-10")}>
-                        <Icon size={20} className={styles.text} />
+                    <span className="font-semibold text-zinc-400 text-[10px] uppercase tracking-widest leading-none mt-1">{label}</span>
+                    <div className={clsx("p-2.5 rounded-xl transition-all duration-300 group-hover:scale-110", styles.iconBg, "bg-opacity-10")}>
+                        <Icon size={18} className={styles.text} />
                     </div>
                 </div>
 
                 <div>
-                    <div className="flex items-baseline gap-1 mb-1">
-                        <h3 className="text-3xl font-bold text-white tracking-tight group-hover:tracking-normal transition-all duration-300">{value}</h3>
+                    <div className="flex items-baseline gap-1.5 mb-1">
+                        <h3 className="text-4xl font-bold text-white tracking-tight">{value}</h3>
                         {variant === 'blue' && <span className="text-zinc-500 text-sm font-medium">h</span>}
                     </div>
-                    <p className="text-zinc-500 text-xs font-medium">{subValue}</p>
+                    <p className="text-zinc-500 text-xs font-medium tracking-wide">{subValue}</p>
                 </div>
             </div>
 
