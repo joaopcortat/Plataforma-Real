@@ -215,6 +215,10 @@ export function Shell() {
                         <LogOut size={20} />
                         <span className="font-medium">Sair</span>
                     </button>
+
+                    <div className="mt-4 text-center">
+                        <span className="text-[10px] text-zinc-600 font-mono">v1.2 • Fase Realista</span>
+                    </div>
                 </div>
             </aside>
 
