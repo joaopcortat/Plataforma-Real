@@ -54,12 +54,7 @@ export function Shell() {
         { path: '/materials', icon: BookOpen, label: 'Materiais' },
     ];
 
-    const devItems = [
-        { path: '/performance', icon: BarChart2, label: 'Desempenho' },
-        { path: '/ranking', icon: Trophy, label: 'Ranking' },
-        { path: '/achievements', icon: Medal, label: 'Conquistas' },
-        { path: '/courses', icon: GraduationCap, label: 'Aulas' },
-    ];
+
 
     const handleLogout = async () => {
         await signOut();
@@ -157,14 +152,7 @@ export function Shell() {
                         </div>
                     </div>
 
-                    {/* 
-                    <div>
-                        <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2 px-4">Em Desenvolvimento</h3>
-                        <div className="space-y-1">
-                            {devItems.map(renderMenuItem)}
-                        </div>
-                    </div> 
-                    */}
+
                 </div>
 
                 <div className="p-4 border-t border-zinc-800">
