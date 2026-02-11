@@ -170,19 +170,8 @@ export function SimulationProgression({ history }: SimulationProgressionProps) {
         ];
     }, [history]);
 
-    if (history.length === 0) {
-        return (
-            <div className="flex flex-col items-center justify-center py-20 text-center bg-zinc-900/30 border border-zinc-800 rounded-2xl border-dashed min-h-[400px]">
-                <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center mb-4 text-zinc-600">
-                    <TrendingUp size={32} />
-                </div>
-                <h2 className="text-xl font-bold text-white mb-2">Sem dados de Progresso</h2>
-                <p className="text-zinc-400 max-w-md mb-6">
-                    Realize simulados ou registre seus resultados antigos para visualizar sua evolução aqui.
-                </p>
-            </div>
-        );
-    }
+    // Removed early return for empty history to show layout as requested
+    // if (history.length === 0) { ... }
 
     return (
         <div className="space-y-6 animate-in fade-in">
@@ -257,8 +246,8 @@ export function SimulationProgression({ history }: SimulationProgressionProps) {
                         <div className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-2">Média Geral</div>
                         <div className="text-3xl font-bold text-white">
                             {viewMode === 'redacao'
-                                ? Math.round(redacaoData.reduce((acc, curr) => acc + (curr.score || 0), 0) / (redacaoData.length || 1))
-                                : Math.round(history.reduce((acc, curr) => acc + curr.score, 0) / (history.length || 1)) // Crude average, refine later
+                                ? (redacaoData.length > 0 ? Math.round(redacaoData.reduce((acc, curr) => acc + (curr.score || 0), 0) / redacaoData.length) : 0)
+                                : (history.length > 0 ? Math.round(history.reduce((acc, curr) => acc + curr.score, 0) / history.length) : 0)
                             }
                         </div>
                         <div className="text-xs text-zinc-500 mt-2">
@@ -270,8 +259,8 @@ export function SimulationProgression({ history }: SimulationProgressionProps) {
                         <div className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-2">Melhor Performance</div>
                         <div className="text-3xl font-bold text-emerald-500">
                             {viewMode === 'redacao'
-                                ? Math.max(...redacaoData.map(h => h.score || 0), 0)
-                                : Math.max(...history.map(h => h.score), 0)
+                                ? (redacaoData.length > 0 ? Math.max(...redacaoData.map(h => h.score || 0), 0) : 0)
+                                : (history.length > 0 ? Math.max(...history.map(h => h.score), 0) : 0)
                             }
                         </div>
                     </div>
