@@ -2,14 +2,10 @@ import { useState, useEffect } from 'react';
 import {
     LayoutDashboard,
     Calendar,
-    BarChart2,
-    Trophy,
     LogOut,
     Menu,
     X,
     FileText,
-    GraduationCap,
-    Medal,
     Crown,
     BookOpen
 } from 'lucide-react';
