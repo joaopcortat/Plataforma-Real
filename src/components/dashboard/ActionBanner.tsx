@@ -1,5 +1,4 @@
 import { type LucideIcon, ArrowRight } from 'lucide-react';
-import clsx from 'clsx';
 
 interface ActionBannerProps {
     title: string;
@@ -8,12 +7,6 @@ interface ActionBannerProps {
     variant: 'blue' | 'green' | 'pink';
     onClick?: () => void;
 }
-
-const VARIANTS = {
-    blue: 'bg-blue-500',
-    green: 'bg-emerald-500',
-    pink: 'bg-pink-500'
-};
 
 export function ActionBanner({ title, description, icon: Icon, variant, onClick }: ActionBannerProps) {
     const variants = {

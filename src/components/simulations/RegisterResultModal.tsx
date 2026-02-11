@@ -24,7 +24,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
     const [humanas, setHumanas] = useState('');
     const [natureza, setNatureza] = useState('');
     const [matematica, setMatematica] = useState('');
-    const [redacao, setRedacao] = useState('');
+
     const [c1, setC1] = useState('');
     const [c2, setC2] = useState('');
     const [c3, setC3] = useState('');
@@ -43,7 +43,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
             setNatureza('');
             setMatematica('');
             setMatematica('');
-            setRedacao('');
+
             setC1('');
             setC2('');
             setC3('');

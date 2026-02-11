@@ -14,7 +14,7 @@ import {
     BookOpen
 } from 'lucide-react';
 import { GAMIFICATION } from '../lib/gamification';
-import { MOCK_DATA } from '../data/mock';
+
 import clsx from 'clsx';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 

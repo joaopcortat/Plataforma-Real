@@ -25,7 +25,8 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
             'História': 3,
             'Geografia': 3,
             'Português': 3,
-            'Filosofia/Sociologia': 3
+            'Filosofia/Sociologia': 3,
+            'Redação': 3
         },
         startDate: new Date()
     });

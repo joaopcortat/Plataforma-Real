@@ -104,7 +104,7 @@ export function Ranking() {
             {/* Podium (Only show if we have enough data and logic fits) */}
             {ranking.length >= 3 && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 items-end">
-                    {displayPodium.map((user, i) => {
+                    {displayPodium.map((user) => {
                         // Re-map index for visual podium: 2nd (left), 1st (center), 3rd (right)
                         // If using the filtered podiumUsers array: 0 is 2nd, 1 is 1st, 2 is 3rd.
                         const isFirst = user.position === 1;
@@ -154,7 +154,7 @@ export function Ranking() {
 
             {/* List */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
-                {ranking.map((user, i) => (
+                {ranking.map((user) => (
                     <div
                         key={user.id}
                         className={clsx(
