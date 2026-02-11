@@ -55,12 +55,14 @@ export function Shell() {
     ];
 
 
+    /*
     const devItems = [
         { path: '/performance', icon: BarChart2, label: 'Desempenho' },
         { path: '/ranking', icon: Trophy, label: 'Ranking' },
         { path: '/achievements', icon: Medal, label: 'Conquistas' },
         { path: '/courses', icon: GraduationCap, label: 'Aulas' },
     ];
+    */
 
     const handleLogout = async () => {
         await signOut();
