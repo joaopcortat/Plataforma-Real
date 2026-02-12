@@ -42,7 +42,7 @@ interface Task {
 }
 
 // Draggable Task Wrapper
-function SortableTask({ task, timeRange, duration, onToggle }: { task: Task, timeRange: string, duration: number, onToggle: (id: string, val: boolean) => void }) {
+function SortableTask({ task, timeRange, duration, onToggle, onDelete }: { task: Task, timeRange: string, duration: number, onToggle: (id: string, val: boolean) => void, onDelete: () => void }) {
     const {
         attributes,
         listeners,
@@ -64,6 +64,7 @@ function SortableTask({ task, timeRange, duration, onToggle }: { task: Task, tim
             <TaskCard
                 {...task}
                 onToggle={(completed) => onToggle(task.id, completed)}
+                onDelete={onDelete}
                 timeRange={timeRange}
                 duration={duration}
             />
@@ -345,23 +346,28 @@ export function Schedule() {
                                         items={dayTasks.map(t => t.id)}
                                         strategy={verticalListSortingStrategy}
                                     >
-                                        {dayTasks.map((task) => {
-                                            const durationMin = 90;
-                                            const startMin = currentMinutes;
-                                            const endMin = startMin + durationMin;
-                                            const startStr = `${Math.floor(startMin / 60).toString().padStart(2, '0')}:${(startMin % 60).toString().padStart(2, '0')}`;
-                                            const endStr = `${Math.floor(endMin / 60).toString().padStart(2, '0')}:${(endMin % 60).toString().padStart(2, '0')}`;
-                                            currentMinutes = endMin;
+                                        function handleDeleteTask(taskId: string) {
+                                                if (!confirm('Tem certeza que deseja excluir esta tarefa?')) return;
+                                                
+                                                setTasks(prev => prev.filter(t => t.id !== taskId));
+                                        supabase.from('schedule_tasks').delete().eq('id', taskId).then(({error}) => {
+                                                    if (error) {
+                                            console.error('Error deleting task:', error);
+                                        fetchTasks(); // Revert
+                                                    }
+                                                });
+                                            }
 
-                                            return (
-                                                <SortableTask
-                                                    key={task.id}
-                                                    task={task}
-                                                    timeRange={`${startStr} - ${endStr}`}
-                                                    duration={durationMin}
-                                                    onToggle={(id, val) => toggleTask(id, val)}
-                                                />
-                                            );
+                                        return (
+                                        <SortableTask
+                                            key={task.id}
+                                            task={task}
+                                            timeRange={`${startStr} - ${endStr}`}
+                                            duration={durationMin}
+                                            onToggle={(id, val) => toggleTask(id, val)}
+                                            onDelete={() => handleDeleteTask(task.id)}
+                                        />
+                                        );
                                         })}
                                     </SortableContext>
 
