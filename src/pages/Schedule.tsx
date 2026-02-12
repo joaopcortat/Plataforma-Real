@@ -161,6 +161,18 @@ export function Schedule() {
         }
     }
 
+    function handleDeleteTask(taskId: string) {
+        if (!confirm('Tem certeza que deseja excluir esta tarefa?')) return;
+
+        setTasks(prev => prev.filter(t => t.id !== taskId));
+        supabase.from('schedule_tasks').delete().eq('id', taskId).then(({ error }) => {
+            if (error) {
+                console.error('Error deleting task:', error);
+                fetchTasks(); // Revert
+            }
+        });
+    }
+
     function handleAddTask(date: Date) {
         setSelectedDate(date);
         setIsModalOpen(true);
