@@ -29,39 +29,49 @@ export function ENEMCountdown() {
             {/* Background Effects */}
             <div className={`absolute top-0 right-0 w-48 h-48 blur-[60px] rounded-full pointer-events-none transition-all duration-500 opacity-10 group-hover:opacity-20 ${timeLeft.weeks > 12 ? (timeLeft.weeks > 30 ? 'bg-emerald-600' : 'bg-blue-600') : 'bg-red-600'}`} />
 
-            <div className="relative z-10 flex flex-col items-center text-center">
-                {/* Header */}
-                <div className="flex items-center gap-2 mb-4">
-                    <div className={`p-2 rounded-xl ${phase.bg} ${phase.color} ring-1 ring-inset ring-white/10 group-hover:scale-110 transition-transform duration-500`}>
-                        <Timer size={18} />
-                    </div>
-                    <span className={`text-[10px] font-bold uppercase tracking-widest text-zinc-500 group-hover:text-zinc-300 transition-colors`}>
-                        {phase.label}
-                    </span>
-                </div>
+            <div className="relative z-10 flex flex-col items-center text-center justify-center min-h-[160px]">
 
-                {/* Main Counter */}
-                <div className="mb-2">
-                    <span className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500 tracking-tighter">
-                        {Math.max(0, timeLeft.weeks)}
-                    </span>
-                </div>
-
-                <span className="text-sm font-medium text-zinc-400 uppercase tracking-widest mb-6 px-4 py-1 bg-zinc-800/50 rounded-full border border-zinc-700/50">
-                    Semanas Restantes
+                {/* Header Text */}
+                <span className="text-sm font-bold text-zinc-500 tracking-[0.2em] uppercase mb-4">
+                    FALTAM
                 </span>
 
-                {/* Footer Details */}
-                <div className="w-full pt-4 border-t border-zinc-800/50 flex justify-between items-center text-xs">
-                    <div className="flex flex-col items-start gap-1">
-                        <span className="text-zinc-400 text-[10px] uppercase tracking-wider">Próximo Marco</span>
-                        <span className="text-white font-bold">1º Dia (08/11)</span>
+                {/* Main Counter Block */}
+                {/* Main Counter Block - Adjusted Layout */}
+                <div className="flex items-center justify-center gap-4 mb-2">
+
+                    {/* Weeks (Big) */}
+                    <div className="flex flex-col items-center">
+                        <span className="text-8xl font-black text-white tracking-tighter leading-none filter drop-shadow-2xl">
+                            {Math.max(0, timeLeft.weeks)}
+                        </span>
+                        <span className="text-xs font-bold text-zinc-500 uppercase tracking-[0.3em] mt-1">
+                            SEMANAS
+                        </span>
                     </div>
-                    <div className="flex flex-col items-end gap-1">
-                        <span className="text-zinc-600 text-[10px] uppercase tracking-wider">2º Dia</span>
-                        <span className="text-zinc-400">15/11</span>
+
+                    {/* Separator / 'e' */}
+                    {/* <span className="text-2xl font-light text-zinc-600 self-start mt-6">e</span> */}
+
+                    {/* Days (Detail) - Vertical Stack next to it */}
+                    <div className="flex flex-col items-start h-full justify-center pt-2 gap-1">
+                        <div className="flex items-baseline gap-1">
+                            <span className="text-xl text-zinc-500 font-light">e</span>
+                            <span className="text-3xl font-bold text-zinc-300">
+                                {timeLeft.days}
+                            </span>
+                        </div>
+                        <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest pl-1">
+                            DIAS
+                        </span>
                     </div>
                 </div>
+
+                {/* Footer Context */}
+                <span className="text-sm font-bold text-zinc-500 tracking-[0.2em] uppercase">
+                    PARA O ENEM
+                </span>
+
             </div>
         </div>
     );
