@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { differenceInWeeks, differenceInDays } from 'date-fns';
-import { Timer } from 'lucide-react';
 
 export function ENEMCountdown() {
     const [timeLeft, setTimeLeft] = useState<{ weeks: number; days: number }>({ weeks: 0, days: 0 });
