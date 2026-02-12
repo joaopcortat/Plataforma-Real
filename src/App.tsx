@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import { Shell } from './layouts/Shell';
 import { AuthLayout } from './layouts/AuthLayout';
-import { StudyProvider } from './contexts/StudyContext';
 import { StudyTimerProvider } from './contexts/StudyTimerContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import {
@@ -37,40 +36,39 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <StudyProvider>
-          <StudyTimerProvider>
-            <Routes>
-              {/* Public Routes (Login) */}
-              <Route element={<AuthLayout />}>
-                <Route element={<PublicRoute />}>
-                  <Route path="/login" element={<Login />} />
-                </Route>
+        <StudyTimerProvider>
+          <Routes>
+            {/* Public Routes (Login) */}
+            <Route element={<AuthLayout />}>
+              <Route element={<PublicRoute />}>
+                <Route path="/login" element={<Login />} />
               </Route>
+            </Route>
 
-              {/* Protected Routes (App) */}
-              <Route element={<PrivateRoute />}>
-                <Route element={<Shell />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/schedule" element={<Schedule />} />
-                  <Route path="/materials" element={<Materials />} />
-                  <Route path="/achievements" element={<Achievements />} />
+            {/* Protected Routes (App) */}
+            <Route element={<PrivateRoute />}>
+              <Route element={<Shell />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/schedule" element={<Schedule />} />
+                <Route path="/materials" element={<Materials />} />
+                <Route path="/achievements" element={<Achievements />} />
 
-                  {/* Non-MVP Routes -> Under Construction */}
-                  <Route path="/performance" element={<Performance />} />
-                  <Route path="/simulations" element={<Simulations />} />
-                  <Route path="/courses" element={<Courses />} />
-                  <Route path="/ranking" element={<Ranking />} />
-                  <Route path="/profile" element={<Profile />} />
-                </Route>
+                {/* Non-MVP Routes -> Under Construction */}
+                <Route path="/performance" element={<Performance />} />
+                <Route path="/simulations" element={<Simulations />} />
+                <Route path="/courses" element={<Courses />} />
+                <Route path="/ranking" element={<Ranking />} />
+                <Route path="/profile" element={<Profile />} />
               </Route>
+            </Route>
 
-              {/* Catch all */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </StudyTimerProvider>
-        </StudyProvider>
-      </AuthProvider>
-    </BrowserRouter>
+            {/* Catch all */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </StudyTimerProvider>
+      </StudyProvider>
+    </AuthProvider>
+    </BrowserRouter >
   );
 }
 
