@@ -265,7 +265,7 @@ export function Schedule() {
                         className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-500/20 mr-2 border border-indigo-400/30"
                     >
                         <Sparkles size={20} />
-                        Recalcular rota
+                        Gerar com IA
                     </button>
 
                     <button
@@ -349,15 +349,15 @@ export function Schedule() {
                                             const durationMin = 90;
                                             const startMin = currentMinutes;
                                             const endMin = startMin + durationMin;
-                                            // const startStr = `${Math.floor(startMin / 60).toString().padStart(2, '0')}:${(startMin % 60).toString().padStart(2, '0')}`;
-                                            // const endStr = `${Math.floor(endMin / 60).toString().padStart(2, '0')}:${(endMin % 60).toString().padStart(2, '0')}`;
+                                            const startStr = `${Math.floor(startMin / 60).toString().padStart(2, '0')}:${(startMin % 60).toString().padStart(2, '0')}`;
+                                            const endStr = `${Math.floor(endMin / 60).toString().padStart(2, '0')}:${(endMin % 60).toString().padStart(2, '0')}`;
                                             currentMinutes = endMin;
 
                                             return (
                                                 <SortableTask
                                                     key={task.id}
                                                     task={task}
-                                                    timeRange={`${durationMin} min`}
+                                                    timeRange={`${startStr} - ${endStr}`}
                                                     duration={durationMin}
                                                     onToggle={(id, val) => toggleTask(id, val)}
                                                 />

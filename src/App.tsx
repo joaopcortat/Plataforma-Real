@@ -66,9 +66,8 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </StudyTimerProvider>
-      </StudyProvider>
-    </AuthProvider>
-    </BrowserRouter >
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
