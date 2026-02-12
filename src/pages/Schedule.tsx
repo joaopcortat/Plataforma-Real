@@ -265,7 +265,7 @@ export function Schedule() {
                         className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-500/20 mr-2 border border-indigo-400/30"
                     >
                         <Sparkles size={20} />
-                        Gerar com IA
+                        Recalcular rota
                     </button>
 
                     <button
