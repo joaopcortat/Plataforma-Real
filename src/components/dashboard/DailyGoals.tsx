@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BookOpen, CheckCircle2, Plus, Settings, Save, X } from 'lucide-react';
+import { BookOpen, CheckCircle2, Plus, Settings, Save, X, Minus } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 interface DailyGoalType {
@@ -65,9 +65,11 @@ export function DailyGoals() {
         }
     }
 
-    async function incrementGoal(type: 'questions' | 'classes') {
+    async function updateGoalValue(type: 'questions' | 'classes', delta: number) {
         const field = type === 'questions' ? 'questions_done' : 'classes_done';
-        const newValue = goals[field] + 1;
+        const newValue = goals[field] + delta;
+
+        if (newValue < 0) return; // Prevention
 
         setGoals(prev => ({ ...prev, [field]: newValue }));
 
@@ -83,7 +85,7 @@ export function DailyGoals() {
                 .eq('date', today);
         } catch (error) {
             console.error('Error updating goal:', error);
-            setGoals(prev => ({ ...prev, [field]: prev[field] - 1 }));
+            setGoals(prev => ({ ...prev, [field]: prev[field] - delta }));
         }
     }
 
@@ -199,68 +201,74 @@ export function DailyGoals() {
                                 </div>
                             </div>
 
-                            <div className="flex items-end justify-between mb-2">
-                                <div className="flex items-baseline gap-1">
-                                    <span className="text-2xl font-bold text-white">{goal.current}</span>
-                                    <span className="text-sm text-zinc-500">/ </span>
-
-                                    {/* Editable Target */}
-                                    {isEditing ? (
-                                        <input
-                                            type="number"
-                                            value={goals[goal.targetField]}
-                                            onChange={(e) => setGoals(prev => ({ ...prev, [goal.targetField]: parseInt(e.target.value) || 0 }))}
-                                            className="w-12 bg-zinc-800 border border-zinc-700 text-white text-sm rounded px-1 text-center focus:outline-none focus:border-yellow-500"
-                                        />
-                                    ) : (
-                                        <span className="text-sm text-zinc-500">{goal.target}</span>
-                                    )}
-
-                                </div>
-                                {!isEditing && (
+                            {!isEditing && (
+                                <div className="flex gap-2">
                                     <button
-                                        onClick={() => incrementGoal(goal.id === 1 ? 'questions' : 'classes')}
+                                        onClick={() => {
+                                            const field = goal.id === 1 ? 'questions' : 'classes';
+                                            // Prevent negative
+                                            const currentVal = goal.current;
+                                            if (currentVal > 0) {
+                                                // We can reuse increment but with -1 logic, 
+                                                // but better to make a generic update function or just call increment with -1 if refactored.
+                                                // Let's refactor increment to updateGoal(value)
+                                                updateGoalValue(field, -1);
+                                            }
+                                        }}
+                                        className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 transition-all hover:scale-105 active:scale-95"
+                                        title="Remover -1"
+                                        disabled={goal.current <= 0}
+                                    >
+                                        <Minus size={16} />
+                                    </button>
+                                    <button
+                                        onClick={() => updateGoalValue(goal.id === 1 ? 'questions' : 'classes', 1)}
                                         className="p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-400 hover:text-white transition-all hover:scale-105 active:scale-95"
                                         title="Adicionar +1"
                                     >
                                         <Plus size={16} />
                                     </button>
-                                )}
-                            </div>
-
-                            {/* Progress Bar only shown when NOT editing to keep UI clean */}
-                            {!isEditing && (
-                                <div className="h-1.5 w-full bg-zinc-800/50 rounded-full overflow-hidden">
-                                    <div
-                                        className={`h-full ${goal.color} transition-all duration-1000 ease-out`}
-                                        style={{ width: `${Math.min(percentage, 100)}%` }}
-                                    />
                                 </div>
                             )}
                         </div>
-                    );
-                })}
-            </div>
 
-            {/* Tasks / Topics List */}
-            {goals.tasks && goals.tasks.length > 0 && (
-                <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-2xl p-5">
-                    <h4 className="text-sm font-bold text-zinc-400 mb-3 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                        Tópicos Estudados Hoje
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                        {goals.tasks.map((task, index) => (
-                            <span
-                                key={index}
-                                className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-300 font-medium"
-                            >
-                                {task}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            )}
+                            {/* Progress Bar only shown when NOT editing to keep UI clean */ }
+                    {
+                        !isEditing && (
+                            <div className="h-1.5 w-full bg-zinc-800/50 rounded-full overflow-hidden">
+                                <div
+                                    className={`h-full ${goal.color} transition-all duration-1000 ease-out`}
+                                    style={{ width: `${Math.min(percentage, 100)}%` }}
+                                />
+                            </div>
+                        )
+                    }
+                        </div>
+            );
+                })}
         </div>
+
+            {/* Tasks / Topics List */ }
+    {
+        goals.tasks && goals.tasks.length > 0 && (
+            <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-2xl p-5">
+                <h4 className="text-sm font-bold text-zinc-400 mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    Tópicos Estudados Hoje
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                    {goals.tasks.map((task, index) => (
+                        <span
+                            key={index}
+                            className="px-3 py-1.5 rounded-lg bg-zinc-800/50 border border-zinc-700/50 text-xs text-zinc-300 font-medium"
+                        >
+                            {task}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+        </div >
     );
 }
