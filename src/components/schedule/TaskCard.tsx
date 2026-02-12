@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { Clock } from 'lucide-react';
+import { Clock, Trash2 } from 'lucide-react';
 
 interface TaskCardProps {
     subject: string;
     title: string;
     completed: boolean;
     onToggle?: (completed: boolean) => void;
-    timeRange?: string; // e.g. "08:00 - 09:30"
-    duration?: number;  // in minutes, for height calculation/display
+    onDelete?: () => void;
+    timeRange?: string; // e.g. "08:00 - 09:30" - Kept for compatibility but not displayed
+    duration?: number;  // in minutes
 }
 
 // Color mapping based on the reference image vibe
@@ -30,7 +31,7 @@ const SUBJECT_COLORS: Record<string, string> = {
 
 const DEFAULT_COLOR = 'border-zinc-500 text-zinc-500 bg-zinc-500/10';
 
-export function TaskCard({ subject, title, completed, onToggle, timeRange, duration = 90 }: TaskCardProps) {
+export function TaskCard({ subject, title, completed, onToggle, onDelete, timeRange, duration = 90 }: TaskCardProps) {
     const [isCompleted, setIsCompleted] = useState(completed);
 
     const handleToggle = () => {
@@ -45,7 +46,6 @@ export function TaskCard({ subject, title, completed, onToggle, timeRange, durat
     const [borderColor, textColor, _bgColor] = colorClass.split(' ');
 
     // Google Agenda Style: Height is proportional to duration
-    // We use minHeight to ensure it doesn't collapse if content is small, but allows expanding.
     const minHeight = `${Math.max(duration, 60)}px`;
 
     return (
@@ -66,13 +66,29 @@ export function TaskCard({ subject, title, completed, onToggle, timeRange, durat
                     {subject}
                 </span>
 
-                <div className={clsx(
-                    "w-3.5 h-3.5 rounded border-2 flex items-center justify-center transition-colors shrink-0",
-                    isCompleted
-                        ? clsx("bg-current border-transparent", textColor)
-                        : "border-zinc-600 group-hover:border-zinc-500 bg-transparent"
-                )}>
-                    {isCompleted && <div className="w-1.5 h-1.5 bg-black rounded-sm" />}
+                <div className="flex items-center gap-2">
+                    {/* Delete Button (Veiled) */}
+                    {onDelete && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete();
+                            }}
+                            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-zinc-500 hover:text-red-500 rounded"
+                            title="Excluir bloco"
+                        >
+                            <Trash2 size={12} />
+                        </button>
+                    )}
+
+                    <div className={clsx(
+                        "w-3.5 h-3.5 rounded border-2 flex items-center justify-center transition-colors shrink-0",
+                        isCompleted
+                            ? clsx("bg-current border-transparent", textColor)
+                            : "border-zinc-600 group-hover:border-zinc-500 bg-transparent"
+                    )}>
+                        {isCompleted && <div className="w-1.5 h-1.5 bg-black rounded-sm" />}
+                    </div>
                 </div>
             </div>
 
@@ -84,15 +100,11 @@ export function TaskCard({ subject, title, completed, onToggle, timeRange, durat
                 {title}
             </p>
 
-            {/* Footer: Time Range */}
-            {timeRange && (
-                <div className="flex items-center gap-1 text-[9px] text-zinc-500 font-bold mt-2 pt-2 border-t border-white/5 uppercase tracking-wide">
-                    <Clock size={10} />
-                    <span>{timeRange}</span>
-                    <span className="opacity-50 mx-1">•</span>
-                    <span>{duration} min</span>
-                </div>
-            )}
+            {/* Footer: Duration Only */}
+            <div className="flex items-center gap-1 text-[9px] text-zinc-500 font-bold mt-2 pt-2 border-t border-white/5 uppercase tracking-wide">
+                <Clock size={10} />
+                <span>{duration} min</span>
+            </div>
         </div>
     );
 }
