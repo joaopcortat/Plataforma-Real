@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { MetricCard } from '../components/dashboard/MetricCard';
 import { ActionBanner } from '../components/dashboard/ActionBanner';
 import { DailyGoals } from '../components/dashboard/DailyGoals';
-import { CompetencyRadar } from '../components/dashboard/CompetencyRadar';
 import { ENEMCountdown } from '../components/dashboard/ENEMCountdown';
 import { ManualStudyEntryModal } from '../components/dashboard/ManualStudyEntryModal';
 import { CheckCircle2, FileText, Play, Plus, BookOpen, Clock } from 'lucide-react';
@@ -144,10 +143,9 @@ export function Dashboard() {
                     </div>
                 </div>
 
-                {/* Sidebar Area (1 col) - Countdown & Radar */}
+                {/* Sidebar Area (1 col) - Countdown */}
                 <div className="lg:col-span-1 space-y-6">
                     <ENEMCountdown />
-                    <CompetencyRadar />
                 </div>
             </div>
 

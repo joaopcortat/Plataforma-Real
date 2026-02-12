@@ -1,273 +1,238 @@
-import { SYLLABUS, type Subject } from './syllabus';
-import { addDays, format } from 'date-fns';
+import { SYLLABUS, type Subject, type Topic } from './syllabus';
+import { addDays, format, getDay } from 'date-fns';
 
+// ─── Public Types ────────────────────────────────────────
 export interface UserPreferences {
     hoursPerDay: {
-        weekdays: number; // Mon-Fri
-        weekend: number;  // Sat-Sun
+        weekdays: number;
+        weekend: number;
     };
-    proficiency: Record<Subject, number>; // 1 (Bad) to 5 (Good)
+    proficiency: Record<Subject, number>; // 1–5
     startDate: Date;
+    focusCourse?: 'Medicina' | 'Engenharia' | 'Direito' | 'Geral';
 }
 
 export interface GeneratedTask {
-    date: string; // YYYY-MM-DD
+    date: string;          // YYYY-MM-DD
     subject: Subject;
     title: string;
     type: 'class' | 'exercise' | 'review' | 'simulation';
     is_ia_generated: boolean;
 }
 
-/**
- * Generates a schedule based on Proficiency and Importance.
- * Algorithm:
- * 1. Calculate Priority Score: (6 - Proficiency) + ImportanceBonus
- * 2. Sort all topics by Score.
- * 3. Distribute into available slots.
- */
-// Helper to identify phase
-function getPhase(date: Date): 'foundation' | 'consolidation' {
-    const month = date.getMonth(); // 0 = Jan, 1 = Feb, ..., 5 = June, 8 = Sept
-    if (month >= 1 && month <= 4) return 'foundation'; // Feb - May
-    return 'consolidation'; // June onwards
+// ─── Constants ───────────────────────────────────────────
+const BLOCK_CLASS = 60;   // minutes for a theory block
+const BLOCK_EXERCISE = 45;   // minutes for a fixation block
+const BLOCK_REVIEW = 20;   // minutes for a spaced-review
+const BLOCK_REDACAO = 90;   // minutes for weekly essay
+const MAX_SUBJECTS_DAY = 4;   // max distinct subjects per day
+
+// ─── Scoring ─────────────────────────────────────────────
+function scoreOf(topic: Topic, prefs: UserPreferences): number {
+    let s = 0;
+    s += (4 - topic.tier) * 200;                                         // Tier weight
+    s += (6 - (prefs.proficiency[topic.subject] || 3)) * 30;            // Low prof → high score
+    if (prefs.focusCourse === 'Medicina') {
+        if (['Matemática', 'Física', 'Química', 'Biologia'].includes(topic.subject)) s += 80;
+    }
+    if (topic.category === 'Basics') s += 20;
+    return s;
 }
 
+// ─── Main Generator ──────────────────────────────────────
 export function generateSchedule(prefs: UserPreferences): GeneratedTask[] {
     const tasks: GeneratedTask[] = [];
 
-    // --- 1. Graph Setup ---
-    const topicMap = new Map(SYLLABUS.map(t => [t.id, t]));
-    const dependents = new Map<string, string[]>(); // topicId -> [dependentIds]
-    const inDegree = new Map<string, number>(); // topicId -> count of unmet prereqs
+    // ── 1. Build Dependency Graph ────────────────────────
+    const topicMap = new Map<string, Topic>();
+    const dependents = new Map<string, string[]>();
+    const inDegree = new Map<string, number>();
+    const remaining = new Map<string, number>();      // minutes left per topic
 
-    // Initialize
-    SYLLABUS.forEach(t => {
-        inDegree.set(t.id, 0);
+    for (const t of SYLLABUS) {
+        topicMap.set(t.id, t);
         dependents.set(t.id, []);
-    });
+        inDegree.set(t.id, 0);
 
-    // Build Graph
-    SYLLABUS.forEach(topic => {
-        topic.prerequisites.forEach(prereqId => {
-            if (topicMap.has(prereqId)) {
-                dependents.get(prereqId)?.push(topic.id);
-                inDegree.set(topic.id, (inDegree.get(topic.id) || 0) + 1);
-            }
-        });
-    });
+        const prof = prefs.proficiency[t.subject] || 3;
+        const mult = prof <= 2 ? 1.3 : 1.0;
+        remaining.set(t.id, Math.ceil(t.estimatedMinutes * mult));
+    }
 
-    // --- 2. Scoring Helper ---
-    const importanceWeight: Record<string, number> = {
-        'Very High': 5,
-        'High': 4,
-        'Medium': 3,
-        'Low': 2
-    };
-
-    const getTopicScore = (topicId: string, currentPhase: 'foundation' | 'consolidation') => {
-        const topic = topicMap.get(topicId)!;
-        const prof = prefs.proficiency[topic.subject] || 3;
-
-        // Base Score: Proficiency impact
-        // Lower proficiency = Higher need
-        const proficiencyScore = (6 - prof) * 2;
-        const impactScore = importanceWeight[topic.importance];
-
-        let score = proficiencyScore + impactScore;
-
-        // Phase Tuning
-        if (currentPhase === 'foundation') {
-            // Boost "Basic" or "Foundation" categories
-            if (topic.category === 'Basics' || topic.category === 'Física' || topic.category === 'Química' || topic.category === 'Biologia') {
-                // Slightly boost basics to ensure we clear them
-                if (topic.category === 'Basics') score += 5;
+    for (const t of SYLLABUS) {
+        for (const prereq of t.prerequisites) {
+            if (topicMap.has(prereq)) {
+                dependents.get(prereq)!.push(t.id);
+                inDegree.set(t.id, (inDegree.get(t.id) || 0) + 1);
             }
         }
+    }
 
-        return score;
-    };
+    // ── 2. Initialize Available Queue ────────────────────
+    //    All topics with 0 in-degree are ready
+    const available = new Set<string>();
+    for (const t of SYLLABUS) {
+        if ((inDegree.get(t.id) || 0) === 0) available.add(t.id);
+    }
 
-    // --- 3. Available Queue ---
-    // Topics with inDegree 0
-    let availableQueue: string[] = SYLLABUS
-        .filter(t => (inDegree.get(t.id) || 0) === 0)
-        .map(t => t.id);
+    const completed = new Set<string>();
 
-    const processedTopics = new Set<string>();
-    const completedTopics = new Set<string>(); // For review logic later
+    // ── 3. Spaced Reviews ────────────────────────────────
+    const reviews = new Map<string, GeneratedTask[]>();
+    function addReview(d: Date, task: GeneratedTask) {
+        const k = format(d, 'yyyy-MM-dd');
+        if (!reviews.has(k)) reviews.set(k, []);
+        reviews.get(k)!.push(task);
+    }
 
-    // --- 4. Scheduling Loop (Feb -> Sept 30) ---
-    let currentDate = new Date(prefs.startDate);
-    const endOfYear = new Date(currentDate.getFullYear(), 8, 30); // Sept 30 (Month is 0-indexed: 8=Sept)
+    // ── 4. Day-by-Day Scheduling ─────────────────────────
+    let cur = new Date(prefs.startDate);
+    const deadline = new Date(cur.getFullYear(), 9, 15);   // Oct 15
+    const MAX_DAYS = 365;
 
-    // Safety break
-    const MAX_DAYS = 300;
-    let dayCount = 0;
+    for (let d = 0; d < MAX_DAYS; d++) {
+        if (cur > deadline) break;
+        if (completed.size >= SYLLABUS.length && available.size === 0) break;
 
-    while (currentDate <= endOfYear && dayCount < MAX_DAYS) {
-        dayCount++;
+        const dateKey = format(cur, 'yyyy-MM-dd');
+        const dow = getDay(cur);                       // 0 = Sun
+        const isWknd = dow === 0 || dow === 6;
+        const budget = (isWknd ? prefs.hoursPerDay.weekend : prefs.hoursPerDay.weekdays) * 60;
+        let used = 0;
+        const subjectsToday = new Set<Subject>();
+        let lastSubj: Subject | null = null;
 
-        // Stop if no more topics AND we are just filling with reviews (optional, but let's keep filling)
-        // Actually user wants "June - Sept igualar conteúdo com questões"
-        // If we run out of content, we should just do exercises/reviews.
+        // helper: can I fit X more minutes?
+        const fits = (mins: number) => used + mins <= budget;
 
-        const isWeekend = currentDate.getDay() === 0 || currentDate.getDay() === 6;
-        const hoursAvailable = isWeekend ? prefs.hoursPerDay.weekend : prefs.hoursPerDay.weekdays;
-        let minutesLeft = hoursAvailable * 60;
+        // ─ A) Sunday Redação ─
+        if (dow === 0 && fits(BLOCK_REDACAO)) {
+            tasks.push({ date: dateKey, subject: 'Redação', title: 'Produção Textual Semanal', type: 'simulation', is_ia_generated: true });
+            used += BLOCK_REDACAO;
+            subjectsToday.add('Redação');
+            lastSubj = 'Redação';
+        }
 
-        const phase = getPhase(currentDate);
+        // ─ B) Scheduled Reviews ─
+        const todayRevs = reviews.get(dateKey) || [];
+        for (const rev of todayRevs) {
+            if (!fits(BLOCK_REVIEW)) break;
+            tasks.push(rev);
+            used += BLOCK_REVIEW;
+            subjectsToday.add(rev.subject);
+        }
+        reviews.delete(dateKey);
 
-        // --- Weekly Essay (Force on Sundays) ---
-        if (currentDate.getDay() === 0) { // Sunday
+        // ─ C) Fill with New Content ─
+        let iters = 0;
+        while (fits(BLOCK_CLASS) && iters < 30) {
+            iters++;
+
+            // Sort available by score
+            const sorted = Array.from(available)
+                .map(id => ({ id, topic: topicMap.get(id)!, score: scoreOf(topicMap.get(id)!, prefs) }))
+                .sort((a, b) => b.score - a.score);
+
+            if (sorted.length === 0) break;
+
+            // Pick candidate: prefer a different subject from lastSubj,
+            // AND check subject count limit
+            let pick: typeof sorted[0] | null = null;
+
+            // Pass 1: different subject, not at limit
+            for (const c of sorted) {
+                if (c.topic.subject !== lastSubj && subjectsToday.size < MAX_SUBJECTS_DAY) {
+                    pick = c;
+                    break;
+                }
+                if (c.topic.subject !== lastSubj && subjectsToday.has(c.topic.subject)) {
+                    pick = c;
+                    break;
+                }
+            }
+
+            // Pass 2: same subject is ok
+            if (!pick) {
+                for (const c of sorted) {
+                    if (subjectsToday.has(c.topic.subject) || subjectsToday.size < MAX_SUBJECTS_DAY) {
+                        pick = c;
+                        break;
+                    }
+                }
+            }
+
+            // Pass 3: just take the first one
+            if (!pick) pick = sorted[0];
+
+            const topic = pick.topic;
+            const topicId = pick.id;
+            const rem = remaining.get(topicId) || 0;
+
+            // How much time for this block?
+            const blockTime = Math.min(BLOCK_CLASS, rem, budget - used);
+            if (blockTime < 20) break;   // not worth it
+
+            // ── Add Theory Task ──
             tasks.push({
-                date: format(currentDate, 'yyyy-MM-dd'),
-                subject: 'Redação',
-                title: 'Produção de Redação Semanal',
-                type: 'simulation',
-                is_ia_generated: true
+                date: dateKey,
+                subject: topic.subject,
+                title: topic.title,
+                type: 'class',
+                is_ia_generated: true,
             });
-            minutesLeft -= 90;
-        }
+            used += blockTime;
+            subjectsToday.add(topic.subject);
+            lastSubj = topic.subject;
 
-        // Determine Strategy based on Phase
-        // Phase 1: Mostly Theory (Classes), minimal exercises.
-        // Phase 2: Theory + Exercises (1:1).
+            // Update remaining
+            const newRem = rem - blockTime;
+            remaining.set(topicId, newRem);
 
-        // Sort queue for current phase preference
-        availableQueue.sort((a, b) => getTopicScore(b, phase) - getTopicScore(a, phase));
+            // ── Topic Complete? ──
+            if (newRem <= 0) {
+                available.delete(topicId);
+                completed.add(topicId);
 
-        let lastSubject: string | null = null;
-
-        while (minutesLeft >= 45) {
-            // Interleaving Logic
-            const candidateWindow = 6;
-            let selectedIndex = -1;
-
-            // Try to find a topic in availableQueue
-            if (availableQueue.length > 0) {
-                selectedIndex = 0; // Default to top
-                if (lastSubject) {
-                    for (let i = 0; i < Math.min(candidateWindow, availableQueue.length); i++) {
-                        const tId = availableQueue[i];
-                        const t = topicMap.get(tId)!;
-                        if (t.subject !== lastSubject) {
-                            selectedIndex = i;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            // If we have a topic to study
-            if (selectedIndex !== -1) {
-                const topicId = availableQueue.splice(selectedIndex, 1)[0];
-                const topic = topicMap.get(topicId)!;
-
-                lastSubject = topic.subject;
-                processedTopics.add(topicId);
-                completedTopics.add(topicId);
-
-                // Time Clalc
-                const prof = prefs.proficiency[topic.subject] || 3;
-                // In phase 1, we might spend more time on theory to be solid
-                const timeMultiplier = prof <= 2 ? 1.5 : 1.0;
-                const actualMinutes = Math.ceil(topic.estimatedMinutes * timeMultiplier);
-
-                // Create Theory Blocks
-                let remainingDuration = actualMinutes;
-                let blockCount = 1;
-
-                while (remainingDuration > 0 && minutesLeft >= 30) {
-                    const maxBlock = 90;
-                    let duration = Math.min(remainingDuration, maxBlock);
-                    if (duration > minutesLeft) duration = minutesLeft;
-
-                    tasks.push({
-                        date: format(currentDate, 'yyyy-MM-dd'),
-                        subject: topic.subject,
-                        title: blockCount > 1 ? `${topic.title} (Parte ${blockCount})` : topic.title,
-                        type: 'class',
-                        is_ia_generated: true
-                    });
-
-                    remainingDuration -= duration;
-                    minutesLeft -= duration;
-                    blockCount++;
-                }
-
-                // Unlock Dependents immediately
-                const children = dependents.get(topicId) || [];
-                children.forEach(childId => {
-                    const currentInDegree = inDegree.get(childId) || 0;
-                    inDegree.set(childId, currentInDegree - 1);
-                    if (currentInDegree - 1 === 0) {
-                        availableQueue.push(childId);
-                    }
-                });
-
-                // Exercises Logic based on Phase
-                if (minutesLeft >= 30) {
-                    if (phase === 'foundation') {
-                        // Phase 1: Only small fixating exercise if we have time, NOT mandatory 1:1
-                        // Let's add a small block if we have decent time left (e.g. > 45m)
-                        if (minutesLeft >= 45) {
-                            tasks.push({
-                                date: format(currentDate, 'yyyy-MM-dd'),
-                                subject: topic.subject,
-                                title: `Fixação: ${topic.title}`,
-                                type: 'exercise',
-                                is_ia_generated: true
-                            });
-                            minutesLeft -= 45;
-                        }
-                    } else {
-                        // Phase 2: "Igualar conteúdo com questões"
-                        // Aggressively add exercise block
+                // Exercise block
+                if (fits(BLOCK_EXERCISE)) {
+                    const exTime = Math.min(BLOCK_EXERCISE, budget - used);
+                    if (exTime >= 20) {
                         tasks.push({
-                            date: format(currentDate, 'yyyy-MM-dd'),
+                            date: dateKey,
                             subject: topic.subject,
-                            title: `Exercícios Práticos: ${topic.title}`,
+                            title: `Fixação: ${topic.title}`,
                             type: 'exercise',
-                            is_ia_generated: true
+                            is_ia_generated: true,
                         });
-                        minutesLeft -= 60; // Dedicate a solid hour
+                        used += exTime;
                     }
                 }
 
-            } else {
-                // No new topics available (caught up or finished syllabus)
-                // Fill with Reviews or Exercises from COMPLETED topics
-
-                // Pick a random completed topic to review
-                if (completedTopics.size > 0 && minutesLeft >= 45) {
-                    const completedArray = Array.from(completedTopics);
-                    // Prefer topics from weak subjects? For now random from completed.
-                    const randomTopicId = completedArray[Math.floor(Math.random() * completedArray.length)];
-                    const topic = topicMap.get(randomTopicId)!;
-
-                    if (topic.subject !== lastSubject) {
-                        tasks.push({
-                            date: format(currentDate, 'yyyy-MM-dd'),
-                            subject: topic.subject,
-                            title: `Revisão/Questões: ${topic.title}`,
-                            type: 'review',
-                            is_ia_generated: true
-                        });
-                        minutesLeft -= 60;
-                        lastSubject = topic.subject;
-                    } else {
-                        // Force break to avoid infinite loop if only 1 subject done
-                        if (minutesLeft < 60) break;
+                // Unlock dependents
+                for (const childId of (dependents.get(topicId) || [])) {
+                    const deg = (inDegree.get(childId) || 1) - 1;
+                    inDegree.set(childId, deg);
+                    if (deg <= 0 && !completed.has(childId) && !available.has(childId)) {
+                        available.add(childId);
                     }
-                } else {
-                    break; // Nothing to do
+                }
+
+                // Schedule spaced reviews (D+1, D+7, D+30)
+                for (const [offset, label] of [[1, 'Revisão D+1'], [7, 'Revisão D+7'], [30, 'Revisão D+30']] as [number, string][]) {
+                    const rd = addDays(cur, offset);
+                    addReview(rd, {
+                        date: format(rd, 'yyyy-MM-dd'),
+                        subject: topic.subject,
+                        title: `${label}: ${topic.title}`,
+                        type: 'review',
+                        is_ia_generated: true,
+                    });
                 }
             }
+            // If topic not complete, it stays in `available` and will be picked up next day
         }
 
-        currentDate = addDays(currentDate, 1);
-        // Resort provided queue for next day
-        availableQueue.sort((a, b) => getTopicScore(b, phase) - getTopicScore(a, phase));
+        cur = addDays(cur, 1);
     }
 
     return tasks;

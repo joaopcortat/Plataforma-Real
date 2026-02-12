@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, Plus, Sparkles } from 'lucide-react';
 import clsx from 'clsx';
 import { TaskCard } from '../components/schedule/TaskCard';
@@ -7,8 +7,6 @@ import { GeneratorWizard } from '../components/schedule/generator/GeneratorWizar
 import { format, addDays, startOfWeek, isSameDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { supabase } from '../lib/supabase';
-
-// DnD Imports
 import {
     DndContext,
     DragOverlay,
@@ -72,8 +70,8 @@ function SortableTask({ task, timeRange, duration, onToggle, onDelete }: { task:
     );
 }
 
-// Droppable Day Container
-function DroppableDay({ date, children, isToday, loading }: { date: string, children: React.ReactNode, isToday: boolean, loading: boolean }) {
+// Memoized Droppable Day Container
+const DroppableDay = React.memo(function DroppableDay({ date, children, isToday, loading }: { date: string, children: React.ReactNode, isToday: boolean, loading: boolean }) {
     const { setNodeRef } = useSortable({
         id: date,
         data: { type: 'day', date }
@@ -91,7 +89,98 @@ function DroppableDay({ date, children, isToday, loading }: { date: string, chil
             {children}
         </div>
     );
-}
+});
+
+// Memoized Day Column
+const DayColumn = React.memo(function DayColumn({
+    day,
+    isToday,
+    dateKey,
+    tasks,
+    loading,
+    onAddTask,
+    onToggleTask,
+    onDeleteTask
+}: {
+    day: Date,
+    isToday: boolean,
+    dateKey: string,
+    tasks: Task[],
+    loading: boolean,
+    onAddTask: (date: Date) => void,
+    onToggleTask: (id: string, val: boolean) => void,
+    onDeleteTask: (id: string) => void
+}) {
+    let currentMinutes = 8 * 60; // Start at 8:00 AM
+
+    // Duration by task type
+    const durationFor = (type: string) => {
+        switch (type) {
+            case 'class': return 60;
+            case 'exercise': return 45;
+            case 'review': return 20;
+            case 'simulation': return 90;
+            default: return 60;
+        }
+    };
+
+    return (
+        <DroppableDay date={dateKey} isToday={isToday} loading={loading}>
+            {/* Day Header */}
+            <div className={clsx(
+                "text-center py-4 border-b border-zinc-800",
+                isToday ? "bg-indigo-500/10" : "bg-zinc-900"
+            )}>
+                <div className="text-xs font-medium uppercase text-zinc-500 mb-1">
+                    {format(day, 'EEE', { locale: ptBR })}
+                </div>
+                <div className={clsx(
+                    "text-2xl font-bold flex justify-center items-center mx-auto w-10 h-10 rounded-full",
+                    isToday ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/25" : "text-zinc-400"
+                )}>
+                    {format(day, 'd')}
+                </div>
+            </div>
+
+            {/* Sortable Area */}
+            <div className="flex-1 p-2 space-y-2 relative">
+                <SortableContext
+                    items={tasks.map(t => t.id)}
+                    strategy={verticalListSortingStrategy}
+                >
+                    {tasks.map((task) => {
+                        const durationMin = durationFor(task.type);
+                        const startMin = currentMinutes;
+                        const endMin = startMin + durationMin;
+                        const startStr = `${Math.floor(startMin / 60).toString().padStart(2, '0')}:${(startMin % 60).toString().padStart(2, '0')}`;
+                        const endStr = `${Math.floor(endMin / 60).toString().padStart(2, '0')}:${(endMin % 60).toString().padStart(2, '0')}`;
+                        currentMinutes = endMin;
+
+                        return (
+                            <SortableTask
+                                key={task.id}
+                                task={task}
+                                timeRange={`${startStr} - ${endStr}`}
+                                duration={durationMin}
+                                onToggle={onToggleTask}
+                                onDelete={() => onDeleteTask(task.id)}
+                            />
+                        );
+                    })}
+                </SortableContext>
+
+                {/* Add Button */}
+                <button
+                    onClick={() => onAddTask(day)}
+                    className="w-full py-3 rounded-lg border border-dashed border-zinc-800 flex items-center justify-center text-zinc-600 hover:text-zinc-400 hover:border-zinc-600 transition-all gap-2 text-xs font-medium mt-4 group"
+                >
+                    <Plus size={14} className="group-hover:scale-110 transition-transform" />
+                    Adicionar
+                </button>
+            </div>
+        </DroppableDay>
+    );
+});
 
 export function Schedule() {
     const [currentDate, setCurrentDate] = useState(new Date());
@@ -102,14 +191,14 @@ export function Schedule() {
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [activeId, setActiveId] = useState<string | null>(null);
 
-    const startOfCurrentWeek = startOfWeek(currentDate, { weekStartsOn: 0 });
-    const weekDays = Array.from({ length: 7 }, (_, i) => addDays(startOfCurrentWeek, i));
+    const startOfCurrentWeek = useMemo(() => startOfWeek(currentDate, { weekStartsOn: 0 }), [currentDate]);
+    const weekDays = useMemo(() => Array.from({ length: 7 }, (_, i) => addDays(startOfCurrentWeek, i)), [startOfCurrentWeek]);
 
     // DnD Sensors
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
-                distance: 8, // Require 8px movement to start drag, preventing accidental drags
+                distance: 8,
             },
         }),
         useSensor(KeyboardSensor, {
@@ -117,11 +206,8 @@ export function Schedule() {
         })
     );
 
-    useEffect(() => {
-        fetchTasks();
-    }, [currentDate]);
-
-    async function fetchTasks() {
+    // Handlers
+    const fetchTasks = useCallback(async () => {
         try {
             setLoading(true);
             const { data: { user } } = await supabase.auth.getUser();
@@ -149,9 +235,13 @@ export function Schedule() {
         } finally {
             setTimeout(() => setLoading(false), 300);
         }
-    }
+    }, [weekDays]);
 
-    async function toggleTask(taskId: string, completed: boolean) {
+    useEffect(() => {
+        fetchTasks();
+    }, [fetchTasks]);
+
+    const toggleTask = useCallback(async (taskId: string, completed: boolean) => {
         setTasks(prev => prev.map(t => t.id === taskId ? { ...t, completed } : t));
         try {
             await supabase.from('schedule_tasks').update({ completed }).eq('id', taskId);
@@ -159,9 +249,9 @@ export function Schedule() {
             console.error('Error updating task:', error);
             fetchTasks();
         }
-    }
+    }, [fetchTasks]);
 
-    function handleDeleteTask(taskId: string) {
+    const handleDeleteTask = useCallback((taskId: string) => {
         if (!confirm('Tem certeza que deseja excluir esta tarefa?')) return;
 
         setTasks(prev => prev.filter(t => t.id !== taskId));
@@ -171,20 +261,20 @@ export function Schedule() {
                 fetchTasks(); // Revert
             }
         });
-    }
+    }, [fetchTasks]);
 
-    function handleAddTask(date: Date) {
+    const handleAddTask = useCallback((date: Date) => {
         setSelectedDate(date);
         setIsModalOpen(true);
-    }
+    }, []);
 
     // --- DnD Handlers ---
 
-    function handleDragStart(event: DragStartEvent) {
+    const handleDragStart = useCallback((event: DragStartEvent) => {
         setActiveId(event.active.id as string);
-    }
+    }, []);
 
-    function handleDragOver(event: DragOverEvent) {
+    const handleDragOver = useCallback((event: DragOverEvent) => {
         const { active, over } = event;
         if (!over) return;
 
@@ -220,30 +310,19 @@ export function Schedule() {
                 return [...items]; // Trigger re-render
             });
         }
-    }
+    }, [tasks, weekDays]);
 
-    function handleDragEnd(event: DragEndEvent) {
+    const handleDragEnd = useCallback((event: DragEndEvent) => {
         const { active, over } = event;
         setActiveId(null);
 
         if (!over) return;
 
         const activeId = active.id as string;
-        // const overId = over.id as string;
 
-        const activeTask = tasks.find(t => t.id === activeId);
-        if (!activeTask) return;
-
-        // Persist change to Supabase
-        // Determine new date based on where it was dropped
-        // If dropped on a task, it takes that task's date. If dropped on a day, it takes that day's date.
-        // Since we updated state in DragOver (optimistically), we just need to save the final state of the active task.
-
-        // Wait allow React state to settle if needed, but activeTask might be stale from closure?
-        // Actually, we should look at the *current* state of the task in the list, or rely on the `over` data.
-
-        // Simplest: Just save the activeTask's date from the 'tasks' state which was updated in DragOver
+        // Just find the task in current 'tasks' list (which should have the new date).
         const finalTask = tasks.find(t => t.id === activeId);
+
         if (finalTask) {
             supabase
                 .from('schedule_tasks')
@@ -253,15 +332,15 @@ export function Schedule() {
                     if (error) console.error('Error saving move:', error);
                 });
         }
-    }
+    }, [tasks]);
 
 
     // Group tasks by date for rendering
-    const tasksByDate = weekDays.reduce((acc, day) => {
+    const tasksByDate = useMemo(() => weekDays.reduce((acc, day) => {
         const dateKey = format(day, 'yyyy-MM-dd');
         acc[dateKey] = tasks.filter(task => task.date === dateKey);
         return acc;
-    }, {} as Record<string, Task[]>);
+    }, {} as Record<string, Task[]>), [tasks, weekDays]);
 
     return (
         <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in duration-500">
@@ -332,63 +411,19 @@ export function Schedule() {
                         const isToday = isSameDay(day, new Date());
                         const dateKey = format(day, 'yyyy-MM-dd');
                         const dayTasks = tasksByDate[dateKey] || [];
-                        let currentMinutes = 8 * 60;
 
                         return (
-                            <DroppableDay key={dateKey} date={dateKey} isToday={isToday} loading={loading}>
-                                {/* Day Header */}
-                                <div className={clsx(
-                                    "text-center py-4 border-b border-zinc-800",
-                                    isToday ? "bg-indigo-500/10" : "bg-zinc-900"
-                                )}>
-                                    <div className="text-xs font-medium uppercase text-zinc-500 mb-1">
-                                        {format(day, 'EEE', { locale: ptBR })}
-                                    </div>
-                                    <div className={clsx(
-                                        "text-2xl font-bold flex justify-center items-center mx-auto w-10 h-10 rounded-full",
-                                        isToday ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/25" : "text-zinc-400"
-                                    )}>
-                                        {format(day, 'd')}
-                                    </div>
-                                </div>
-
-                                {/* Sortable Area */}
-                                <div className="flex-1 p-2 space-y-2 relative">
-                                    <SortableContext
-                                        items={dayTasks.map(t => t.id)}
-                                        strategy={verticalListSortingStrategy}
-                                    >
-                                        {dayTasks.map((task) => {
-                                            const durationMin = 90;
-                                            const startMin = currentMinutes;
-                                            const endMin = startMin + durationMin;
-                                            const startStr = `${Math.floor(startMin / 60).toString().padStart(2, '0')}:${(startMin % 60).toString().padStart(2, '0')}`;
-                                            const endStr = `${Math.floor(endMin / 60).toString().padStart(2, '0')}:${(endMin % 60).toString().padStart(2, '0')}`;
-                                            currentMinutes = endMin;
-
-                                            return (
-                                                <SortableTask
-                                                    key={task.id}
-                                                    task={task}
-                                                    timeRange={`${startStr} - ${endStr}`}
-                                                    duration={durationMin}
-                                                    onToggle={(id, val) => toggleTask(id, val)}
-                                                    onDelete={() => handleDeleteTask(task.id)}
-                                                />
-                                            );
-                                        })}
-                                    </SortableContext>
-
-                                    {/* Add Button */}
-                                    <button
-                                        onClick={() => handleAddTask(day)}
-                                        className="w-full py-3 rounded-lg border border-dashed border-zinc-800 flex items-center justify-center text-zinc-600 hover:text-zinc-400 hover:border-zinc-600 transition-all gap-2 text-xs font-medium mt-4 group"
-                                    >
-                                        <Plus size={14} className="group-hover:scale-110 transition-transform" />
-                                        Adicionar
-                                    </button>
-                                </div>
-                            </DroppableDay>
+                            <DayColumn
+                                key={dateKey}
+                                day={day}
+                                isToday={isToday}
+                                dateKey={dateKey}
+                                tasks={dayTasks}
+                                loading={loading}
+                                onAddTask={handleAddTask}
+                                onToggleTask={toggleTask}
+                                onDeleteTask={handleDeleteTask}
+                            />
                         );
                     })}
                 </div>
@@ -399,9 +434,9 @@ export function Schedule() {
                         <div className="opacity-80 rotate-2 scale-105 cursor-grabbing">
                             <TaskCard
                                 {...tasks.find(t => t.id === activeId)!}
-                                completed={false} // Preview state
+                                completed={false}
                                 timeRange="Move to..."
-                                duration={90}
+                                duration={(() => { const t = tasks.find(t => t.id === activeId); return t ? ({ class: 60, exercise: 45, review: 20, simulation: 90 }[t.type] || 60) : 60; })()}
                             />
                         </div>
                     ) : null}
