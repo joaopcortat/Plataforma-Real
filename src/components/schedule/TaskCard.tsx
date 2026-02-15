@@ -31,7 +31,7 @@ const SUBJECT_COLORS: Record<string, string> = {
 
 const DEFAULT_COLOR = 'border-zinc-500 text-zinc-500 bg-zinc-500/10';
 
-export function TaskCard({ subject, title, completed, onToggle, onDelete, timeRange, duration = 90 }: TaskCardProps) {
+export function TaskCard({ subject, title, completed, onToggle, onDelete, duration = 90 }: TaskCardProps) {
     const [isCompleted, setIsCompleted] = useState(completed);
 
     const handleToggle = () => {
