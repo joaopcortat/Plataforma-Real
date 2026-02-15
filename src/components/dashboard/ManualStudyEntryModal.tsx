@@ -121,7 +121,6 @@ export function ManualStudyEntryModal({ isOpen, onClose, onSuccess }: ManualStud
             }
 
             onSuccess();
-            window.location.reload(); // Refresh to update metrics
 
         } catch (err) {
             console.error(err);

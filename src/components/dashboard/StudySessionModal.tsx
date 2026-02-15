@@ -143,7 +143,6 @@ export function StudySessionModal({ isOpen, onClose, totalSeconds, onSuccess }: 
 
             onSuccess();
             setSessionNotes(''); // Clear global notes
-            window.location.reload(); // To refresh dashboard metrics
 
         } catch (err) {
             console.error(err);

@@ -33,7 +33,8 @@ export function Shell() {
         openSessionModal,
         isSessionModalOpen,
         closeSessionModal,
-        sessionSeconds
+        sessionSeconds,
+        bumpMetricsVersion
     } = useStudyTimer();
 
     useEffect(() => {
@@ -276,10 +277,7 @@ export function Shell() {
                 totalSeconds={sessionSeconds}
                 onSuccess={() => {
                     closeSessionModal();
-                    // Optionally force refresh dashboard or something? 
-                    // The modals refresh usually. But if on Schedule page, might not update.
-                    // Ideally use a global refresh trigger or query invalidation.
-                    window.location.reload(); // Simple brute force update for now
+                    bumpMetricsVersion();
                 }}
             />
         </div>

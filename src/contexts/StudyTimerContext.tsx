@@ -12,6 +12,9 @@ interface StudyTimerContextType {
 
     sessionNotes: string;
     setSessionNotes: (notes: string) => void;
+
+    metricsVersion: number;
+    bumpMetricsVersion: () => void;
 }
 
 const StudyTimerContext = createContext<StudyTimerContextType | undefined>(undefined);
@@ -22,6 +25,10 @@ export function StudyTimerProvider({ children }: { children: ReactNode }) {
     const [isSessionModalOpen, setIsSessionModalOpen] = useState(false);
     const [sessionSeconds, setSessionSeconds] = useState(0);
     const [sessionNotes, setSessionNotes] = useState('');
+
+    // Global counter to signal dashboard/other components to re-fetch metrics
+    const [metricsVersion, setMetricsVersion] = useState(0);
+    const bumpMetricsVersion = () => setMetricsVersion(v => v + 1);
 
     const openTimer = () => setIsTimerOpen(true);
     const closeTimer = () => setIsTimerOpen(false);
@@ -47,7 +54,9 @@ export function StudyTimerProvider({ children }: { children: ReactNode }) {
             openSessionModal,
             closeSessionModal,
             sessionNotes,
-            setSessionNotes
+            setSessionNotes,
+            metricsVersion,
+            bumpMetricsVersion
         }}>
             {children}
         </StudyTimerContext.Provider>
@@ -61,3 +70,4 @@ export function useStudyTimer() {
     }
     return context;
 }
+

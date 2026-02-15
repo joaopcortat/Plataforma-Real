@@ -10,7 +10,7 @@ interface DailyGoalType {
     tasks?: string[];
 }
 
-export function DailyGoals() {
+export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
     const [goals, setGoals] = useState<DailyGoalType>({
         questions_target: 30,
         questions_done: 0,
@@ -24,7 +24,7 @@ export function DailyGoals() {
 
     useEffect(() => {
         fetchGoals();
-    }, []);
+    }, [refreshKey]);
 
     async function fetchGoals() {
         try {
