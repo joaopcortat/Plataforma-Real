@@ -87,6 +87,7 @@ export function Dashboard() {
                     subValue="tempo total"
                     icon={Clock}
                     variant="orange"
+                    suffix="horas"
                 />
                 <MetricCard
                     label="Questões Resolvidas"

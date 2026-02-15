@@ -7,6 +7,7 @@ interface MetricCardProps {
     subValue: string;
     icon: LucideIcon;
     variant: 'orange' | 'blue' | 'green' | 'purple';
+    suffix?: string;
 }
 
 const VARIANTS = {
@@ -36,7 +37,7 @@ const VARIANTS = {
     }
 };
 
-export function MetricCard({ label, value, subValue, icon: Icon, variant }: MetricCardProps) {
+export function MetricCard({ label, value, subValue, icon: Icon, variant, suffix }: MetricCardProps) {
     const styles = VARIANTS[variant];
 
     return (
@@ -55,7 +56,7 @@ export function MetricCard({ label, value, subValue, icon: Icon, variant }: Metr
                 <div>
                     <div className="flex items-baseline gap-1.5 mb-1">
                         <h3 className="text-4xl font-bold text-white tracking-tight">{value}</h3>
-                        {variant === 'blue' && <span className="text-zinc-500 text-sm font-medium">h</span>}
+                        {suffix && <span className="text-zinc-500 text-sm font-medium">{suffix}</span>}
                     </div>
                     <p className="text-zinc-500 text-xs font-medium tracking-wide">{subValue}</p>
                 </div>
