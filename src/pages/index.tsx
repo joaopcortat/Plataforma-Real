@@ -1,3 +1,4 @@
+export { Landing } from './Landing';
 export { Dashboard } from './Dashboard';
 export { Login } from './auth/Login';
 export { Schedule } from './Schedule';
