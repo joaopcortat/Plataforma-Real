@@ -56,7 +56,7 @@ export function Shell() {
     }
 
     const focusItems = [
-        { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', end: true },
+        { path: '/', icon: LayoutDashboard, label: 'Dashboard', end: true },
         { path: '/schedule', icon: Calendar, label: 'Cronograma' },
         { path: '/simulations', icon: FileText, label: 'Simulados' },
         { path: '/materials', icon: BookOpen, label: 'Materiais' },
@@ -138,7 +138,7 @@ export function Shell() {
                 <div className="p-6 border-b border-zinc-800 flex items-center justify-between lg:justify-center relative">
 
                     <div className="flex items-center gap-3 relative z-10">
-                        <NavLink to="/dashboard" className="relative group cursor-pointer">
+                        <NavLink to="/" className="relative group cursor-pointer">
                             {/* Royal Glow Effect emitting from the square - visible only on hover */}
                             <div className="absolute inset-0 bg-amber-500 rounded-xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
 

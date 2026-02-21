@@ -33,7 +33,7 @@ export function Login() {
                     password: formData.password,
                 });
                 if (error) throw error;
-                navigate('/dashboard');
+                navigate('/');
             }
         } catch (err: any) {
             // Translate common Supabase errors

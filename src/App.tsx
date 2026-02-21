@@ -7,7 +7,6 @@ import { Shell } from './layouts/Shell';
 import { AuthLayout } from './layouts/AuthLayout';
 
 import {
-    Landing,
     Dashboard,
     Login,
     Schedule,
@@ -29,9 +28,6 @@ export default function App() {
                 <SubscriptionProvider>
                     <StudyTimerProvider>
                         <Routes>
-                            {/* Public routes */}
-                            <Route path="/" element={<Landing />} />
-
                             {/* Auth routes — sem proteção */}
                             <Route element={<AuthLayout />}>
                                 <Route path="/login" element={<Login />} />
@@ -45,7 +41,7 @@ export default function App() {
                                     </RequireSubscription>
                                 }
                             >
-                                <Route path="/dashboard" element={<Dashboard />} />
+                                <Route path="/" element={<Dashboard />} />
                                 <Route path="/schedule" element={<Schedule />} />
                                 <Route path="/simulations" element={<Simulations />} />
                                 <Route path="/materials" element={<Materials />} />
@@ -57,7 +53,7 @@ export default function App() {
                             </Route>
 
                             {/* Fallback */}
-                            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                            <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>
                     </StudyTimerProvider>
                 </SubscriptionProvider>
