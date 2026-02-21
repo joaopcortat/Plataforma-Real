@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { User, Mail, GraduationCap, Target, Save, Camera, Moon, Bell, Shield } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { PlanSection } from '../components/profile/PlanSection';
 import clsx from 'clsx';
 
 export function Profile() {
@@ -239,6 +240,17 @@ export function Profile() {
 
                 {/* Right Column: Forms */}
                 <div className="lg:col-span-2 space-y-6">
+
+                    {/* Plano */}
+                    <div>
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="p-2 bg-violet-500/10 text-violet-400 rounded-lg">
+                                <Shield size={20} />
+                            </div>
+                            <h3 className="text-lg font-bold text-white">Meu Plano</h3>
+                        </div>
+                        <PlanSection />
+                    </div>
 
                     {/* Personal Data */}
                     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">

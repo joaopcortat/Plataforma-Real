@@ -1,74 +1,63 @@
-import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { SubscriptionProvider } from './contexts/SubscriptionContext';
+import { StudyTimerProvider } from './contexts/StudyTimerContext';
+
 import { Shell } from './layouts/Shell';
 import { AuthLayout } from './layouts/AuthLayout';
-import { StudyTimerProvider } from './contexts/StudyTimerContext';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+
 import {
-  Dashboard,
-  Login,
-  Schedule,
-  Achievements,
-  Simulations,
-  Performance,
-  Courses,
-  Ranking,
-  Profile,
-  Materials
+    Dashboard,
+    Login,
+    Schedule,
+    Achievements,
+    Simulations,
+    Performance,
+    Courses,
+    Ranking,
+    Profile,
+    Materials,
 } from './pages';
 
-function PrivateRoute() {
-  const { session, loading } = useAuth();
+import { RequireSubscription } from './components/auth/RequireSubscription';
 
-  if (loading) return <div className="min-h-screen bg-black flex items-center justify-center text-white">Carregando...</div>;
+export default function App() {
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <SubscriptionProvider>
+                    <StudyTimerProvider>
+                        <Routes>
+                            {/* Auth routes — sem proteção */}
+                            <Route element={<AuthLayout />}>
+                                <Route path="/login" element={<Login />} />
+                            </Route>
 
-  return session ? <Outlet /> : <Navigate to="/login" replace />;
+                            {/* App routes — requer auth + assinatura ativa */}
+                            <Route
+                                element={
+                                    <RequireSubscription>
+                                        <Shell />
+                                    </RequireSubscription>
+                                }
+                            >
+                                <Route path="/" element={<Dashboard />} />
+                                <Route path="/schedule" element={<Schedule />} />
+                                <Route path="/simulations" element={<Simulations />} />
+                                <Route path="/materials" element={<Materials />} />
+                                <Route path="/profile" element={<Profile />} />
+                                <Route path="/performance" element={<Performance />} />
+                                <Route path="/ranking" element={<Ranking />} />
+                                <Route path="/achievements" element={<Achievements />} />
+                                <Route path="/courses" element={<Courses />} />
+                            </Route>
+
+                            {/* Fallback */}
+                            <Route path="*" element={<Navigate to="/" replace />} />
+                        </Routes>
+                    </StudyTimerProvider>
+                </SubscriptionProvider>
+            </AuthProvider>
+        </BrowserRouter>
+    );
 }
-
-function PublicRoute() {
-  const { session, loading } = useAuth();
-
-  if (loading) return null;
-
-  return !session ? <Outlet /> : <Navigate to="/" replace />;
-}
-
-function App() {
-  return (
-    <BrowserRouter>
-      <AuthProvider>
-        <StudyTimerProvider>
-          <Routes>
-            {/* Public Routes (Login) */}
-            <Route element={<AuthLayout />}>
-              <Route element={<PublicRoute />}>
-                <Route path="/login" element={<Login />} />
-              </Route>
-            </Route>
-
-            {/* Protected Routes (App) */}
-            <Route element={<PrivateRoute />}>
-              <Route element={<Shell />}>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/schedule" element={<Schedule />} />
-                <Route path="/materials" element={<Materials />} />
-                <Route path="/achievements" element={<Achievements />} />
-
-                {/* Non-MVP Routes -> Under Construction */}
-                <Route path="/performance" element={<Performance />} />
-                <Route path="/simulations" element={<Simulations />} />
-                <Route path="/courses" element={<Courses />} />
-                <Route path="/ranking" element={<Ranking />} />
-                <Route path="/profile" element={<Profile />} />
-              </Route>
-            </Route>
-
-            {/* Catch all */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </StudyTimerProvider>
-      </AuthProvider>
-    </BrowserRouter>
-  );
-}
-
-export default App
