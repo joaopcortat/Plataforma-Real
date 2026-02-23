@@ -1,4 +1,3 @@
-export { Landing } from './Landing';
 export { Dashboard } from './Dashboard';
 export { Login } from './auth/Login';
 export { Schedule } from './Schedule';
@@ -9,3 +8,4 @@ export { Courses } from './Courses';
 export { Ranking } from './Ranking';
 export { Profile } from './Profile';
 export { Materials } from './Materials';
+export { Landing } from './Landing';

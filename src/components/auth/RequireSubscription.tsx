@@ -35,8 +35,8 @@ function UpgradeWall() {
                     <div
                         key={plan.id}
                         className={`relative rounded-2xl p-6 border transition-all ${plan.highlight
-                                ? 'bg-gradient-to-b from-[#7c3aed]/20 to-[#7c3aed]/5 border-[#7c3aed]/50 shadow-lg shadow-[#7c3aed]/10'
-                                : 'bg-[#111118] border-white/10'
+                            ? 'bg-gradient-to-b from-[#7c3aed]/20 to-[#7c3aed]/5 border-[#7c3aed]/50 shadow-lg shadow-[#7c3aed]/10'
+                            : 'bg-[#111118] border-white/10'
                             }`}
                     >
                         {plan.highlight && (
@@ -76,8 +76,8 @@ function UpgradeWall() {
                             target="_blank"
                             rel="noopener noreferrer"
                             className={`block w-full text-center py-3 rounded-xl font-semibold transition-all ${plan.highlight
-                                    ? 'bg-[#7c3aed] hover:bg-[#6d28d9] text-white'
-                                    : 'bg-white/10 hover:bg-white/20 text-white border border-white/10'
+                                ? 'bg-[#7c3aed] hover:bg-[#6d28d9] text-white'
+                                : 'bg-white/10 hover:bg-white/20 text-white border border-white/10'
                                 }`}
                         >
                             Começar agora
@@ -102,7 +102,7 @@ interface RequireSubscriptionProps {
 
 export function RequireSubscription({ children, requireAuth = true }: RequireSubscriptionProps) {
     const { user, loading: authLoading } = useAuth();
-    const { isActive, isLoading: subLoading } = useSubscription();
+    const { isLoading: subLoading } = useSubscription();
 
     // Ainda carregando
     if (authLoading || subLoading) {
@@ -113,15 +113,14 @@ export function RequireSubscription({ children, requireAuth = true }: RequireSub
         );
     }
 
-    // Não autenticado
+    // Não autenticado → /login
     if (requireAuth && !user) {
         return <Navigate to="/login" replace />;
     }
 
-    // Autenticado mas sem assinatura ativa
-    if (user && !isActive) {
-        return <UpgradeWall />;
-    }
+    // ⚠️  BETA: qualquer usuário autenticado tem acesso livre.
+    // Reative a verificação abaixo quando o checkout estiver pronto:
+    // if (user && !isActive) return <UpgradeWall />;
 
     return <>{children}</>;
 }

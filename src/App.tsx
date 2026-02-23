@@ -17,6 +17,7 @@ import {
     Ranking,
     Profile,
     Materials,
+    Landing,
 } from './pages';
 
 import { RequireSubscription } from './components/auth/RequireSubscription';
@@ -28,6 +29,9 @@ export default function App() {
                 <SubscriptionProvider>
                     <StudyTimerProvider>
                         <Routes>
+                            {/* Landing Page */}
+                            <Route path="/landing" element={<Landing />} />
+
                             {/* Auth routes — sem proteção */}
                             <Route element={<AuthLayout />}>
                                 <Route path="/login" element={<Login />} />
