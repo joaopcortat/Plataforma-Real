@@ -1,19 +1,25 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background: Amber Gradient Rounded Square -->
-  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#grad1)" stroke="rgba(253, 224, 71, 0.2)" stroke-width="2"/>
-  
-  <!-- Gradient Definition -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Yellow rounded square background -->
   <defs>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" /> <!-- amber-400 -->
-      <stop offset="100%" style="stop-color:#ca8a04;stop-opacity:1" /> <!-- yellow-600 -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FCD34D"/>
+      <stop offset="100%" style="stop-color:#F59E0B"/>
     </linearGradient>
   </defs>
+  <rect x="2" y="2" width="96" height="96" rx="22" ry="22" fill="url(#bg)"/>
 
-  <!-- Crown Icon (Lucide-like) -->
-  <g transform="translate(14, 14) scale(1.5)">
-    <path d="M5 18h14v-2H5v2zm0-2l-3-11 5 4 4-6 4 6 5-4-3 11H5z" fill="rgba(66, 32, 6, 0.2)" /> <!-- Fill yellow-950/20 -->
-    <path d="M2 6l3 11h14l3-11-6 6-4-8-4 8-6-6z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    <path d="M5 19h14" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
+  <!-- Crown icon (centered, black) -->
+  <!-- Crown body bottom bar -->
+  <rect x="26" y="66" width="48" height="7" rx="3.5" fill="#1a1a1a"/>
+  <!-- Crown top points: left valley, left peak, middle valley, right peak, right valley -->
+  <path d="
+    M26 64
+    L26 46
+    L36 56
+    L50 34
+    L64 56
+    L74 46
+    L74 64
+    Z
+  " fill="#1a1a1a" stroke="#1a1a1a" stroke-width="1" stroke-linejoin="round"/>
 </svg>
