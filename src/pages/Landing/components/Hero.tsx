@@ -3,7 +3,7 @@ import { ArrowRight, Star, Play, Timer, Target, CheckCircle2, TrendingUp, Sparkl
 
 export function Hero() {
     return (
-        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <section className="relative pt-24 pb-16 md:pt-44 md:pb-28 overflow-hidden">
             {/* Background Gradients */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
@@ -24,7 +24,7 @@ export function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.1] max-w-4xl"
+                    className="text-[2.4rem] leading-tight md:text-7xl font-bold text-white tracking-tight md:leading-[1.1] max-w-4xl"
                 >
                     Domine seus estudos e conquiste a{' '}
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary">
@@ -36,7 +36,7 @@ export function Hero() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="mt-6 text-lg md:text-xl text-zinc-400 max-w-2xl leading-relaxed"
+                    className="mt-4 text-base md:text-xl text-zinc-400 max-w-2xl leading-relaxed px-1"
                 >
                     Muito mais que um cursinho. Estudo Real é o ecossistema perfeito para organizar seus horários, metrificar seu desempenho e destruir nos simulados.
                 </motion.p>
@@ -49,14 +49,15 @@ export function Hero() {
                 >
                     <button
                         onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-waitlist')); }}
-                        className="w-full sm:w-auto flex items-center justify-center gap-2 h-14 px-8 rounded-xl bg-primary hover:bg-primary text-zinc-950 text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(251,191,36,0.2)] hover:shadow-[0_0_40px_rgba(251,191,36,0.4)]"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 h-13 px-6 md:h-14 md:px-8 rounded-xl bg-primary hover:bg-primary text-zinc-950 text-sm md:text-base font-bold transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(251,191,36,0.2)] hover:shadow-[0_0_40px_rgba(251,191,36,0.4)]"
                     >
-                        Garantir acesso antecipado (50% OFF)
+                        <span className="sm:hidden">Garantir 50% OFF</span>
+                        <span className="hidden sm:inline">Garantir acesso antecipado (50% OFF)</span>
                         <ArrowRight className="w-5 h-5" />
                     </button>
                     <a
                         href="#plataforma"
-                        className="w-full sm:w-auto flex items-center justify-center gap-2 h-14 px-8 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 text-white text-base font-medium transition-all"
+                        className="w-full sm:w-auto flex items-center justify-center gap-2 h-12 md:h-14 px-6 md:px-8 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 text-white text-sm md:text-base font-medium transition-all"
                     >
                         <Play className="w-5 h-5 text-primary" />
                         Conhecer Plataforma
@@ -68,7 +69,7 @@ export function Hero() {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
-                    className="w-full mt-20 relative max-w-5xl mx-auto"
+                    className="w-full mt-12 md:mt-20 relative max-w-5xl mx-auto"
                 >
                     {/* Responsive Floating Notifications */}
                     <div className="absolute inset-0 z-20 flex sm:hidden pointer-events-none">

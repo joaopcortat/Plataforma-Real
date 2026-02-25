@@ -26,7 +26,7 @@ const features = [
 
 export function Features() {
     return (
-        <section id="recursos" className="py-24 relative bg-zinc-950">
+        <section id="recursos" className="py-16 md:py-24 relative bg-zinc-950">
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center max-w-3xl mx-auto mb-20">
@@ -46,7 +46,7 @@ export function Features() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
-                            className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl hover:border-primary/30 transition-colors group relative overflow-hidden"
+                            className="bg-zinc-900 border border-zinc-800 p-5 md:p-8 rounded-2xl hover:border-primary/30 transition-colors group relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
                                 {feature.icon}

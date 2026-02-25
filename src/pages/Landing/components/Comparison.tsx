@@ -42,7 +42,7 @@ const features = [
 
 export function Comparison() {
     return (
-        <section id="comparativo" className="py-24 bg-zinc-950 relative">
+        <section id="comparativo" className="py-16 md:py-24 bg-zinc-950 relative">
             <div className="max-w-6xl mx-auto px-6">
 
                 <div className="text-center max-w-3xl mx-auto mb-16">
@@ -65,8 +65,8 @@ export function Comparison() {
                         <table className="w-full text-left border-collapse min-w-[700px]">
                             <thead>
                                 <tr className="border-b border-zinc-800 bg-zinc-900/80">
-                                    <th className="p-6 text-sm font-semibold text-zinc-400 w-1/3">Recursos & Foco</th>
-                                    <th className="p-6 text-center border-l border-zinc-800 bg-primary/5">
+                                    <th className="p-4 md:p-6 text-sm font-semibold text-zinc-400 w-1/3">Recursos & Foco</th>
+                                    <th className="p-4 md:p-6 text-center border-l border-zinc-800 bg-primary/5">
                                         <div className="flex flex-col items-center gap-1">
                                             <span className="text-primary font-black text-lg">Estudo Real</span>
                                             <span className="text-xs text-primary/80 font-normal">O Ecossistema Completo</span>
@@ -85,10 +85,10 @@ export function Comparison() {
                             <tbody className="divide-y divide-zinc-800/50">
                                 {features.map((feature, i) => (
                                     <tr key={i} className="hover:bg-zinc-800/20 transition-colors">
-                                        <td className="p-6 text-sm font-medium text-white">{feature.name}</td>
+                                        <td className="p-3 md:p-6 text-sm font-medium text-white">{feature.name}</td>
 
                                         {/* Estudo Real Column */}
-                                        <td className="p-6 text-center border-l border-zinc-800 bg-primary/5 relative">
+                                        <td className="p-3 md:p-6 text-center border-l border-zinc-800 bg-primary/5 relative">
                                             {typeof feature.real === 'boolean' ? (
                                                 feature.real ? (
                                                     <Check className="w-6 h-6 text-primary mx-auto" strokeWidth={3} />
@@ -101,7 +101,7 @@ export function Comparison() {
                                         </td>
 
                                         {/* Generic Apps Column */}
-                                        <td className="p-6 text-center border-l border-zinc-800 text-zinc-400 relative">
+                                        <td className="p-3 md:p-6 text-center border-l border-zinc-800 text-zinc-400 relative">
                                             {typeof feature.generic === 'boolean' ? (
                                                 feature.generic ? (
                                                     <Check className="w-5 h-5 text-zinc-500 mx-auto" />
@@ -114,7 +114,7 @@ export function Comparison() {
                                         </td>
 
                                         {/* Manual Spreadsheets Column */}
-                                        <td className="p-6 text-center border-l border-zinc-800 text-zinc-400 relative">
+                                        <td className="p-3 md:p-6 text-center border-l border-zinc-800 text-zinc-400 relative">
                                             {typeof feature.manual === 'boolean' ? (
                                                 feature.manual ? (
                                                     <Check className="w-5 h-5 text-zinc-500 mx-auto" />

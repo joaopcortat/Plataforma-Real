@@ -52,7 +52,7 @@ export function Showcase() {
     }, []);
 
     return (
-        <section id="interface" className="py-24 bg-zinc-950 relative">
+        <section id="interface" className="py-16 md:py-24 bg-zinc-950 relative">
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center max-w-3xl mx-auto mb-16">
@@ -67,54 +67,31 @@ export function Showcase() {
                     </p>
                 </div>
 
-                <div className="grid lg:grid-cols-[300px_1fr] gap-8 xl:gap-12 items-start">
+                <div className="flex flex-col gap-6 xl:gap-12">
 
-                    {/* Menu Lateral */}
-                    <div className="flex flex-col gap-3">
+                    {/* Mobile: horizontal scroll tabs */}
+                    <div className="flex lg:hidden overflow-x-auto gap-2 pb-2 -mx-2 px-2 scrollbar-hide">
                         {slides.map((slide, index) => {
                             const isActive = activeSlide === index;
                             return (
                                 <button
                                     key={slide.id}
                                     onClick={() => setActiveSlide(index)}
-                                    className={`text-left p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${isActive
-                                        ? 'bg-zinc-900 border-primary/50 shadow-[0_0_20px_rgba(251,191,36,0.1)]'
-                                        : 'bg-zinc-900/40 border-zinc-800/50 hover:bg-zinc-900/80 hover:border-zinc-700'
+                                    className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-semibold transition-all ${isActive
+                                        ? 'bg-zinc-900 border-primary/50 text-primary'
+                                        : 'bg-zinc-900/40 border-zinc-800 text-zinc-400'
                                         }`}
                                 >
-                                    {isActive && (
-                                        <motion.div
-                                            layoutId="showcase-active-indicator"
-                                            className="absolute left-0 top-0 bottom-0 w-1 bg-primary"
-                                        />
-                                    )}
-                                    <div className="flex items-center gap-4 mb-3">
-                                        <div className={`p-2 rounded-xl border transition-colors ${isActive ? 'bg-primary/10 text-primary border-primary/20' : 'bg-zinc-800 text-zinc-400 border-zinc-700 group-hover:text-zinc-300'
-                                            }`}>
-                                            {slide.icon}
-                                        </div>
-                                        <h3 className={`font-bold transition-colors ${isActive ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
-                                            {slide.title}
-                                        </h3>
-                                    </div>
-                                    {isActive && (
-                                        <motion.p
-                                            initial={{ opacity: 0, height: 0 }}
-                                            animate={{ opacity: 1, height: 'auto' }}
-                                            className="text-sm text-zinc-400 leading-relaxed pl-1"
-                                        >
-                                            {slide.description}
-                                        </motion.p>
-                                    )}
+                                    <span className="[&>svg]:w-4 [&>svg]:h-4">{slide.icon}</span>
+                                    {slide.title}
                                 </button>
                             );
                         })}
                     </div>
 
-                    {/* Área da Imagem / Mockup */}
-                    <div className="relative w-full aspect-[16/10] md:aspect-video rounded-3xl border border-zinc-800 bg-zinc-900 overflow-hidden shadow-2xl flex items-center justify-center group flex-1">
+                    {/* Image area — visible on mobile first */}
+                    <div className="relative w-full min-h-[220px] md:min-h-[360px] lg:hidden rounded-2xl border border-zinc-800 bg-zinc-900 overflow-hidden shadow-2xl">
                         <div className="absolute inset-0 bg-zinc-950 pointer-events-none" />
-
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeSlide}
@@ -122,28 +99,102 @@ export function Showcase() {
                                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                                 exit={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }}
                                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                                className="absolute inset-0 w-full h-full p-2 md:p-4"
+                                className="absolute inset-0 w-full h-full p-2"
                             >
-                                <div className="w-full h-full rounded-2xl overflow-hidden border border-zinc-800/50 relative bg-zinc-950">
+                                <div className="w-full h-full rounded-xl overflow-hidden border border-zinc-800/50 relative bg-zinc-950">
                                     <img
                                         src={slides[activeSlide].image}
                                         alt={slides[activeSlide].title}
                                         className="w-full h-full object-cover object-left-top"
                                     />
-                                    {/* Fallback de cor caso a imagem não carregue rápido */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent pointer-events-none" />
                                 </div>
                             </motion.div>
                         </AnimatePresence>
-
-                        {/* Decoração estilo Janela de App */}
-                        <div className="absolute top-4 md:top-6 left-4 md:left-6 flex gap-2 z-10">
-                            <div className="w-3 h-3 rounded-full bg-zinc-800/80 backdrop-blur" />
-                            <div className="w-3 h-3 rounded-full bg-zinc-800/80 backdrop-blur" />
-                            <div className="w-3 h-3 rounded-full bg-zinc-800/80 backdrop-blur" />
-                        </div>
                     </div>
 
+                    {/* Description below image on mobile */}
+                    <div className="lg:hidden text-center px-1">
+                        <h3 className="text-white font-bold text-lg mb-1">{slides[activeSlide].title}</h3>
+                        <p className="text-sm text-zinc-400 leading-relaxed">{slides[activeSlide].description}</p>
+                    </div>
+
+                    {/* Desktop: side menu + image */}
+                    <div className="hidden lg:grid lg:grid-cols-[280px_1fr] gap-8 xl:gap-12 items-start">
+                        <div className="flex flex-col gap-3">
+                            {slides.map((slide, index) => {
+                                const isActive = activeSlide === index;
+                                return (
+                                    <button
+                                        key={slide.id}
+                                        onClick={() => setActiveSlide(index)}
+                                        className={`text-left p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${isActive
+                                            ? 'bg-zinc-900 border-primary/50 shadow-[0_0_20px_rgba(251,191,36,0.1)]'
+                                            : 'bg-zinc-900/40 border-zinc-800/50 hover:bg-zinc-900/80 hover:border-zinc-700'
+                                            }`}
+                                    >
+                                        {isActive && (
+                                            <motion.div
+                                                layoutId="showcase-active-indicator"
+                                                className="absolute left-0 top-0 bottom-0 w-1 bg-primary"
+                                            />
+                                        )}
+                                        <div className="flex items-center gap-4 mb-3">
+                                            <div className={`p-2 rounded-xl border transition-colors ${isActive ? 'bg-primary/10 text-primary border-primary/20' : 'bg-zinc-800 text-zinc-400 border-zinc-700 group-hover:text-zinc-300'
+                                                }`}>
+                                                {slide.icon}
+                                            </div>
+                                            <h3 className={`font-bold transition-colors ${isActive ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
+                                                {slide.title}
+                                            </h3>
+                                        </div>
+                                        {isActive && (
+                                            <motion.p
+                                                initial={{ opacity: 0, height: 0 }}
+                                                animate={{ opacity: 1, height: 'auto' }}
+                                                className="text-sm text-zinc-400 leading-relaxed pl-1"
+                                            >
+                                                {slide.description}
+                                            </motion.p>
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Área da Imagem / Mockup */}
+                        <div className="relative w-full aspect-[16/10] md:aspect-video rounded-3xl border border-zinc-800 bg-zinc-900 overflow-hidden shadow-2xl flex items-center justify-center group flex-1">
+                            <div className="absolute inset-0 bg-zinc-950 pointer-events-none" />
+
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={activeSlide}
+                                    initial={{ opacity: 0, scale: 0.98, filter: 'blur(10px)' }}
+                                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                                    exit={{ opacity: 0, scale: 1.02, filter: 'blur(10px)' }}
+                                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                                    className="absolute inset-0 w-full h-full p-2 md:p-4"
+                                >
+                                    <div className="w-full h-full rounded-2xl overflow-hidden border border-zinc-800/50 relative bg-zinc-950">
+                                        <img
+                                            src={slides[activeSlide].image}
+                                            alt={slides[activeSlide].title}
+                                            className="w-full h-full object-cover object-left-top"
+                                        />
+                                        {/* Fallback de cor caso a imagem não carregue rápido */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/40 to-transparent pointer-events-none" />
+                                    </div>
+                                </motion.div>
+                            </AnimatePresence>
+
+                            {/* Decoração estilo Janela de App */}
+                            <div className="absolute top-4 md:top-6 left-4 md:left-6 flex gap-2 z-10">
+                                <div className="w-3 h-3 rounded-full bg-zinc-800/80 backdrop-blur" />
+                                <div className="w-3 h-3 rounded-full bg-zinc-800/80 backdrop-blur" />
+                                <div className="w-3 h-3 rounded-full bg-zinc-800/80 backdrop-blur" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
