@@ -28,7 +28,7 @@ const EXAM_TYPES: ExamConfig[] = [
         description: 'Linguagens, Humanas e Redação',
         time: '5h 30m',
         minutes: 330,
-        color: 'from-orange-500 to-red-600',
+        color: 'from-primary to-primary',
         icon: BookOpen,
         subject: 'Linguagens e Humanas',
         questions: 90
@@ -39,7 +39,7 @@ const EXAM_TYPES: ExamConfig[] = [
         description: 'Matemática e Natureza',
         time: '5h 00m',
         minutes: 300,
-        color: 'from-blue-500 to-indigo-600',
+        color: 'from-primary to-primary',
         icon: BrainCircuit,
         subject: 'Natureza e Matemática',
         questions: 90
@@ -50,7 +50,7 @@ const EXAM_TYPES: ExamConfig[] = [
         description: 'Tempo e meta personalizáveis',
         time: 'Personalizado',
         minutes: 0, // Set by user
-        color: 'from-emerald-500 to-teal-600',
+        color: 'from-primary to-primary',
         icon: TimerIcon,
         subject: 'Personalizado',
         questions: 0 // Will be ignored or handled as N/A
@@ -175,10 +175,10 @@ export function Simulations() {
                             </div>
 
                             <div className="relative z-10 p-8">
-                                <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300">
+                                <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
                                     <BookOpen size={24} />
                                 </div>
-                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Fazer Simulado</h2>
+                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Fazer Simulado</h2>
                                 <p className="text-zinc-300 text-sm font-medium leading-relaxed max-w-sm">
                                     Entre no modo de prova com cronômetro oficial e simulados completos do ENEM.
                                 </p>
@@ -200,10 +200,10 @@ export function Simulations() {
                             </div>
 
                             <div className="relative z-10 p-8">
-                                <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform duration-300">
+                                <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4 text-white shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
                                     <BarChart3 size={24} />
                                 </div>
-                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">Progressão</h2>
+                                <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">Progressão</h2>
                                 <p className="text-zinc-300 text-sm font-medium leading-relaxed max-w-sm">
                                     Visualize sua evolução com gráficos detalhados de desempenho por área e nota.
                                 </p>
@@ -275,7 +275,7 @@ export function Simulations() {
                                             <div className="font-medium text-white">{item.title}</div>
                                             <div className="text-xs text-zinc-500">{format(new Date(item.created_at || new Date()), 'dd/MM/yyyy')}</div>
                                         </div>
-                                        <div className="flex items-center gap-2 text-emerald-400 font-bold bg-emerald-500/10 px-3 py-1 rounded-lg">
+                                        <div className="flex items-center gap-2 text-primary font-bold bg-primary/10 px-3 py-1 rounded-lg">
                                             <Trophy size={14} />
                                             {item.score}/{item.total_questions}
                                         </div>

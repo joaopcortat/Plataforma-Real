@@ -12,28 +12,28 @@ interface MetricCardProps {
 
 const VARIANTS = {
     orange: {
-        iconBg: 'bg-orange-500',
+        iconBg: 'bg-primary',
         iconColor: 'text-white',
-        glow: 'shadow-orange-500/20',
-        text: 'text-orange-500'
+        glow: 'shadow-primary/20',
+        text: 'text-primary'
     },
     blue: {
-        iconBg: 'bg-blue-500',
+        iconBg: 'bg-primary',
         iconColor: 'text-white',
-        glow: 'shadow-blue-500/20',
-        text: 'text-blue-500'
+        glow: 'shadow-primary/20',
+        text: 'text-primary'
     },
     green: {
-        iconBg: 'bg-emerald-500',
+        iconBg: 'bg-primary',
         iconColor: 'text-white',
-        glow: 'shadow-emerald-500/20',
-        text: 'text-emerald-500'
+        glow: 'shadow-primary/20',
+        text: 'text-primary'
     },
     purple: {
-        iconBg: 'bg-purple-500',
+        iconBg: 'bg-primary',
         iconColor: 'text-white',
-        glow: 'shadow-purple-500/20',
-        text: 'text-purple-500'
+        glow: 'shadow-primary/20',
+        text: 'text-primary'
     }
 };
 

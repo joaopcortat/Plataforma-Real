@@ -34,7 +34,7 @@ export function FAQ() {
 
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                        Dúvidas <span className="text-amber-400">Frequentes</span>
+                        Dúvidas <span className="text-primary">Frequentes</span>
                     </h2>
                     <p className="text-lg text-zinc-400">
                         Ainda com alguma dúvida se este é o momento ideal para assinar? Confira as perguntas abaixo.
@@ -52,18 +52,18 @@ export function FAQ() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className={`border rounded-2xl overflow-hidden transition-colors ${isOpen ? 'bg-zinc-900 border-amber-500/30' : 'bg-transparent border-zinc-800 hover:border-zinc-700'
+                                className={`border rounded-2xl overflow-hidden transition-colors ${isOpen ? 'bg-zinc-900 border-primary/30' : 'bg-transparent border-zinc-800 hover:border-zinc-700'
                                     }`}
                             >
                                 <button
                                     className="w-full flex items-center justify-between p-6 text-left"
                                     onClick={() => setOpenIndex(isOpen ? null : index)}
                                 >
-                                    <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-amber-400' : 'text-white'}`}>
+                                    <span className={`text-lg font-bold transition-colors ${isOpen ? 'text-primary' : 'text-white'}`}>
                                         {faq.question}
                                     </span>
                                     <ChevronDown
-                                        className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-amber-400' : 'text-zinc-500'}`}
+                                        className={`w-5 h-5 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-primary' : 'text-zinc-500'}`}
                                     />
                                 </button>
                                 <AnimatePresence>

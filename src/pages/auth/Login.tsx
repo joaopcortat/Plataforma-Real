@@ -60,7 +60,7 @@ export function Login() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 {error && (
-                    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 flex items-center gap-3 text-red-400 text-sm">
+                    <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 flex items-center gap-3 text-primary text-sm">
                         <AlertCircle size={18} />
                         {error}
                     </div>
@@ -76,7 +76,7 @@ export function Login() {
                             required
                             value={formData.email}
                             onChange={e => setFormData({ ...formData, email: e.target.value })}
-                            className="block w-full pl-10 bg-zinc-900/50 border border-zinc-800 rounded-xl py-3 text-white placeholder-zinc-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                            className="block w-full pl-10 bg-zinc-900/50 border border-zinc-800 rounded-xl py-3 text-white placeholder-zinc-500 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                             placeholder="seu@email.com"
                         />
                     </div>
@@ -90,7 +90,7 @@ export function Login() {
                             required
                             value={formData.password}
                             onChange={e => setFormData({ ...formData, password: e.target.value })}
-                            className="block w-full pl-10 bg-zinc-900/50 border border-zinc-800 rounded-xl py-3 text-white placeholder-zinc-500 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                            className="block w-full pl-10 bg-zinc-900/50 border border-zinc-800 rounded-xl py-3 text-white placeholder-zinc-500 focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                             placeholder="••••••••"
                             minLength={6}
                         />
@@ -100,7 +100,7 @@ export function Login() {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg shadow-indigo-500/20 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg shadow-primary/20 text-sm font-bold text-white bg-primary hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {loading ? (
                         <Loader2 className="animate-spin" size={20} />

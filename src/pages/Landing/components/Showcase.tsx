@@ -56,11 +56,11 @@ export function Showcase() {
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center max-w-3xl mx-auto mb-16">
-                    <div className="inline-flex justify-center items-center px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-semibold text-sm mb-6">
+                    <div className="inline-flex justify-center items-center px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-semibold text-sm mb-6">
                         Por Dentro da Plataforma
                     </div>
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                        Ferramentas premium para uma <span className="text-amber-400">rotina de elite.</span>
+                        Ferramentas premium para uma <span className="text-primary">rotina de elite.</span>
                     </h2>
                     <p className="text-lg text-zinc-400">
                         Abaixo estão as prints reais da sua futura área de estudos. Esqueça cursinhos cheios de publicidade, aqui o silêncio e o minimalismo ditam o jogo.
@@ -78,18 +78,18 @@ export function Showcase() {
                                     key={slide.id}
                                     onClick={() => setActiveSlide(index)}
                                     className={`text-left p-6 rounded-2xl border transition-all duration-300 relative overflow-hidden group ${isActive
-                                        ? 'bg-zinc-900 border-amber-500/50 shadow-[0_0_20px_rgba(251,191,36,0.1)]'
+                                        ? 'bg-zinc-900 border-primary/50 shadow-[0_0_20px_rgba(251,191,36,0.1)]'
                                         : 'bg-zinc-900/40 border-zinc-800/50 hover:bg-zinc-900/80 hover:border-zinc-700'
                                         }`}
                                 >
                                     {isActive && (
                                         <motion.div
                                             layoutId="showcase-active-indicator"
-                                            className="absolute left-0 top-0 bottom-0 w-1 bg-amber-400"
+                                            className="absolute left-0 top-0 bottom-0 w-1 bg-primary"
                                         />
                                     )}
                                     <div className="flex items-center gap-4 mb-3">
-                                        <div className={`p-2 rounded-xl border transition-colors ${isActive ? 'bg-amber-400/10 text-amber-400 border-amber-400/20' : 'bg-zinc-800 text-zinc-400 border-zinc-700 group-hover:text-zinc-300'
+                                        <div className={`p-2 rounded-xl border transition-colors ${isActive ? 'bg-primary/10 text-primary border-primary/20' : 'bg-zinc-800 text-zinc-400 border-zinc-700 group-hover:text-zinc-300'
                                             }`}>
                                             {slide.icon}
                                         </div>

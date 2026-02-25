@@ -37,7 +37,7 @@ export function XPCard() {
                 </ResponsiveContainer>
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <span className="text-emerald-500 text-sm font-bold bg-emerald-500/10 px-2 py-1 rounded-full mb-1">
+                    <span className="text-primary text-sm font-bold bg-primary/10 px-2 py-1 rounded-full mb-1">
                         {Math.round(percentage)}%
                     </span>
                     <span className="text-3xl font-bold text-white shadow-glow">{currentXP}</span>
@@ -48,7 +48,7 @@ export function XPCard() {
             <div className="text-center mt-6">
                 <h3 className="text-lg font-bold text-white mb-1">Hora de começar!</h3>
                 <p className="text-zinc-400 text-sm">Faltam <span className="text-white font-bold">{targetXP - currentXP} XP</span></p>
-                <p className="text-xs text-emerald-500 mt-2 font-medium">Média diária: 300 XP</p>
+                <p className="text-xs text-primary mt-2 font-medium">Média diária: 300 XP</p>
             </div>
         </div>
     );

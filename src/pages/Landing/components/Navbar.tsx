@@ -24,7 +24,7 @@ export function Navbar() {
         >
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-amber-300 to-amber-500 shadow-[0_0_15px_rgba(251,191,36,0.3)] overflow-hidden">
+                    <div className="relative flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-primary shadow-[0_0_15px_rgba(251,191,36,0.3)] overflow-hidden">
                         <div className="absolute inset-0 bg-white/20 opacity-0 hover:opacity-100 transition-opacity"></div>
                         <Crown className="w-6 h-6 text-zinc-950" strokeWidth={2.5} />
                     </div>
@@ -39,12 +39,12 @@ export function Navbar() {
                 </nav>
 
                 <div className="hidden md:flex items-center gap-4">
-                    <Link to="/login" className="text-sm font-medium text-white hover:text-amber-400 transition-colors">
+                    <Link to="/login" className="text-sm font-medium text-white hover:text-primary transition-colors">
                         Entrar
                     </Link>
                     <button
                         onClick={(e) => { e.preventDefault(); window.dispatchEvent(new CustomEvent('open-waitlist')); }}
-                        className="flex items-center justify-center gap-2 h-10 px-6 rounded-lg bg-amber-400 hover:bg-amber-300 text-zinc-950 text-sm font-semibold transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(251,191,36,0.3)] hover:shadow-[0_0_30px_rgba(251,191,36,0.5)]"
+                        className="flex items-center justify-center gap-2 h-10 px-6 rounded-lg bg-primary hover:bg-primary text-zinc-950 text-sm font-semibold transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(251,191,36,0.3)] hover:shadow-[0_0_30px_rgba(251,191,36,0.5)]"
                     >
                         Acesso VIP
                         <ArrowRight className="w-4 h-4" />
@@ -72,7 +72,7 @@ export function Navbar() {
                     <Link to="/login" className="text-white font-medium py-2" onClick={() => setMobileMenuOpen(false)}>Entrar</Link>
                     <button
                         onClick={() => { setMobileMenuOpen(false); window.dispatchEvent(new CustomEvent('open-waitlist')); }}
-                        className="flex items-center justify-center gap-2 h-12 rounded-lg bg-amber-400 text-zinc-950 font-semibold mt-4"
+                        className="flex items-center justify-center gap-2 h-12 rounded-lg bg-primary text-zinc-950 font-semibold mt-4"
                     >
                         Acesso VIP
                     </button>

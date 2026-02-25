@@ -18,6 +18,8 @@ import {
     Profile,
     Materials,
     Landing,
+    Essays,
+    Habits,
 } from './pages';
 
 import { RequireSubscription } from './components/auth/RequireSubscription';
@@ -48,7 +50,9 @@ export default function App() {
                                 <Route path="/" element={<Dashboard />} />
                                 <Route path="/schedule" element={<Schedule />} />
                                 <Route path="/simulations" element={<Simulations />} />
+                                <Route path="/essays" element={<Essays />} />
                                 <Route path="/materials" element={<Materials />} />
+                                <Route path="/habits" element={<Habits />} />
                                 <Route path="/profile" element={<Profile />} />
                                 <Route path="/performance" element={<Performance />} />
                                 <Route path="/ranking" element={<Ranking />} />

@@ -14,7 +14,7 @@ export function PlatformPreview() {
                         className="flex flex-col gap-6"
                     >
                         <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-                            Uma interface projetada para <span className="text-amber-400">reduzir atrito</span>.
+                            Uma interface projetada para <span className="text-primary">reduzir atrito</span>.
                         </h2>
                         <p className="text-lg text-zinc-400">
                             Cada milissegundo conta quando o assunto é o seu tempo líquido de estudos. Desenvolvemos uma interface
@@ -28,7 +28,7 @@ export function PlatformPreview() {
                                 { title: 'Navegação Ultra Rápida', text: 'Construído com tecnologia premium, o sistema reza 60 quadros de animação por segundo.' }
                             ].map((item, i) => (
                                 <div key={i} className="flex gap-4">
-                                    <div className="w-12 h-12 shrink-0 rounded-full bg-amber-400/10 border border-amber-500/20 flex items-center justify-center font-bold text-amber-400 text-lg">
+                                    <div className="w-12 h-12 shrink-0 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center font-bold text-primary text-lg">
                                         {i + 1}
                                     </div>
                                     <div>
@@ -47,13 +47,13 @@ export function PlatformPreview() {
                         className="relative"
                     >
                         {/* Glowing Background Blur */}
-                        <div className="absolute inset-0 bg-blue-600/20 rounded-full blur-[100px] pointer-events-none" />
+                        <div className="absolute inset-0 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
 
                         <div className="relative rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-900 to-zinc-950 p-2 shadow-2xl flex flex-col overflow-hidden">
                             {/* Decorative Sidebar Preview */}
                             <div className="bg-zinc-950 border border-zinc-800 rounded-xl max-h-[600px] overflow-hidden flex shadow-inner">
                                 <div className="w-20 lg:w-48 bg-zinc-900 border-r border-zinc-800 flex flex-col gap-4 p-4 shrink-0 shadow-lg">
-                                    <div className="w-8 h-8 rounded-lg bg-amber-400/20 mb-6" />
+                                    <div className="w-8 h-8 rounded-lg bg-primary/20 mb-6" />
                                     {[...Array(6)].map((_, i) => (
                                         <div key={i} className="w-full h-8 bg-zinc-800/50 rounded-lg flex items-center px-3" />
                                     ))}
@@ -66,7 +66,7 @@ export function PlatformPreview() {
                                     {/* Bento Grid Preview */}
                                     <div className="grid grid-cols-2 gap-4 h-32">
                                         <div className="bg-zinc-900 border border-zinc-800 rounded-xl relative overflow-hidden">
-                                            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-amber-500/10 to-transparent" />
+                                            <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-primary/10 to-transparent" />
                                         </div>
                                         <div className="bg-zinc-900 border border-zinc-800 rounded-xl" />
                                     </div>
@@ -74,7 +74,7 @@ export function PlatformPreview() {
                                         <div className="absolute inset-0 flex items-end opacity-40">
                                             {/* Fake Chart bars */}
                                             {[20, 45, 30, 70, 50, 90, 60, 45, 80].map((h, j) => (
-                                                <div key={j} className="flex-1 bg-amber-400 mx-[2px] rounded-t-sm" style={{ height: `${h}%` }} />
+                                                <div key={j} className="flex-1 bg-primary mx-[2px] rounded-t-sm" style={{ height: `${h}%` }} />
                                             ))}
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@ export function PlatformPreview() {
                             <div className="text-xs font-semibold text-zinc-500">Horas Líquidas</div>
                             <div className="text-2xl font-black text-white">4h 32m</div>
                             <div className="h-1.5 w-full bg-zinc-800 rounded-full mt-auto overflow-hidden">
-                                <div className="w-[75%] h-full bg-amber-400" />
+                                <div className="w-[75%] h-full bg-primary" />
                             </div>
                         </motion.div>
 
@@ -99,7 +99,7 @@ export function PlatformPreview() {
                             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
                             className="absolute -left-12 bottom-20 w-48 bg-zinc-900 border border-zinc-800 rounded-xl p-4 shadow-2xl backdrop-blur-md hidden lg:flex flex-col gap-3"
                         >
-                            <div className="w-8 h-8 rounded bg-green-500/20 text-green-500 flex items-center justify-center font-bold">✓</div>
+                            <div className="w-8 h-8 rounded bg-primary/20 text-primary flex items-center justify-center font-bold">✓</div>
                             <div>
                                 <div className="text-sm font-bold text-white">Meta Diária</div>
                                 <div className="text-xs text-zinc-400">Batida com sucesso</div>

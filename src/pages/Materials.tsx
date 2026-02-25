@@ -115,9 +115,9 @@ export function Materials() {
     }
 
     const getFileIcon = (type: string) => {
-        if (['pdf'].includes(type)) return <FileText size={24} className="text-red-400" />;
-        if (['mp4', 'mov'].includes(type)) return <Video size={24} className="text-blue-400" />;
-        if (['jpg', 'png', 'jpeg'].includes(type)) return <ImageIcon size={24} className="text-emerald-400" />;
+        if (['pdf'].includes(type)) return <FileText size={24} className="text-primary" />;
+        if (['mp4', 'mov'].includes(type)) return <Video size={24} className="text-primary" />;
+        if (['jpg', 'png', 'jpeg'].includes(type)) return <ImageIcon size={24} className="text-primary" />;
         return <File size={24} className="text-zinc-400" />;
     };
 

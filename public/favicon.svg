@@ -1,38 +1,19 @@
-<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background: Amber Gradient Rounded Square -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#grad1)" stroke="rgba(253, 224, 71, 0.2)" stroke-width="2"/>
+  
+  <!-- Gradient Definition -->
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFC832"/>
-      <stop offset="100%" stop-color="#F59E0B"/>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" /> <!-- amber-400 -->
+      <stop offset="100%" style="stop-color:#ca8a04;stop-opacity:1" /> <!-- yellow-600 -->
     </linearGradient>
   </defs>
 
-  <!-- Amber rounded square background -->
-  <rect width="512" height="512" rx="110" fill="url(#bg)"/>
-
-  <!-- Crown icon — faithful to the logo: two peaks + base bar -->
-  <!-- stroke width scaled generously so it's visible as favicon -->
-  <g transform="translate(96, 120)">
-    <!-- Crown outline with 2-peak shape -->
-    <path
-      d="M20 230
-         L20 185
-         L0 60
-         L80 130
-         L160 10
-         L240 130
-         L320 60
-         L300 185
-         L300 230
-         Z"
-      fill="none"
-      stroke="#1a1008"
-      stroke-width="28"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <!-- Base line 1 -->
-    <line x1="10" y1="255" x2="310" y2="255" stroke="#1a1008" stroke-width="28" stroke-linecap="round"/>
-    <!-- Base line 2 -->
-    <line x1="10" y1="290" x2="310" y2="290" stroke="#1a1008" stroke-width="28" stroke-linecap="round"/>
+  <!-- Crown Icon (Lucide-like) -->
+  <g transform="translate(14, 14) scale(1.5)">
+    <path d="M5 18h14v-2H5v2zm0-2l-3-11 5 4 4-6 4 6 5-4-3 11H5z" fill="rgba(66, 32, 6, 0.2)" /> <!-- Fill yellow-950/20 -->
+    <path d="M2 6l3 11h14l3-11-6 6-4-8-4 8-6-6z" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M5 19h14" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg>

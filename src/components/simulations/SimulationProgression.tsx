@@ -196,7 +196,7 @@ export function SimulationProgression({ history }: SimulationProgressionProps) {
 
                     {/* Meta Input (Global) */}
                     <div className="flex items-center gap-2 bg-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-800">
-                        <Target size={16} className="text-emerald-500" />
+                        <Target size={16} className="text-primary" />
                         <span className="text-zinc-400 text-sm">Meta Global:</span>
                         {isEditingTarget ? (
                             <input
@@ -210,7 +210,7 @@ export function SimulationProgression({ history }: SimulationProgressionProps) {
                         ) : (
                             <span
                                 onClick={() => setIsEditingTarget(true)}
-                                className="text-white font-bold text-sm cursor-pointer hover:text-emerald-400 transition-colors border-b border-dashed border-zinc-600 hover:border-emerald-500"
+                                className="text-white font-bold text-sm cursor-pointer hover:text-primary transition-colors border-b border-dashed border-zinc-600 hover:border-primary"
                             >
                                 {targetScore}
                             </span>
@@ -268,7 +268,7 @@ export function SimulationProgression({ history }: SimulationProgressionProps) {
 
                     <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl">
                         <div className="text-zinc-500 text-xs font-bold uppercase tracking-wider mb-2">Melhor Performance</div>
-                        <div className="text-3xl font-bold text-emerald-500">
+                        <div className="text-3xl font-bold text-primary">
                             {viewMode === 'redacao'
                                 ? Math.max(...redacaoData.map(h => h.score || 0), 0)
                                 : Math.max(...history.map(h => h.score), 0)

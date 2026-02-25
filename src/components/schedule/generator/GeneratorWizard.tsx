@@ -89,7 +89,7 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
 
                 {/* Header */}
                 <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                         <Brain size={24} />
                     </div>
                     <div>
@@ -105,13 +105,13 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                             {/* Focus Course */}
                             <div className="bg-zinc-800/50 p-4 rounded-xl border border-zinc-700">
                                 <div className="flex items-center gap-2 mb-3 text-white font-medium">
-                                    <GraduationCap size={18} className="text-indigo-400" />
+                                    <GraduationCap size={18} className="text-primary" />
                                     <span>Curso de Foco</span>
                                 </div>
                                 <select
                                     value={prefs.focusCourse}
                                     onChange={e => setPrefs({ ...prefs, focusCourse: e.target.value as any })}
-                                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-zinc-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                                    className="w-full bg-zinc-900 border border-zinc-700 rounded-lg p-2 text-zinc-200 focus:ring-2 focus:ring-primary focus:outline-none"
                                 >
                                     <option value="Medicina">Medicina (Alta Concorrência)</option>
                                     <option value="Engenharia">Engenharia</option>
@@ -124,11 +124,11 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                             {/* Coverage Info */}
                             <div className="bg-zinc-800/50 p-4 rounded-xl border border-zinc-700">
                                 <div className="flex items-center gap-2 mb-3 text-white font-medium">
-                                    <Calendar size={18} className="text-emerald-400" />
+                                    <Calendar size={18} className="text-primary" />
                                     <span>Cobertura Completa</span>
                                 </div>
                                 <p className="text-sm text-zinc-300">
-                                    Toda a matéria do ENEM distribuída até <strong className="text-emerald-400">outubro</strong>.
+                                    Toda a matéria do ENEM distribuída até <strong className="text-primary">outubro</strong>.
                                 </p>
                                 <p className="text-xs text-zinc-500 mt-2">Teoria + Fixação + Revisão D+1, D+7, D+30.</p>
                             </div>
@@ -149,7 +149,7 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                                     onChange={e => setPrefs({ ...prefs, hoursPerDay: { ...prefs.hoursPerDay, weekdays: parseInt(e.target.value) } })}
                                     className="w-full accent-indigo-500 mb-2"
                                 />
-                                <div className="text-right font-bold text-indigo-400">{prefs.hoursPerDay.weekdays} horas/dia</div>
+                                <div className="text-right font-bold text-primary">{prefs.hoursPerDay.weekdays} horas/dia</div>
                             </div>
 
                             <div className="bg-zinc-800/50 p-4 rounded-xl border border-zinc-700">
@@ -163,7 +163,7 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                                     onChange={e => setPrefs({ ...prefs, hoursPerDay: { ...prefs.hoursPerDay, weekend: parseInt(e.target.value) } })}
                                     className="w-full accent-indigo-500 mb-2"
                                 />
-                                <div className="text-right font-bold text-indigo-400">{prefs.hoursPerDay.weekend} horas/dia</div>
+                                <div className="text-right font-bold text-primary">{prefs.hoursPerDay.weekend} horas/dia</div>
                             </div>
                         </div>
 
@@ -171,7 +171,7 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                             <button onClick={onCancel} className="px-4 py-2 text-zinc-400 hover:text-white">Cancelar</button>
                             <button
                                 onClick={() => setStep(2)}
-                                className="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg flex items-center gap-2 font-medium transition-colors"
+                                className="px-6 py-2 bg-primary hover:bg-primary text-white rounded-lg flex items-center gap-2 font-medium transition-colors"
                             >
                                 Próximo <ChevronRight size={18} />
                             </button>
@@ -199,7 +199,7 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                                                 <button
                                                     key={r}
                                                     onClick={() => setPrefs(p => ({ ...p, proficiency: { ...p.proficiency, [subj]: r } }))}
-                                                    className={`p-0.5 transition-transform hover:scale-110 ${(prefs.proficiency[subj] || 3) >= r ? 'text-yellow-500 fill-yellow-500' : 'text-zinc-700'
+                                                    className={`p-0.5 transition-transform hover:scale-110 ${(prefs.proficiency[subj] || 3) >= r ? 'text-primary fill-yellow-500' : 'text-zinc-700'
                                                         }`}
                                                 >
                                                     <Star size={18} />
@@ -220,7 +220,7 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                             <button onClick={() => setStep(1)} className="px-4 py-2 text-zinc-400 hover:text-white flex items-center gap-2"><ChevronLeft size={16} /> Voltar</button>
                             <button
                                 onClick={() => setStep(3)}
-                                className="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg flex items-center gap-2 font-medium transition-colors"
+                                className="px-6 py-2 bg-primary hover:bg-primary text-white rounded-lg flex items-center gap-2 font-medium transition-colors"
                             >
                                 Próximo <ChevronRight size={18} />
                             </button>
@@ -231,8 +231,8 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                 {/* ━━━ Step 3: Confirmation ━━━ */}
                 {step === 3 && (
                     <div className="space-y-6 text-center py-8">
-                        <div className="w-20 h-20 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                            <Brain size={48} className="text-indigo-500" />
+                        <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                            <Brain size={48} className="text-primary" />
                         </div>
 
                         <h3 className="text-2xl font-bold text-white">Tudo pronto!</h3>
@@ -252,7 +252,7 @@ export function GeneratorWizard({ onComplete, onCancel }: GeneratorWizardProps) 
                             <button
                                 onClick={handleFinish}
                                 disabled={loading}
-                                className="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl flex items-center gap-2 font-bold transition-all shadow-lg shadow-indigo-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="px-8 py-3 bg-primary hover:bg-primary text-white rounded-xl flex items-center gap-2 font-bold transition-all shadow-lg shadow-primary/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {loading ? 'Gerando...' : 'Gerar Planejamento 🚀'}
                             </button>

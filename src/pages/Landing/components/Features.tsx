@@ -5,22 +5,22 @@ const features = [
     {
         title: "Gerador de Cronograma Inteligente",
         description: "Um cronograma que se adapta à sua rotina. Escolha as matérias, os dias livres e a plataforma cria o planejamento perfeito matematicamente.",
-        icon: <Clock className="w-6 h-6 text-amber-400" />
+        icon: <Clock className="w-6 h-6 text-primary" />
     },
     {
         title: "Simulados Corrigidos e Rankeados",
         description: "Faça provas simuladas no padrão real. Seus erros são mapeados, e você descobre exatamente quais assuntos precisa revisar.",
-        icon: <Target className="w-6 h-6 text-amber-400" />
+        icon: <Target className="w-6 h-6 text-primary" />
     },
     {
         title: "Análise de Performance",
         description: "Painéis de controle completos mostrando sua evolução por matéria, tempo médio por questão e predição de nota.",
-        icon: <BarChart className="w-6 h-6 text-amber-400" />
+        icon: <BarChart className="w-6 h-6 text-primary" />
     },
     {
         title: "Métricas Avançadas",
         description: "Conheça seus pontos cegos. O aplicativo acompanha cada minuto de estudo líquido e correlaciona com seu desempenho.",
-        icon: <Zap className="w-6 h-6 text-amber-400" />
+        icon: <Zap className="w-6 h-6 text-primary" />
     }
 ];
 
@@ -31,7 +31,7 @@ export function Features() {
 
                 <div className="text-center max-w-3xl mx-auto mb-20">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-                        Não é só estudar. É ter <span className="text-amber-400">direção clara.</span>
+                        Não é só estudar. É ter <span className="text-primary">direção clara.</span>
                     </h2>
                     <p className="text-lg text-zinc-400">
                         A Plataforma Real foi construída com tecnologia de ponta para substituir planilhas complexas, resumos perdidos e simulados desorganizados.
@@ -46,7 +46,7 @@ export function Features() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1 }}
-                            className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl hover:border-amber-500/30 transition-colors group relative overflow-hidden"
+                            className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl hover:border-primary/30 transition-colors group relative overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
                                 {feature.icon}

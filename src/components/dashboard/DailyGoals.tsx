@@ -128,9 +128,9 @@ export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
             current: goals.questions_done,
             target: goals.questions_target,
             targetField: 'questions_target' as const,
-            color: 'bg-emerald-500',
-            textColor: 'text-emerald-500',
-            bgColor: 'bg-emerald-500/10'
+            color: 'bg-primary',
+            textColor: 'text-primary',
+            bgColor: 'bg-primary/10'
         },
         {
             id: 2,
@@ -139,9 +139,9 @@ export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
             current: goals.classes_done,
             target: goals.classes_target,
             targetField: 'classes_target' as const,
-            color: 'bg-blue-500',
-            textColor: 'text-blue-500',
-            bgColor: 'bg-blue-500/10'
+            color: 'bg-primary',
+            textColor: 'text-primary',
+            bgColor: 'bg-primary/10'
         }
     ];
 
@@ -155,14 +155,14 @@ export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
                     <>
                         <button
                             onClick={saveTargets}
-                            className="p-1.5 rounded-lg bg-green-500/20 text-green-400 hover:bg-green-500/30 transition-all"
+                            className="p-1.5 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 transition-all"
                             title="Salvar Metas"
                         >
                             <Save size={14} />
                         </button>
                         <button
                             onClick={cancelEdit}
-                            className="p-1.5 rounded-lg bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-all"
+                            className="p-1.5 rounded-lg bg-primary/20 text-primary hover:bg-primary/30 transition-all"
                             title="Cancelar"
                         >
                             <X size={14} />
@@ -185,7 +185,7 @@ export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
                     const Icon = goal.icon;
 
                     return (
-                        <div key={goal.id} className={`group relative overflow-hidden rounded-3xl p-6 border ${isEditing ? 'border-yellow-500/30 bg-yellow-500/5' : 'border-zinc-800 bg-zinc-900/50'} hover:bg-zinc-900/80 transition-all duration-500`}>
+                        <div key={goal.id} className={`group relative overflow-hidden rounded-3xl p-6 border ${isEditing ? 'border-primary/30 bg-primary/5' : 'border-zinc-800 bg-zinc-900/50'} hover:bg-zinc-900/80 transition-all duration-500`}>
                             <div className="flex justify-between items-start mb-6">
                                 <div className="flex items-center gap-3">
                                     <div className={`p-2 rounded-xl ${goal.bgColor} ${goal.textColor} bg-opacity-10 ring-1 ring-white/5`}>
@@ -212,7 +212,7 @@ export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
                                             type="number"
                                             value={goals[goal.targetField]}
                                             onChange={(e) => setGoals(prev => ({ ...prev, [goal.targetField]: parseInt(e.target.value) || 0 }))}
-                                            className="w-12 bg-zinc-800 border border-zinc-700 text-white text-sm rounded px-1 text-center focus:outline-none focus:border-yellow-500"
+                                            className="w-12 bg-zinc-800 border border-zinc-700 text-white text-sm rounded px-1 text-center focus:outline-none focus:border-primary"
                                         />
                                     ) : (
                                         <span className="text-sm text-zinc-500">{goal.target}</span>
@@ -223,7 +223,7 @@ export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
                                     <div className="flex gap-2">
                                         <button
                                             onClick={() => updateGoalValue(goal.id === 1 ? 'questions' : 'classes', -1)}
-                                            className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary hover:text-primary transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
                                             title="Remover -1"
                                             disabled={goal.current <= 0}
                                         >
@@ -258,7 +258,7 @@ export function DailyGoals({ refreshKey }: { refreshKey?: number }) {
             {goals.tasks && goals.tasks.length > 0 && (
                 <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-2xl p-5">
                     <h4 className="text-sm font-bold text-zinc-400 mb-3 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                         Tópicos Estudados Hoje
                     </h4>
                     <div className="flex flex-wrap gap-2">

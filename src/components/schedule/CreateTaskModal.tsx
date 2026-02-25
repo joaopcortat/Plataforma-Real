@@ -68,7 +68,7 @@ export function CreateTaskModal({ isOpen, onClose, onSuccess, defaultDate }: Cre
                             required
                             value={formData.title}
                             onChange={e => setFormData({ ...formData, title: e.target.value })}
-                            className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                            className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                             placeholder="Ex: Resolver lista de exercícios"
                         />
                     </div>
@@ -80,7 +80,7 @@ export function CreateTaskModal({ isOpen, onClose, onSuccess, defaultDate }: Cre
                                 required
                                 value={formData.subject}
                                 onChange={e => setFormData({ ...formData, subject: e.target.value })}
-                                className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500 transition-all appearance-none"
+                                className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-primary transition-all appearance-none"
                             >
                                 <option value="" disabled>Selecione...</option>
                                 <option value="Matemática">Matemática</option>
@@ -99,7 +99,7 @@ export function CreateTaskModal({ isOpen, onClose, onSuccess, defaultDate }: Cre
                             <select
                                 value={formData.type}
                                 onChange={e => setFormData({ ...formData, type: e.target.value })}
-                                className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500 transition-all appearance-none"
+                                className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-primary transition-all appearance-none"
                             >
                                 <option value="class">Aula</option>
                                 <option value="exercise">Exercícios</option>
@@ -116,14 +116,14 @@ export function CreateTaskModal({ isOpen, onClose, onSuccess, defaultDate }: Cre
                             required
                             value={formData.date}
                             onChange={e => setFormData({ ...formData, date: e.target.value })}
-                            className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-emerald-500 transition-all"
+                            className="w-full bg-zinc-800/50 border border-zinc-700 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-primary transition-all"
                         />
                     </div>
 
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95 flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-primary hover:bg-primary text-black font-bold py-3 rounded-xl transition-all shadow-lg shadow-primary/20 active:scale-95 flex items-center justify-center gap-2 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? (
                             <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />

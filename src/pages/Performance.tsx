@@ -93,7 +93,7 @@ export function Performance() {
 
     function getColorForSubject(subject: string) {
         const hash = subject.split('').reduce((acc, char) => char.charCodeAt(0) + acc, 0);
-        const colors = ['bg-yellow-500', 'bg-emerald-500', 'bg-purple-500', 'bg-blue-500', 'bg-pink-500'];
+        const colors = ['bg-primary', 'bg-primary', 'bg-primary', 'bg-primary', 'bg-primary'];
         return colors[hash % colors.length];
     }
 
@@ -107,10 +107,10 @@ export function Performance() {
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {[
-                    { title: 'Tempo de Estudo', value: `${stats.studyHours}h`, change: 'Estimado', icon: Clock, color: 'text-indigo-400', bg: 'bg-indigo-400/10' },
-                    { title: 'Exercícios/Tarefas', value: stats.completedTasks, change: 'Concluídos', icon: Target, color: 'text-emerald-400', bg: 'bg-emerald-400/10' },
-                    { title: 'Taxa de Conclusão', value: `${stats.completionRate}%`, change: 'Geral', icon: BarChart3, color: 'text-orange-400', bg: 'bg-orange-400/10' },
-                    { title: 'Nível Atual', value: 'Prata', change: 'Em breve', icon: Award, color: 'text-pink-400', bg: 'bg-pink-400/10' },
+                    { title: 'Tempo de Estudo', value: `${stats.studyHours}h`, change: 'Estimado', icon: Clock, color: 'text-primary', bg: 'bg-primary/10' },
+                    { title: 'Exercícios/Tarefas', value: stats.completedTasks, change: 'Concluídos', icon: Target, color: 'text-primary', bg: 'bg-primary/10' },
+                    { title: 'Taxa de Conclusão', value: `${stats.completionRate}%`, change: 'Geral', icon: BarChart3, color: 'text-primary', bg: 'bg-primary/10' },
+                    { title: 'Nível Atual', value: 'Prata', change: 'Em breve', icon: Award, color: 'text-primary', bg: 'bg-primary/10' },
                 ].map((stat, i) => (
                     <div key={i} className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl hover:border-zinc-700 transition-colors">
                         <div className="flex justify-between items-start mb-4">

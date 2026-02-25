@@ -163,7 +163,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                     examType === 'enem_day1' ? "bg-zinc-800 text-white shadow-sm" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900"
                                 )}
                             >
-                                <BookOpen size={16} className={examType === 'enem_day1' ? "text-orange-500" : ""} />
+                                <BookOpen size={16} className={examType === 'enem_day1' ? "text-primary" : ""} />
                                 Dia 1
                             </button>
                             <button
@@ -173,7 +173,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                     examType === 'enem_day2' ? "bg-zinc-800 text-white shadow-sm" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900"
                                 )}
                             >
-                                <BrainCircuit size={16} className={examType === 'enem_day2' ? "text-blue-500" : ""} />
+                                <BrainCircuit size={16} className={examType === 'enem_day2' ? "text-primary" : ""} />
                                 Dia 2
                             </button>
                             <button
@@ -183,7 +183,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                     examType === 'custom' ? "bg-zinc-800 text-white shadow-sm" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900"
                                 )}
                             >
-                                <TimerIcon size={16} className={examType === 'custom' ? "text-emerald-500" : ""} />
+                                <TimerIcon size={16} className={examType === 'custom' ? "text-primary" : ""} />
                                 Outro
                             </button>
                         </div>
@@ -238,7 +238,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                             required
                                             value={linguagens}
                                             onChange={(e) => setLinguagens(e.target.value)}
-                                            className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-blue-500"
+                                            className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-primary"
                                         />
                                     </div>
                                     <div>
@@ -250,7 +250,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                             required
                                             value={humanas}
                                             onChange={(e) => setHumanas(e.target.value)}
-                                            className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-orange-500"
+                                            className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-primary"
                                         />
                                     </div>
                                 </div>
@@ -274,14 +274,14 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                                         if (num === 4) setC4(val);
                                                         if (num === 5) setC5(val);
                                                     }}
-                                                    className="w-full bg-zinc-800 border-zinc-700 rounded-lg p-2 text-center text-xs font-bold text-white focus:border-pink-500"
+                                                    className="w-full bg-zinc-800 border-zinc-700 rounded-lg p-2 text-center text-xs font-bold text-white focus:border-primary"
                                                 />
                                             </div>
                                         ))}
                                     </div>
                                     <div className="mt-2 text-right">
                                         <span className="text-xs text-zinc-500 mr-2">Total:</span>
-                                        <span className="text-pink-500 font-bold">
+                                        <span className="text-primary font-bold">
                                             {(parseInt(c1 || '0') + parseInt(c2 || '0') + parseInt(c3 || '0') + parseInt(c4 || '0') + parseInt(c5 || '0'))}
                                         </span>
                                     </div>
@@ -300,7 +300,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                         required
                                         value={natureza}
                                         onChange={(e) => setNatureza(e.target.value)}
-                                        className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-emerald-500"
+                                        className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-primary"
                                     />
                                 </div>
                                 <div>
@@ -312,7 +312,7 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                         required
                                         value={matematica}
                                         onChange={(e) => setMatematica(e.target.value)}
-                                        className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-blue-600"
+                                        className="w-full bg-zinc-800 border-zinc-700 rounded-xl p-3 text-center font-bold text-white focus:border-primary"
                                     />
                                 </div>
                             </div>

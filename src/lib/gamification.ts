@@ -10,11 +10,11 @@ export const GAMIFICATION = {
 
     // Titles based on Level
     getTitle: (level: number) => {
-        if (level >= 50) return { title: 'Imperador', color: 'text-yellow-400' };
-        if (level >= 40) return { title: 'Rei', color: 'text-orange-400' };
-        if (level >= 30) return { title: 'Duque', color: 'text-purple-400' };
-        if (level >= 20) return { title: 'Marquês', color: 'text-red-400' };
-        if (level >= 10) return { title: 'Cavaleiro', color: 'text-blue-400' };
+        if (level >= 50) return { title: 'Imperador', color: 'text-primary' };
+        if (level >= 40) return { title: 'Rei', color: 'text-primary' };
+        if (level >= 30) return { title: 'Duque', color: 'text-primary' };
+        if (level >= 20) return { title: 'Marquês', color: 'text-primary' };
+        if (level >= 10) return { title: 'Cavaleiro', color: 'text-primary' };
         return { title: 'Plebeu', color: 'text-zinc-400' };
     }
 };

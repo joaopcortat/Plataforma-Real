@@ -129,14 +129,14 @@ const DayColumn = React.memo(function DayColumn({
             {/* Day Header */}
             <div className={clsx(
                 "text-center py-4 border-b border-zinc-800",
-                isToday ? "bg-indigo-500/10" : "bg-zinc-900"
+                isToday ? "bg-primary/10" : "bg-zinc-900"
             )}>
                 <div className="text-xs font-medium uppercase text-zinc-500 mb-1">
                     {format(day, 'EEE', { locale: ptBR })}
                 </div>
                 <div className={clsx(
                     "text-2xl font-bold flex justify-center items-center mx-auto w-10 h-10 rounded-full",
-                    isToday ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/25" : "text-zinc-400"
+                    isToday ? "bg-primary text-white shadow-lg shadow-primary/25" : "text-zinc-400"
                 )}>
                     {format(day, 'd')}
                 </div>
@@ -354,7 +354,7 @@ export function Schedule() {
                 <div className="flex items-center gap-4">
                     <button
                         onClick={() => setIsGeneratorOpen(true)}
-                        className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg transition-all shadow-lg shadow-indigo-500/20 mr-2 border border-indigo-400/30"
+                        className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary text-white font-bold rounded-lg transition-all shadow-lg shadow-primary/20 mr-2 border border-primary/30"
                     >
                         <Sparkles size={20} />
                         Novo Planejamento
@@ -362,7 +362,7 @@ export function Schedule() {
 
                     <button
                         onClick={() => handleAddTask(new Date())}
-                        className="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-lg transition-colors shadow-lg shadow-emerald-500/20"
+                        className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary text-black font-bold rounded-lg transition-colors shadow-lg shadow-primary/20"
                     >
                         <Plus size={20} />
                         Nova Tarefa
@@ -401,7 +401,7 @@ export function Schedule() {
                     {loading && (
                         <div className="absolute inset-0 z-10 bg-zinc-900/50 backdrop-blur-[2px] flex items-center justify-center pointer-events-none">
                             <div className="flex flex-col items-center gap-3 animate-pulse">
-                                <Sparkles className="text-indigo-500 w-10 h-10 animate-spin-slow" />
+                                <Sparkles className="text-primary w-10 h-10 animate-spin-slow" />
                                 <p className="text-sm font-medium text-zinc-400">Carregando cronograma...</p>
                             </div>
                         </div>

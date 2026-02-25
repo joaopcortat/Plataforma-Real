@@ -20,7 +20,7 @@ export function Testimonials() {
         <section id="depoimentos" className="py-24 bg-zinc-950 relative overflow-hidden border-t border-zinc-900">
 
             {/* Background Decorativo */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10 mb-16">
                 <div className="text-center max-w-3xl mx-auto">
@@ -28,13 +28,13 @@ export function Testimonials() {
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex justify-center items-center px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-semibold text-sm mb-6"
+                        className="inline-flex justify-center items-center px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-semibold text-sm mb-6"
                     >
                         Aprovados
                     </motion.div>
 
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                        Não acredite apenas <span className="text-amber-400">em nós.</span>
+                        Não acredite apenas <span className="text-primary">em nós.</span>
                     </h2>
                     <p className="text-lg text-zinc-400">
                         Veja o que os alunos que adotaram a rotina de alto desempenho e nossa plataforma estão falando a respeito.
@@ -56,7 +56,7 @@ export function Testimonials() {
                             className="w-[300px] md:w-[350px] shrink-0 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-2 shadow-xl relative overflow-hidden group"
                         >
                             {/* Fallback box caso a imagem não exista - a estética dark mode garante que não fique feio */}
-                            <div className="w-full aspect-[4/5] bg-zinc-900 rounded-xl relative overflow-hidden flex items-center justify-center border border-zinc-800/50 group-hover:border-amber-500/30 transition-colors">
+                            <div className="w-full aspect-[4/5] bg-zinc-900 rounded-xl relative overflow-hidden flex items-center justify-center border border-zinc-800/50 group-hover:border-primary/30 transition-colors">
                                 <span className="text-zinc-600 text-xs text-center px-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
                                     Coloque a imagem em: <br /> {imagePath}
                                 </span>

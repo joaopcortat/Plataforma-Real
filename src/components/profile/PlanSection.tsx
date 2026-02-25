@@ -10,10 +10,10 @@ const PLAN_LABELS = {
 };
 
 const PLAN_COLORS = {
-    trimestral: 'from-blue-500/20 to-blue-600/10 border-blue-500/30',
-    semestral: 'from-violet-500/20 to-violet-600/10 border-violet-500/30',
-    anual: 'from-amber-500/20 to-amber-600/10 border-amber-500/30',
-    manual: 'from-emerald-500/20 to-emerald-600/10 border-emerald-500/30',
+    trimestral: 'from-primary/20 to-primary/10 border-primary/30',
+    semestral: 'from-primary/20 to-primary/10 border-primary/30',
+    anual: 'from-primary/20 to-primary/10 border-primary/30',
+    manual: 'from-primary/20 to-primary/10 border-primary/30',
 };
 
 const PLAN_ICONS = {
@@ -54,9 +54,9 @@ export function PlanSection() {
     // Sem assinatura ativa
     if (!isActive || !subscription) {
         return (
-            <div className="bg-[#111118] border border-white/10 rounded-2xl p-6">
+            <div className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span className="text-xl">⚠️</span>
                     </div>
                     <div>
@@ -76,11 +76,11 @@ export function PlanSection() {
                             href={UPGRADE_URLS[plan.id as keyof typeof UPGRADE_URLS]}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-[#1a1a2e] hover:bg-[#7c3aed]/20 border border-white/10 hover:border-[#7c3aed]/40 rounded-xl p-4 text-center transition-all group"
+                            className="bg-zinc-950 hover:bg-primary/10 border border-zinc-800 hover:border-primary/40 rounded-xl p-4 text-center transition-all group"
                         >
                             <p className="text-white font-bold text-lg">{plan.price}</p>
                             <p className="text-gray-400 text-xs">{plan.period}</p>
-                            <p className="text-[#a78bfa] text-xs mt-2 group-hover:text-white transition-colors">Assinar →</p>
+                            <p className="text-primary text-xs mt-2 opacity-80 group-hover:opacity-100 transition-opacity">Assinar →</p>
                         </a>
                     ))}
                 </div>
@@ -113,7 +113,7 @@ export function PlanSection() {
                             <h3 className="text-white font-bold text-lg">
                                 Plano {PLAN_LABELS[subscription.plan]}
                             </h3>
-                            <span className="bg-emerald-500/20 text-emerald-400 text-xs font-medium px-2 py-0.5 rounded-full border border-emerald-500/30">
+                            <span className="bg-primary/20 text-primary text-xs font-medium px-2 py-0.5 rounded-full border border-primary/30">
                                 ✓ Ativo
                             </span>
                         </div>
@@ -145,7 +145,7 @@ export function PlanSection() {
                 </div>
                 <div className="bg-black/20 rounded-xl p-4">
                     <p className="text-gray-400 text-xs mb-1">Dias restantes</p>
-                    <p className={`font-bold text-xl ${isExpiringSoon ? 'text-amber-400' : 'text-white'}`}>
+                    <p className={`font-bold text-xl ${isExpiringSoon ? 'text-primary' : 'text-white'}`}>
                         {daysRemaining}
                         {isExpiringSoon && <span className="text-xs font-normal ml-1">⚠️ expirando</span>}
                     </p>
@@ -161,7 +161,7 @@ export function PlanSection() {
                     </div>
                     <div className="h-2 bg-black/30 rounded-full overflow-hidden">
                         <div
-                            className={`h-full rounded-full transition-all ${isExpiringSoon ? 'bg-amber-500' : 'bg-[#7c3aed]'
+                            className={`h-full rounded-full transition-all ${isExpiringSoon ? 'bg-primary' : 'bg-zinc-700'
                                 }`}
                             style={{
                                 width: `${Math.min(100, (daysRemaining / (subscription.plan === 'anual' ? 365 : subscription.plan === 'semestral' ? 183 : 92)) * 100)}%`
@@ -178,7 +178,7 @@ export function PlanSection() {
                         href={UPGRADE_URLS[subscription.plan as keyof typeof UPGRADE_URLS] || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 bg-[#7c3aed] hover:bg-[#6d28d9] text-white text-sm font-semibold py-2.5 rounded-xl text-center transition-all"
+                        className="flex-1 bg-primary hover:bg-primary-hover text-black text-sm font-semibold py-2.5 rounded-xl text-center transition-all"
                     >
                         Renovar plano
                     </a>

@@ -4,10 +4,10 @@ import clsx from 'clsx';
 export function Heatmap() {
     const getIntensityClass = (count: number) => {
         if (count === 0) return 'bg-zinc-800/50';
-        if (count === 1) return 'bg-emerald-900/40';
-        if (count === 2) return 'bg-emerald-700/60';
-        if (count === 3) return 'bg-emerald-500/80';
-        return 'bg-emerald-400';
+        if (count === 1) return 'bg-primary/40';
+        if (count === 2) return 'bg-primary/60';
+        if (count === 3) return 'bg-primary/80';
+        return 'bg-primary';
     };
 
     // Group by weeks for the grid
@@ -32,10 +32,10 @@ export function Heatmap() {
                     <span>Menos</span>
                     <div className="flex gap-1">
                         <div className="w-3 h-3 rounded-sm bg-zinc-800/50" />
-                        <div className="w-3 h-3 rounded-sm bg-emerald-900/40" />
-                        <div className="w-3 h-3 rounded-sm bg-emerald-700/60" />
-                        <div className="w-3 h-3 rounded-sm bg-emerald-500/80" />
-                        <div className="w-3 h-3 rounded-sm bg-emerald-400" />
+                        <div className="w-3 h-3 rounded-sm bg-primary/40" />
+                        <div className="w-3 h-3 rounded-sm bg-primary/60" />
+                        <div className="w-3 h-3 rounded-sm bg-primary/80" />
+                        <div className="w-3 h-3 rounded-sm bg-primary" />
                     </div>
                     <span>Mais</span>
                 </div>

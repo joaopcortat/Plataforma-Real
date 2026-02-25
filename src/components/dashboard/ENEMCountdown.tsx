@@ -17,9 +17,9 @@ export function ENEMCountdown() {
     }, []);
 
     const getPhase = (weeks: number) => {
-        if (weeks > 30) return { label: 'Construção de Base', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'hover:border-emerald-500/30' };
-        if (weeks > 12) return { label: 'Aprofundamento', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'hover:border-blue-500/30' };
-        return { label: 'Reta Final', color: 'text-red-400', bg: 'bg-red-500/10', border: 'hover:border-red-500/30' };
+        if (weeks > 30) return { label: 'Construção de Base', color: 'text-primary', bg: 'bg-primary/10', border: 'hover:border-primary/30' };
+        if (weeks > 12) return { label: 'Aprofundamento', color: 'text-primary', bg: 'bg-primary/10', border: 'hover:border-primary/30' };
+        return { label: 'Reta Final', color: 'text-primary', bg: 'bg-primary/10', border: 'hover:border-primary/30' };
     };
 
     const phase = getPhase(timeLeft.weeks);
@@ -27,7 +27,7 @@ export function ENEMCountdown() {
     return (
         <div className={`relative group overflow-hidden rounded-3xl p-6 border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-900/80 transition-all duration-500 ${phase.border} hover:shadow-2xl`}>
             {/* Background Effects */}
-            <div className={`absolute top-0 right-0 w-48 h-48 blur-[60px] rounded-full pointer-events-none transition-all duration-500 opacity-10 group-hover:opacity-20 ${timeLeft.weeks > 12 ? (timeLeft.weeks > 30 ? 'bg-emerald-600' : 'bg-blue-600') : 'bg-red-600'}`} />
+            <div className={`absolute top-0 right-0 w-48 h-48 blur-[60px] rounded-full pointer-events-none transition-all duration-500 opacity-10 group-hover:opacity-20 ${timeLeft.weeks > 12 ? (timeLeft.weeks > 30 ? 'bg-primary' : 'bg-primary') : 'bg-primary'}`} />
 
             <div className="relative z-10 flex flex-col items-center text-center justify-center min-h-[160px]">
 

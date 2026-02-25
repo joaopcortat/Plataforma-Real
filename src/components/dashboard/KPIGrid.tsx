@@ -8,32 +8,32 @@ export function KPIGrid() {
             label: 'Horas de Estudo',
             value: `${MOCK_DATA.kpis.studyHours}h`,
             icon: Clock,
-            color: 'text-blue-400',
-            bg: 'bg-blue-500/10',
+            color: 'text-primary',
+            bg: 'bg-primary/10',
             trend: '+2.5h'
         },
         {
             label: 'Questões Resolvidas',
             value: MOCK_DATA.kpis.questionsSolved,
             icon: CheckCircle,
-            color: 'text-emerald-400',
-            bg: 'bg-emerald-500/10',
+            color: 'text-primary',
+            bg: 'bg-primary/10',
             trend: '+45'
         },
         {
             label: '% de Acerto',
             value: `${MOCK_DATA.kpis.accuracy}%`,
             icon: Target,
-            color: 'text-purple-400',
-            bg: 'bg-purple-500/10',
+            color: 'text-primary',
+            bg: 'bg-primary/10',
             trend: '+5%'
         },
         {
             label: 'Dias Seguidos',
             value: MOCK_DATA.kpis.streak,
             icon: Zap,
-            color: 'text-orange-400',
-            bg: 'bg-orange-500/10',
+            color: 'text-primary',
+            bg: 'bg-primary/10',
             trend: 'Recorde!'
         },
     ];
@@ -51,7 +51,7 @@ export function KPIGrid() {
                             <p className="text-sm text-zinc-400 font-medium">{stat.label}</p>
                             <div className="flex items-baseline gap-2">
                                 <h3 className="text-2xl font-bold text-white">{stat.value}</h3>
-                                <span className="text-xs text-emerald-400 font-medium">{stat.trend}</span>
+                                <span className="text-xs text-primary font-medium">{stat.trend}</span>
                             </div>
                         </div>
                     </div>

@@ -14,19 +14,19 @@ interface TaskCardProps {
 
 // Color mapping based on the reference image vibe
 const SUBJECT_COLORS: Record<string, string> = {
-    'Matemática': 'border-yellow-500 text-yellow-500 bg-yellow-500/10',
-    'Física': 'border-emerald-500 text-emerald-500 bg-emerald-500/10',
-    'Química': 'border-emerald-400 text-emerald-400 bg-emerald-400/10',
-    'Biologia': 'border-green-500 text-green-500 bg-green-500/10',
-    'História': 'border-purple-500 text-purple-500 bg-purple-500/10',
-    'Geografia': 'border-purple-400 text-purple-400 bg-purple-400/10',
-    'Filosofia': 'border-pink-500 text-pink-500 bg-pink-500/10',
-    'Sociologia': 'border-pink-500 text-pink-500 bg-pink-500/10',
-    'Português': 'border-orange-500 text-orange-500 bg-orange-500/10',
-    'Redação': 'border-blue-500 text-blue-500 bg-blue-500/10',
-    'Literatura': 'border-orange-400 text-orange-400 bg-orange-400/10',
-    'Inglês': 'border-indigo-400 text-indigo-400 bg-indigo-400/10',
-    'Espanhol': 'border-indigo-400 text-indigo-400 bg-indigo-400/10',
+    'Matemática': 'border-primary text-primary bg-primary/10',
+    'Física': 'border-primary text-primary bg-primary/10',
+    'Química': 'border-primary text-primary bg-primary/10',
+    'Biologia': 'border-primary text-primary bg-primary/10',
+    'História': 'border-primary text-primary bg-primary/10',
+    'Geografia': 'border-primary text-primary bg-primary/10',
+    'Filosofia': 'border-primary text-primary bg-primary/10',
+    'Sociologia': 'border-primary text-primary bg-primary/10',
+    'Português': 'border-primary text-primary bg-primary/10',
+    'Redação': 'border-primary text-primary bg-primary/10',
+    'Literatura': 'border-primary text-primary bg-primary/10',
+    'Inglês': 'border-primary text-primary bg-primary/10',
+    'Espanhol': 'border-primary text-primary bg-primary/10',
 };
 
 const DEFAULT_COLOR = 'border-zinc-500 text-zinc-500 bg-zinc-500/10';
@@ -74,7 +74,7 @@ export function TaskCard({ subject, title, completed, onToggle, onDelete, durati
                                 e.stopPropagation();
                                 onDelete();
                             }}
-                            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-zinc-500 hover:text-red-500 rounded"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-zinc-500 hover:text-primary rounded"
                             title="Excluir bloco"
                         >
                             <Trash2 size={12} />

@@ -12,7 +12,7 @@ import { WaitlistModal } from './components/WaitlistModal';
 
 export function Landing() {
     return (
-        <div className="min-h-screen bg-zinc-950 font-sans selection:bg-amber-400 selection:text-zinc-950 overflow-x-hidden">
+        <div className="min-h-screen bg-zinc-950 font-sans selection:bg-primary selection:text-zinc-950 overflow-x-hidden">
             <Navbar />
 
             <main>

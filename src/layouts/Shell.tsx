@@ -6,8 +6,9 @@ import {
     Menu,
     X,
     FileText,
-    BookOpen,
-    Crown
+    Crown,
+    PenTool,
+    CheckCircle
 } from 'lucide-react';
 
 import clsx from 'clsx';
@@ -59,7 +60,8 @@ export function Shell() {
         { path: '/', icon: LayoutDashboard, label: 'Dashboard', end: true },
         { path: '/schedule', icon: Calendar, label: 'Cronograma' },
         { path: '/simulations', icon: FileText, label: 'Simulados' },
-        { path: '/materials', icon: BookOpen, label: 'Materiais' },
+        { path: '/essays', icon: PenTool, label: 'Redação' },
+        { path: '/habits', icon: CheckCircle, label: 'Tarefas Diárias' },
     ];
 
     /* 
@@ -84,7 +86,9 @@ export function Shell() {
                 case 'Dashboard': return 'animate-dashboard-hover';
                 case 'Cronograma': return 'animate-calendar-hover';
                 case 'Simulados': return 'animate-sim-hover';
-                case 'Materiais': return 'animate-book-hover';
+                case 'Redação': return 'hover:scale-105';
+
+                case 'Tarefas Diárias': return 'hover:scale-105';
                 default: return 'hover:scale-105';
             }
         };
@@ -140,15 +144,15 @@ export function Shell() {
                     <div className="flex items-center gap-3 relative z-10">
                         <NavLink to="/" className="relative group cursor-pointer">
                             {/* Royal Glow Effect emitting from the square - visible only on hover */}
-                            <div className="absolute inset-0 bg-amber-500 rounded-xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
+                            <div className="absolute inset-0 bg-primary rounded-xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
 
-                            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-lg shadow-amber-500/20 border border-yellow-300/20 group-hover:scale-105 transition-transform duration-300">
+                            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary flex items-center justify-center shadow-lg shadow-primary/20 border border-primary/20 group-hover:scale-105 transition-transform duration-300">
                                 <Crown size={22} className="text-black fill-yellow-950/20" strokeWidth={2.5} />
                             </div>
                         </NavLink>
                         <div className="flex flex-col">
                             <span className="font-black text-xl tracking-tight text-white leading-none">REAL</span>
-                            <span className="text-[10px] font-bold tracking-[0.2em] text-amber-500 uppercase">Mentoria</span>
+                            <span className="text-[10px] font-bold tracking-[0.2em] text-primary uppercase">Estudo</span>
                         </div>
                     </div>
                     <button
@@ -206,7 +210,7 @@ export function Shell() {
 
                     <button
                         onClick={() => setLogoutConfirmationOpen(true)}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-zinc-400 hover:text-primary hover:bg-primary/10 rounded-xl transition-colors"
                     >
                         <LogOut size={20} />
                         <span className="font-medium">Sair</span>
@@ -231,7 +235,7 @@ export function Shell() {
                             </button>
                             <button
                                 onClick={handleLogout}
-                                className="flex-1 px-4 py-2 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 rounded-xl transition-colors font-bold"
+                                className="flex-1 px-4 py-2 bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 rounded-xl transition-colors font-bold"
                             >
                                 Sim, sair
                             </button>
@@ -250,7 +254,7 @@ export function Shell() {
                     >
                         <Menu size={24} />
                     </button>
-                    <span className="font-bold text-white">Real Mentoria</span>
+                    <span className="font-bold text-white">Real Estudo</span>
                     <div className="w-8" /> {/* Spacer */}
                 </div>
 

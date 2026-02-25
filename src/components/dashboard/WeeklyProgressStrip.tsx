@@ -17,7 +17,7 @@ export function WeeklyProgressStrip() {
                         className={clsx(
                             "flex flex-col items-center gap-2 p-3 rounded-xl border transition-all duration-300 relative group",
                             isToday
-                                ? "bg-blue-600/20 border-blue-500 shadow-lg shadow-blue-500/20"
+                                ? "bg-primary/20 border-primary shadow-lg shadow-primary/20"
                                 : isPast
                                     ? "bg-zinc-900/50 border-zinc-800 opacity-60 hover:opacity-100"
                                     : "bg-zinc-900/30 border-zinc-800/50 opacity-40"
@@ -27,8 +27,8 @@ export function WeeklyProgressStrip() {
 
                         <div className={clsx(
                             "w-8 h-8 rounded-full flex items-center justify-center transition-all",
-                            isToday ? "bg-blue-500 text-white animate-pulse" :
-                                isPast ? "bg-emerald-500/20 text-emerald-500" :
+                            isToday ? "bg-primary text-white animate-pulse" :
+                                isPast ? "bg-primary/20 text-primary" :
                                     "bg-zinc-800 text-zinc-600"
                         )}>
                             {isToday ? <Flame size={16} fill="currentColor" /> :
@@ -38,7 +38,7 @@ export function WeeklyProgressStrip() {
 
                         {/* XP Bubble for Today */}
                         {isToday && (
-                            <div className="absolute -top-3 bg-blue-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg whitespace-nowrap animate-bounce">
+                            <div className="absolute -top-3 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg whitespace-nowrap animate-bounce">
                                 +111 XP
                             </div>
                         )}

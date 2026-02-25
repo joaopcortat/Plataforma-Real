@@ -97,11 +97,11 @@ export function StudyStopwatch({ isOpen, onClose, onFinish }: StudyStopwatchProp
                                 <Pause size={16} fill="currentColor" />
                             </button>
                         ) : (
-                            <button onClick={handleResume} className="p-2 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-500 transition-colors">
+                            <button onClick={handleResume} className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors">
                                 <Play size={16} fill="currentColor" />
                             </button>
                         )}
-                        <button onClick={() => setIsMinimized(false)} className="p-2 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 transition-colors" title="Expandir">
+                        <button onClick={() => setIsMinimized(false)} className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors" title="Expandir">
                             <Maximize2 size={16} />
                         </button>
                     </div>
@@ -141,7 +141,7 @@ export function StudyStopwatch({ isOpen, onClose, onFinish }: StudyStopwatchProp
             <div className="flex flex-col items-center max-w-4xl w-full px-4 space-y-12">
                 <div className="flex flex-col items-center w-full min-h-[160px] justify-center transition-all duration-500">
                     {!hideTimer && (
-                        <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl px-12 py-6 min-w-[320px] text-center shadow-lg shadow-emerald-500/5 backdrop-blur-sm animate-in fade-in zoom-in-95 duration-300 relative group">
+                        <div className="bg-primary/10 border border-primary/30 rounded-2xl px-12 py-6 min-w-[320px] text-center shadow-lg shadow-primary/5 backdrop-blur-sm animate-in fade-in zoom-in-95 duration-300 relative group">
                             <span className="text-zinc-400 font-medium tracking-wide uppercase text-sm mb-2 block">Tempo de Estudo</span>
                             <div className="text-7xl font-mono font-bold tracking-tight text-white transition-all duration-300">
                                 {formatTime(seconds)}
@@ -150,7 +150,7 @@ export function StudyStopwatch({ isOpen, onClose, onFinish }: StudyStopwatchProp
                             {/* Hover Action to show notes */}
                             {!isRunning && !showNotes && (
                                 <div className="absolute -bottom-8 left-0 right-0 text-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onClick={() => setShowNotes(true)} className="text-xs text-zinc-500 hover:text-emerald-400 flex items-center justify-center gap-1 mx-auto">
+                                    <button onClick={() => setShowNotes(true)} className="text-xs text-zinc-500 hover:text-primary flex items-center justify-center gap-1 mx-auto">
                                         <PenTool size={10} /> Definir Metas
                                     </button>
                                 </div>
@@ -176,7 +176,7 @@ export function StudyStopwatch({ isOpen, onClose, onFinish }: StudyStopwatchProp
                                 value={sessionNotes}
                                 onChange={(e) => setSessionNotes(e.target.value)}
                                 placeholder="O que você vai estudar hoje? (Ex: Resolver 10 questões de Logaritmo)"
-                                className="w-full bg-zinc-950/50 border border-zinc-800 rounded-lg p-3 text-sm text-zinc-200 focus:outline-none focus:border-emerald-500/50 min-h-[80px] resize-none placeholder:text-zinc-600"
+                                className="w-full bg-zinc-950/50 border border-zinc-800 rounded-lg p-3 text-sm text-zinc-200 focus:outline-none focus:border-primary/50 min-h-[80px] resize-none placeholder:text-zinc-600"
                             />
                         </div>
                     </div>
@@ -187,7 +187,7 @@ export function StudyStopwatch({ isOpen, onClose, onFinish }: StudyStopwatchProp
                     {!isRunning ? (
                         <button
                             onClick={handleStart}
-                            className="px-12 py-4 bg-emerald-600 hover:bg-emerald-500 text-white text-xl font-bold rounded-xl shadow-lg shadow-emerald-900/20 transform hover:scale-105 transition-all flex items-center gap-3"
+                            className="px-12 py-4 bg-primary hover:bg-primary text-white text-xl font-bold rounded-xl shadow-lg shadow-primary/20 transform hover:scale-105 transition-all flex items-center gap-3"
                         >
                             <Play fill="currentColor" />
                             Iniciar Sessão
@@ -205,7 +205,7 @@ export function StudyStopwatch({ isOpen, onClose, onFinish }: StudyStopwatchProp
                             ) : (
                                 <button
                                     onClick={handleResume}
-                                    className="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-emerald-900/20"
+                                    className="px-8 py-3 bg-primary hover:bg-primary text-white font-bold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-primary/20"
                                 >
                                     <Play fill="currentColor" size={20} />
                                     Retomar
@@ -214,7 +214,7 @@ export function StudyStopwatch({ isOpen, onClose, onFinish }: StudyStopwatchProp
 
                             <button
                                 onClick={handleFinish}
-                                className="px-8 py-3 bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 border border-blue-600/20 font-bold rounded-xl transition-all flex items-center gap-2"
+                                className="px-8 py-3 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 font-bold rounded-xl transition-all flex items-center gap-2"
                             >
                                 <Square fill="currentColor" size={18} />
                                 Finalizar

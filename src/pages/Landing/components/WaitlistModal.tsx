@@ -6,7 +6,7 @@ const QUESTIONS = [
     {
         id: 'foco',
         title: 'Qual é o seu principal objetivo este ano?',
-        icon: <Target className="w-5 h-5 text-amber-400" />,
+        icon: <Target className="w-5 h-5 text-primary" />,
         options: [
             'ENEM (Foco em Vestibulares Federais)',
             'Vestibulares Paulistas (FUVEST, UNICAMP, UNESP)',
@@ -17,7 +17,7 @@ const QUESTIONS = [
     {
         id: 'tempo',
         title: 'Há quanto tempo você está se preparando?',
-        icon: <Clock className="w-5 h-5 text-blue-400" />,
+        icon: <Clock className="w-5 h-5 text-primary" />,
         options: [
             'Estou começando agora (Menos de 6 meses)',
             'Sou veterano de 1 ano',
@@ -28,7 +28,7 @@ const QUESTIONS = [
     {
         id: 'desempenho',
         title: 'Como você avalia seu desempenho nos Simulados hoje?',
-        icon: <BarChart className="w-5 h-5 text-green-400" />,
+        icon: <BarChart className="w-5 h-5 text-primary" />,
         options: [
             'Nunca fiz / Não tenho métricas exatas',
             'Iniciante (Abaixo de 50% de acertos)',
@@ -117,7 +117,7 @@ export function WaitlistModal() {
                     {step < 4 && (
                         <div className="h-1.5 w-full bg-zinc-800 absolute top-0 left-0">
                             <motion.div
-                                className="h-full bg-amber-400"
+                                className="h-full bg-primary"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${progress}%` }}
                                 transition={{ duration: 0.3 }}
@@ -140,7 +140,7 @@ export function WaitlistModal() {
                                     <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 mb-4">
                                         {currentQuestion.icon}
                                     </div>
-                                    <span className="text-amber-400 text-xs font-bold tracking-widest uppercase mb-2 block">
+                                    <span className="text-primary text-xs font-bold tracking-widest uppercase mb-2 block">
                                         Passo {step + 1} de {QUESTIONS.length}
                                     </span>
                                     <h3 className="text-2xl font-bold text-white leading-tight">
@@ -153,10 +153,10 @@ export function WaitlistModal() {
                                         <button
                                             key={idx}
                                             onClick={() => handleAnswer(currentQuestion.id, option)}
-                                            className="w-full text-left p-4 rounded-xl border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 hover:border-amber-500/50 text-zinc-300 hover:text-white transition-all flex items-center justify-between group"
+                                            className="w-full text-left p-4 rounded-xl border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 hover:border-primary/50 text-zinc-300 hover:text-white transition-all flex items-center justify-between group"
                                         >
                                             <span className="text-sm font-medium">{option}</span>
-                                            <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-amber-400 transition-colors" />
+                                            <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-primary transition-colors" />
                                         </button>
                                     ))}
                                 </div>
@@ -173,8 +173,8 @@ export function WaitlistModal() {
                                 className="flex flex-col h-full"
                             >
                                 <div className="mb-8 text-center">
-                                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-400/10 mb-4">
-                                        <Target className="w-6 h-6 text-amber-400" />
+                                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                                        <Target className="w-6 h-6 text-primary" />
                                     </div>
                                     <h3 className="text-2xl font-bold text-white mb-2">
                                         Excelente. Último passo!
@@ -193,7 +193,7 @@ export function WaitlistModal() {
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             placeholder="Seu nome"
-                                            className="w-full h-12 px-4 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
+                                            className="w-full h-12 px-4 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                         />
                                     </div>
                                     <div>
@@ -204,7 +204,7 @@ export function WaitlistModal() {
                                             value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             placeholder="seu@melhoremail.com"
-                                            className="w-full h-12 px-4 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
+                                            className="w-full h-12 px-4 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                         />
                                     </div>
                                     <div>
@@ -215,14 +215,14 @@ export function WaitlistModal() {
                                             value={whatsapp}
                                             onChange={(e) => setWhatsapp(e.target.value)}
                                             placeholder="(11) 99999-9999"
-                                            className="w-full h-12 px-4 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all"
+                                            className="w-full h-12 px-4 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder:text-zinc-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                         />
                                     </div>
 
                                     <button
                                         type="submit"
                                         disabled={isLoading}
-                                        className="w-full h-12 mt-2 flex items-center justify-center gap-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-zinc-950 font-bold transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                                        className="w-full h-12 mt-2 flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary text-zinc-950 font-bold transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                                     >
                                         {isLoading ? (
                                             <>
@@ -248,14 +248,14 @@ export function WaitlistModal() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="flex flex-col items-center text-center py-8"
                             >
-                                <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6">
-                                    <CheckCircle2 className="w-10 h-10 text-green-500" />
+                                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                                    <CheckCircle2 className="w-10 h-10 text-primary" />
                                 </div>
                                 <h3 className="text-3xl font-bold text-white mb-4">
                                     Cadastro Confirmado!
                                 </h3>
                                 <p className="text-zinc-400 mb-8 max-w-sm">
-                                    Sua vaga VIP foi reservada com sucesso. Fique de olho no seu e-mail e WhatsApp, entraremos em contato com as instruções para o seu <strong className="text-amber-400">desconto de 50%</strong>.
+                                    Sua vaga VIP foi reservada com sucesso. Fique de olho no seu e-mail e WhatsApp, entraremos em contato com as instruções para o seu <strong className="text-primary">desconto de 50%</strong>.
                                 </p>
                                 <button
                                     onClick={() => setIsOpen(false)}

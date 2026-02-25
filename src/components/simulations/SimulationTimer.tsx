@@ -193,8 +193,8 @@ export function SimulationTimer({ isOpen, onClose, onFinish, simulationTitle, du
                 {/* Main Timer Display */}
                 <div className="flex flex-col items-center w-full min-h-[160px] justify-center transition-all duration-500">
                     {!hideTimer && (
-                        <div className="bg-blue-500/10 border border-blue-500/30 rounded-2xl px-12 py-6 min-w-[320px] text-center shadow-lg shadow-blue-500/5 backdrop-blur-sm relative overflow-hidden group animate-in fade-in zoom-in-95 duration-300">
-                            <div className="absolute inset-0 bg-blue-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
+                        <div className="bg-primary/10 border border-primary/30 rounded-2xl px-12 py-6 min-w-[320px] text-center shadow-lg shadow-primary/5 backdrop-blur-sm relative overflow-hidden group animate-in fade-in zoom-in-95 duration-300">
+                            <div className="absolute inset-0 bg-primary/5 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
                             <span className="text-zinc-400 font-medium tracking-wide uppercase text-sm mb-2 block relative z-10">Tempo Restante</span>
                             <div className="text-7xl font-mono font-bold tracking-tight relative z-10 text-white transition-all duration-300">
                                 {formatTime(secondsLeft)}
@@ -208,7 +208,7 @@ export function SimulationTimer({ isOpen, onClose, onFinish, simulationTitle, du
                     {!isRunning ? (
                         <button
                             onClick={handleStart}
-                            className="px-12 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xl font-bold rounded-xl shadow-lg shadow-blue-900/20 transform hover:scale-105 transition-all flex items-center gap-3"
+                            className="px-12 py-4 bg-gradient-to-r from-primary to-primary hover:from-primary hover:to-primary text-white text-xl font-bold rounded-xl shadow-lg shadow-primary/20 transform hover:scale-105 transition-all flex items-center gap-3"
                         >
                             <Play fill="currentColor" />
                             Começar Prova
@@ -226,7 +226,7 @@ export function SimulationTimer({ isOpen, onClose, onFinish, simulationTitle, du
                             ) : (
                                 <button
                                     onClick={handleResume}
-                                    className="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-emerald-900/20"
+                                    className="px-8 py-3 bg-primary hover:bg-primary text-white font-bold rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-primary/20"
                                 >
                                     <Play fill="currentColor" size={20} />
                                     Retomar Prova
@@ -235,7 +235,7 @@ export function SimulationTimer({ isOpen, onClose, onFinish, simulationTitle, du
 
                             <button
                                 onClick={handleFinish}
-                                className="px-8 py-3 bg-red-600/10 hover:bg-red-600/20 text-red-500 border border-red-600/20 font-bold rounded-xl transition-all flex items-center gap-2"
+                                className="px-8 py-3 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 font-bold rounded-xl transition-all flex items-center gap-2"
                             >
                                 Finalizar
                             </button>
@@ -266,8 +266,8 @@ export function SimulationTimer({ isOpen, onClose, onFinish, simulationTitle, du
                                     "px-3 py-2 rounded-lg text-sm font-mono transition-all border duration-500",
                                     !isVisible ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100",
                                     isRunning
-                                        ? "bg-sky-500/20 border-sky-500/40 text-sky-100 shadow-sm" // Active Analog Block Style
-                                        : "bg-zinc-900 border-zinc-800 hover:border-blue-500/50 hover:bg-zinc-800 text-zinc-400 hover:text-white" // Standard Preset Style
+                                        ? "bg-primary/20 border-primary/40 text-primary shadow-sm" // Active Analog Block Style
+                                        : "bg-zinc-900 border-zinc-800 hover:border-primary/50 hover:bg-zinc-800 text-zinc-400 hover:text-white" // Standard Preset Style
                                 )}
                             >
                                 {preset.label}

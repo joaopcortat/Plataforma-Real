@@ -48,7 +48,7 @@ export function Comparison() {
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
                         Por que a Estudo Real<br />
-                        <span className="text-amber-400">destrói o padrão do mercado?</span>
+                        <span className="text-primary">destrói o padrão do mercado?</span>
                     </h2>
                     <p className="text-lg text-zinc-400">
                         Chega de adaptar ferramentas corporativas (Notion, Trello) para estudar, ou perder horas montando planilhas no Excel.
@@ -66,10 +66,10 @@ export function Comparison() {
                             <thead>
                                 <tr className="border-b border-zinc-800 bg-zinc-900/80">
                                     <th className="p-6 text-sm font-semibold text-zinc-400 w-1/3">Recursos & Foco</th>
-                                    <th className="p-6 text-center border-l border-zinc-800 bg-amber-500/5">
+                                    <th className="p-6 text-center border-l border-zinc-800 bg-primary/5">
                                         <div className="flex flex-col items-center gap-1">
-                                            <span className="text-amber-400 font-black text-lg">Estudo Real</span>
-                                            <span className="text-xs text-amber-400/80 font-normal">O Ecossistema Completo</span>
+                                            <span className="text-primary font-black text-lg">Estudo Real</span>
+                                            <span className="text-xs text-primary/80 font-normal">O Ecossistema Completo</span>
                                         </div>
                                     </th>
                                     <th className="p-6 text-center border-l border-zinc-800">
@@ -88,15 +88,15 @@ export function Comparison() {
                                         <td className="p-6 text-sm font-medium text-white">{feature.name}</td>
 
                                         {/* Estudo Real Column */}
-                                        <td className="p-6 text-center border-l border-zinc-800 bg-amber-500/5 relative">
+                                        <td className="p-6 text-center border-l border-zinc-800 bg-primary/5 relative">
                                             {typeof feature.real === 'boolean' ? (
                                                 feature.real ? (
-                                                    <Check className="w-6 h-6 text-amber-400 mx-auto" strokeWidth={3} />
+                                                    <Check className="w-6 h-6 text-primary mx-auto" strokeWidth={3} />
                                                 ) : (
                                                     <X className="w-6 h-6 text-zinc-600 mx-auto" />
                                                 )
                                             ) : (
-                                                <span className="text-amber-400 font-semibold">{feature.real}</span>
+                                                <span className="text-primary font-semibold">{feature.real}</span>
                                             )}
                                         </td>
 

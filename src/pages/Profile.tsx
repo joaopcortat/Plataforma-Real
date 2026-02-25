@@ -109,7 +109,8 @@ export function Profile() {
 
             const { error } = await supabase
                 .from('profiles')
-                .upsert(updates);
+                .upsert(updates, { onConflict: 'user_id' });
+
 
             if (error) throw error;
 
@@ -141,7 +142,7 @@ export function Profile() {
             {message && (
                 <div className={clsx(
                     "p-4 rounded-xl border flex items-center gap-3 animate-in slide-in-from-top-4 fixed top-8 right-8 z-50 shadow-2xl",
-                    message.type === 'success' ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-500" : "bg-red-500/10 border-red-500/20 text-red-500"
+                    message.type === 'success' ? "bg-primary/10 border-primary/20 text-primary" : "bg-primary/10 border-primary/20 text-primary"
                 )}>
                     {message.type === 'success' ? <Shield size={20} /> : <Target size={20} />}
                     <span className="font-medium">{message.text}</span>
@@ -217,8 +218,8 @@ export function Profile() {
                     </div>
 
                     {/* Dev Tools (Temporary) */}
-                    <div className="bg-red-900/10 border border-red-900/20 rounded-2xl p-6 mt-6">
-                        <h3 className="text-sm font-bold text-red-400 uppercase tracking-wider mb-4">Dev Tools (Security)</h3>
+                    <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 mt-6">
+                        <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-4">Dev Tools (Security)</h3>
                         <button
                             onClick={async () => {
                                 setLoading(true);
@@ -231,7 +232,7 @@ export function Profile() {
                                 }
                                 setLoading(false);
                             }}
-                            className="text-xs bg-red-500/10 text-red-400 hover:bg-red-500/20 px-3 py-2 rounded-lg transition-colors"
+                            className="text-xs bg-primary/10 text-primary hover:bg-primary/20 px-3 py-2 rounded-lg transition-colors"
                         >
                             Set me as Admin (Enable Uploads)
                         </button>
@@ -244,7 +245,7 @@ export function Profile() {
                     {/* Plano */}
                     <div>
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="p-2 bg-violet-500/10 text-violet-400 rounded-lg">
+                            <div className="p-2 bg-primary/10 text-primary rounded-lg">
                                 <Shield size={20} />
                             </div>
                             <h3 className="text-lg font-bold text-white">Meu Plano</h3>
@@ -255,7 +256,7 @@ export function Profile() {
                     {/* Personal Data */}
                     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 bg-blue-500/10 text-blue-500 rounded-lg">
+                            <div className="p-2 bg-primary/10 text-primary rounded-lg">
                                 <User size={20} />
                             </div>
                             <h3 className="text-lg font-bold text-white">Dados Pessoais</h3>
@@ -290,7 +291,7 @@ export function Profile() {
                     {/* Academic Goals */}
                     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="p-2 bg-emerald-500/10 text-emerald-500 rounded-lg">
+                            <div className="p-2 bg-primary/10 text-primary rounded-lg">
                                 <GraduationCap size={20} />
                             </div>
                             <h3 className="text-lg font-bold text-white">Objetivos Academicos</h3>
@@ -320,7 +321,7 @@ export function Profile() {
                             <div className="col-span-1 md:col-span-2 space-y-2">
                                 <label className="text-sm font-medium text-zinc-400 flex justify-between">
                                     <span>Meta de Acertos (Simulado Global)</span>
-                                    <span className="text-emerald-500 font-bold">{targetScore} / 180</span>
+                                    <span className="text-primary font-bold">{targetScore} / 180</span>
                                 </label>
                                 <input
                                     type="range"

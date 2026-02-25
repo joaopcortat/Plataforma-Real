@@ -30,7 +30,7 @@ export function Courses() {
                             <div className="flex items-center gap-4">
                                 <div className={clsx(
                                     "w-12 h-12 rounded-full flex items-center justify-center text-white font-bold",
-                                    mod.locked ? "bg-zinc-800" : "bg-indigo-600 shadow-lg shadow-indigo-600/20"
+                                    mod.locked ? "bg-zinc-800" : "bg-primary shadow-lg shadow-primary/20"
                                 )}>
                                     {mod.locked ? <Lock size={20} /> : <Play size={20} fill="currentColor" />}
                                 </div>
@@ -51,7 +51,7 @@ export function Courses() {
 
                         <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
                             <div
-                                className={clsx("h-full rounded-full transition-all duration-500", mod.progress === 100 ? "bg-emerald-500" : "bg-indigo-500")}
+                                className={clsx("h-full rounded-full transition-all duration-500", mod.progress === 100 ? "bg-primary" : "bg-primary")}
                                 style={{ width: `${mod.progress}%` }}
                             />
                         </div>

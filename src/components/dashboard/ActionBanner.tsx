@@ -10,9 +10,9 @@ interface ActionBannerProps {
 
 export function ActionBanner({ title, description, icon: Icon, variant, onClick }: ActionBannerProps) {
     const variants = {
-        blue: { bg: 'bg-blue-500', text: 'text-blue-400', border: 'hover:border-blue-500/50' },
-        green: { bg: 'bg-emerald-500', text: 'text-emerald-400', border: 'hover:border-emerald-500/50' },
-        pink: { bg: 'bg-pink-500', text: 'text-pink-400', border: 'hover:border-pink-500/50' }
+        blue: { bg: 'bg-primary', text: 'text-primary', border: 'hover:border-primary/50' },
+        green: { bg: 'bg-primary', text: 'text-primary', border: 'hover:border-primary/50' },
+        pink: { bg: 'bg-primary', text: 'text-primary', border: 'hover:border-primary/50' }
     }[variant];
 
     return (

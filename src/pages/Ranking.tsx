@@ -66,9 +66,9 @@ export function Ranking() {
     }
 
     const getPodium = (index: number) => {
-        if (index === 0) return { color: 'text-yellow-500', border: 'border-yellow-500', bg: 'bg-yellow-500/10' }; // 1st
+        if (index === 0) return { color: 'text-primary', border: 'border-primary', bg: 'bg-primary/10' }; // 1st
         if (index === 1) return { color: 'text-zinc-300', border: 'border-zinc-400', bg: 'bg-zinc-400/10' }; // 2nd
-        if (index === 2) return { color: 'text-orange-700', border: 'border-orange-700', bg: 'bg-orange-700/10' }; // 3rd
+        if (index === 2) return { color: 'text-primary', border: 'border-primary', bg: 'bg-primary/10' }; // 3rd
         return { color: 'text-zinc-500', border: 'border-zinc-800', bg: 'bg-zinc-800' };
     };
 
@@ -94,7 +94,7 @@ export function Ranking() {
                     <p className="text-zinc-400">Veja sua posição em relação a outros estudantes.</p>
                 </div>
                 {userPosition && (
-                    <div className="bg-indigo-500/10 border border-indigo-500/20 px-4 py-2 rounded-lg text-indigo-400 font-bold flex items-center gap-2">
+                    <div className="bg-primary/10 border border-primary/20 px-4 py-2 rounded-lg text-primary font-bold flex items-center gap-2">
                         <Trophy size={18} />
                         Sua posição: #{userPosition}
                     </div>
@@ -113,9 +113,9 @@ export function Ranking() {
                         return (
                             <div key={user.id} className={clsx(
                                 "border rounded-2xl p-6 flex flex-col items-center relative transition-all hover:scale-[1.02]",
-                                isFirst ? "bg-gradient-to-b from-zinc-900 to-zinc-950 border-yellow-500/50 shadow-xl shadow-yellow-500/10 z-10 h-80 justify-center" : "bg-zinc-900 border-zinc-800 h-64 justify-center"
+                                isFirst ? "bg-gradient-to-b from-zinc-900 to-zinc-950 border-primary/50 shadow-xl shadow-primary/10 z-10 h-80 justify-center" : "bg-zinc-900 border-zinc-800 h-64 justify-center"
                             )}>
-                                {isFirst && <Crown size={32} className="text-yellow-500 absolute -top-5 drop-shadow-lg" fill="currentColor" />}
+                                {isFirst && <Crown size={32} className="text-primary absolute -top-5 drop-shadow-lg" fill="currentColor" />}
 
                                 <div className={clsx(
                                     "w-20 h-20 rounded-full border-4 mb-4 overflow-hidden relative",
@@ -159,12 +159,12 @@ export function Ranking() {
                         key={user.id}
                         className={clsx(
                             "flex items-center gap-4 p-4 border-b border-zinc-800 last:border-0 hover:bg-zinc-800/50 transition-colors",
-                            user.me ? "bg-indigo-500/10 hover:bg-indigo-500/20" : ""
+                            user.me ? "bg-primary/10 hover:bg-primary/20" : ""
                         )}
                     >
                         <span className={clsx(
                             "w-8 text-center font-bold",
-                            user.position! <= 3 ? "text-yellow-500 text-xl" : "text-zinc-500"
+                            user.position! <= 3 ? "text-primary text-xl" : "text-zinc-500"
                         )}>
                             {user.position}
                         </span>
@@ -180,7 +180,7 @@ export function Ranking() {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                            <p className={clsx("font-bold truncate", user.me ? "text-indigo-400" : "text-white")}>
+                            <p className={clsx("font-bold truncate", user.me ? "text-primary" : "text-white")}>
                                 {user.full_name} {user.me && "(Você)"}
                             </p>
                             <p className="text-xs text-zinc-500 flex items-center gap-2">
