@@ -64,12 +64,12 @@ export function Hero() {
                     </a>
                 </motion.div>
 
-                {/* Dashboard Preview mockup in Hero */}
+                {/* Dashboard Preview — desktop only */}
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
-                    className="w-full mt-12 md:mt-20 relative max-w-5xl mx-auto"
+                    className="w-full mt-12 md:mt-20 relative max-w-5xl mx-auto hidden sm:block"
                 >
                     {/* Responsive Floating Notifications */}
                     <div className="absolute inset-0 z-20 flex sm:hidden pointer-events-none">

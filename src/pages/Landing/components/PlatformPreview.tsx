@@ -44,7 +44,7 @@ export function PlatformPreview() {
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="relative"
+                        className="relative hidden sm:block"
                     >
                         {/* Glowing Background Blur */}
                         <div className="absolute inset-0 bg-primary/20 rounded-full blur-[100px] pointer-events-none" />
