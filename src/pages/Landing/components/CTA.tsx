@@ -3,7 +3,7 @@ import { ArrowRight, Lock } from 'lucide-react';
 
 export function CTA() {
     return (
-        <section id="checkout" className="py-20 md:py-32 relative overflow-hidden bg-zinc-950">
+        <section id="checkout" className="py-32 relative overflow-hidden bg-zinc-950">
             {/* Glow */}
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[400px] bg-primary/10 rounded-[100%] blur-[120px] pointer-events-none" />
@@ -13,7 +13,7 @@ export function CTA() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-6 md:p-16 backdrop-blur-md relative overflow-hidden"
+                    className="bg-zinc-900/50 border border-zinc-800 rounded-3xl p-10 md:p-16 backdrop-blur-md relative overflow-hidden"
                 >
                     <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
                         <Lock className="w-48 h-48 text-primary" />
@@ -27,7 +27,7 @@ export function CTA() {
                         Pronto para mudar o rumo dos seus estudos?
                     </h2>
 
-                    <p className="text-base md:text-xl text-zinc-400 mb-8 md:mb-10 max-w-2xl mx-auto relative z-10">
+                    <p className="text-xl text-zinc-400 mb-10 max-w-2xl mx-auto relative z-10">
                         A plataforma ainda não está aberta para o público geral. Cadastre-se na nossa lista VIP agora para garantir acesso antecipado com <strong className="text-primary">50% de desconto</strong> no dia do lançamento.
                     </p>
 
