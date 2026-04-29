@@ -37,9 +37,15 @@ export function Login() {
             }
         } catch (err: any) {
             // Translate common Supabase errors
-            let msg = err.message;
+            let msg = err.message || String(err);
             if (msg === 'Invalid login credentials') msg = 'Email ou senha incorretos.';
             if (msg === 'User already registered') msg = 'Este email já está cadastrado.';
+            if (msg.toLowerCase().includes('fetch') || msg.toLowerCase().includes('network') || msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('load failed')) {
+                msg = 'Sem conexão com o servidor. Verifique sua internet ou tente novamente em instantes.';
+            }
+            if (msg.toLowerCase().includes('email not confirmed')) {
+                msg = 'Confirme seu email antes de fazer login. Verifique sua caixa de entrada.';
+            }
 
             setError(msg);
         } finally {

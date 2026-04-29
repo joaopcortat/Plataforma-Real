@@ -257,7 +257,13 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                 <div>
                                     <label className="text-xs text-zinc-400 mb-2 block">Redação (C1-C5)</label>
                                     <div className="grid grid-cols-5 gap-2">
-                                        {[1, 2, 3, 4, 5].map((num) => (
+                                        {[
+                                            { num: 1, val: c1, set: setC1 },
+                                            { num: 2, val: c2, set: setC2 },
+                                            { num: 3, val: c3, set: setC3 },
+                                            { num: 4, val: c4, set: setC4 },
+                                            { num: 5, val: c5, set: setC5 },
+                                        ].map(({ num, val, set }) => (
                                             <div key={num}>
                                                 <input
                                                     type="number"
@@ -265,15 +271,8 @@ export function RegisterResultModal({ isOpen, onClose, simulation, timeSpent, on
                                                     min="0"
                                                     step="40"
                                                     placeholder={`C${num}`}
-                                                    value={eval(`c${num}` as any)}
-                                                    onChange={(e) => {
-                                                        const val = e.target.value;
-                                                        if (num === 1) setC1(val);
-                                                        if (num === 2) setC2(val);
-                                                        if (num === 3) setC3(val);
-                                                        if (num === 4) setC4(val);
-                                                        if (num === 5) setC5(val);
-                                                    }}
+                                                    value={val}
+                                                    onChange={(e) => set(e.target.value)}
                                                     className="w-full bg-zinc-800 border-zinc-700 rounded-lg p-2 text-center text-xs font-bold text-white focus:border-primary"
                                                 />
                                             </div>

@@ -45,14 +45,18 @@ export function Shell() {
     }, [user]);
 
     async function fetchProfile() {
-        const { data } = await supabase
-            .from('profiles')
-            .select('*')
-            .eq('user_id', user?.id)
-            .single();
+        try {
+            const { data } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('user_id', user?.id)
+                .single();
 
-        if (data) {
-            setProfile(data);
+            if (data) {
+                setProfile(data);
+            }
+        } catch (err) {
+            console.warn('Could not load profile:', err);
         }
     }
 

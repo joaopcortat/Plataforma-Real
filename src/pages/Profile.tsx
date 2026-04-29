@@ -217,26 +217,7 @@ export function Profile() {
                         </div>
                     </div>
 
-                    {/* Dev Tools (Temporary) */}
-                    <div className="bg-primary/10 border border-primary/20 rounded-2xl p-6 mt-6">
-                        <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-4">Dev Tools (Security)</h3>
-                        <button
-                            onClick={async () => {
-                                setLoading(true);
-                                const { error } = await supabase.from('profiles').update({ role: 'admin' }).eq('user_id', user?.id);
-                                if (!error) {
-                                    alert('Role updated to Admin! You can now upload materials.');
-                                    window.location.reload();
-                                } else {
-                                    alert('Error: ' + error.message);
-                                }
-                                setLoading(false);
-                            }}
-                            className="text-xs bg-primary/10 text-primary hover:bg-primary/20 px-3 py-2 rounded-lg transition-colors"
-                        >
-                            Set me as Admin (Enable Uploads)
-                        </button>
-                    </div>
+
                 </div>
 
                 {/* Right Column: Forms */}
